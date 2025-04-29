@@ -1,0 +1,132 @@
+@model IEnumerable<crackhub.Models.Data.Game>
+@{
+    ViewData["Title"] = ViewBag.Category.CategoryName + " Games - CrackHub";
+    var currentPage = ViewBag.CurrentPage;
+    var totalPages = ViewBag.TotalPages;
+    var category = ViewBag.Category;
+    var totalGameCount = ViewBag.TotalGameCount;
+    var topRatedGame = ViewBag.TopRatedGame;
+    var mostDownloaded = ViewBag.MostDownloaded;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/category.css" asp-append-version="true" />
+}
+
+<div class="container">
+    <!-- Category Header -->
+    <div class="category-header text-center">
+        <div class="container">
+            <i class="@GetCategoryIcon(category.CategoryName) category-icon"></i>
+            <h1 class="category-title animate__animated animate__fadeIn">@category.CategoryName</h1>
+            <p class="category-description">@(string.IsNullOrEmpty(category.Description) ? $"Browse all {category.CategoryName} games in our collection" : category.Description)</p>
+            
+            <div class="category-stats">
+                <div class="stat-item">
+                    <span class="stat-number animate__animated animate__fadeIn animate__delay-1s">@totalGameCount</span>
+                    <span class="stat-label">Games</span>
+                </div>
+                @if (topRatedGame != null)
+                {
+                    <div class="stat-item">
+                        <span class="stat-number animate__animated animate__fadeIn animate__delay-1s">@topRatedGame.AverageRating.ToString("0.0")</span>
+                        <span class="stat-label">Top Rating</span>
+                    </div>
+                }
+                @if (mostDownloaded != null)
+                {
+                    <div class="stat-item">
+                        <span class="stat-number animate__animated animate__fadeIn animate__delay-1s">@mostDownloaded.Downloads</span>
+                        <span class="stat-label">Most Downloads</span>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    
+    <!-- Games Grid -->
+    <div class="games-grid">
+        <div class="row">
+            @foreach (var game in Model)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="game-card" data-aos="fade-up">
+                        <a href="@Url.Action("Details", "Game", new { id = game.Id })">
+                            <div class="card-img-container">
+                                <img src="@(string.IsNullOrEmpty(game.CoverImageUrl) ? "/img/no-image.jpg" : game.CoverImageUrl)" class="card-img-top" alt="@game.Title" onerror="this.src='/img/no-image.jpg'">
+                                <span class="game-category">@game.Category?.CategoryName</span>
+                            </div>
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="@Url.Action("Details", "Game", new { id = game.Id })" class="text-decoration-none text-dark">@game.Title</a>
+                            </h5>
+                            <p class="card-text">@(game.ShortDescription?.Length > 100 ? game.ShortDescription.Substring(0, 100) + "..." : game.ShortDescription)</p>
+                        </div>
+                        <div class="game-card-footer">
+                            <div class="game-rating">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    <i class="@(i <= Math.Round(game.AverageRating) ? "fas" : "far") fa-star"></i>
+                                }
+                            </div>
+                            <div class="game-downloads">
+                                <i class="fas fa-download me-1"></i> @game.Downloads
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    
+    <!-- Pagination -->
+    @if (totalPages > 1)
+    {
+        <nav aria-label="Category pagination" class="category-pagination">
+            <ul class="pagination justify-content-center">
+                <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                    <a class="page-link" href="@Url.Action("ByCategory", "Game", new { categorySlug = category.Slug, page = currentPage - 1 })" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                
+                @for (int i = 1; i <= totalPages; i++)
+                {
+                    <li class="page-item @(i == currentPage ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("ByCategory", "Game", new { categorySlug = category.Slug, page = i })">@i</a>
+                    </li>
+                }
+                
+                <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                    <a class="page-link" href="@Url.Action("ByCategory", "Game", new { categorySlug = category.Slug, page = currentPage + 1 })" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    }
+</div>
+
+@functions {
+    public string GetCategoryIcon(string categoryName)
+    {
+        // Map category names to appropriate Font Awesome icons
+        return categoryName.ToLower() switch
+        {
+            "action" => "fas fa-running",
+            "adventure" => "fas fa-mountain",
+            "rpg" => "fas fa-dragon",
+            "strategy" => "fas fa-chess",
+            "simulation" => "fas fa-gamepad",
+            "sports" => "fas fa-football-ball",
+            "racing" => "fas fa-car",
+            "puzzle" => "fas fa-puzzle-piece",
+            "shooter" => "fas fa-crosshairs",
+            "horror" => "fas fa-ghost",
+            "platformer" => "fas fa-layer-group",
+            "fighting" => "fas fa-fist-raised",
+            _ => "fas fa-gamepad" // Default icon
+        };
+    }
+}

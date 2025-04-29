@@ -1,0 +1,264 @@
+@{
+    ViewData["Title"] = "Đăng ký";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/account.css" />
+}
+
+<div class="account-page-wrapper">
+    <!-- Floating game icons -->
+    <div class="floating-icon icon-1"><i class="fas fa-gamepad"></i></div>
+    <div class="floating-icon icon-2"><i class="fas fa-dice"></i></div>
+    <div class="floating-icon icon-3"><i class="fas fa-ghost"></i></div>
+    <div class="floating-icon icon-4"><i class="fas fa-headset"></i></div>
+    
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Intro Section -->
+            <div class="col-lg-5 mb-5 mb-lg-0">
+                <div class="intro-section">
+                    <div class="intro-content text-center text-lg-start">
+                        <div class="logo-container mb-4">
+                            <img src="~/img/logo01.png" alt="CrackHub Logo" class="intro-logo" onerror="this.src='~/img/logo.png'; this.onerror='';">
+                        </div>
+                        <h1 class="intro-title">Tham gia cộng đồng game</h1>
+                        <p class="intro-text">Đăng ký để tải game không giới hạn, tham gia thảo luận và nhận thông báo về các game mới nhất.</p>
+                        
+                        <!-- Features List -->
+                        <div class="features-list">
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-rocket"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h3>Truy cập nhanh chóng</h3>
+                                    <p>Không cần chờ đợi hoặc xem quảng cáo</p>
+                                </div>
+                            </div>
+                            
+
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-comments"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h3>Cộng đồng game thủ</h3>
+                                    <p>Thảo luận, chia sẻ và khám phá game cùng nhau</p>
+                                </div>
+                            </div>
+                            
+
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-bell"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h3>Cập nhật ưu tiên</h3>
+                                    <p>Nhận thông báo ngay khi có game mới</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Register Section -->
+            <div class="col-lg-7">
+                <div class="account-card">
+                    <div class="account-header text-center">
+                        <h2><i class="fas fa-user-plus me-2"></i> Đăng ký tài khoản</h2>
+                    </div>
+                    <div class="account-body">
+                        @if (ViewBag.Error != null)
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                <i class="fas fa-exclamation-triangle me-2"></i> @ViewBag.Error
+                            </div>
+                        }
+                        
+                        <form method="post" asp-controller="Account" asp-action="Register" enctype="multipart/form-data">
+                            <div class="row">
+                                <!-- Thông tin cá nhân -->
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3 position-relative">
+                                        <i class="fas fa-user input-icon"></i>
+                                        <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Tên" required>
+                                        <label for="firstName">Tên</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3 position-relative">
+                                        <i class="fas fa-user input-icon"></i>
+                                        <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Họ" required>
+                                        <label for="lastName">Họ</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-floating mb-3 position-relative">
+                                <i class="fas fa-tag input-icon"></i>
+                                <input type="text" class="form-control" id="displayName" name="displayName" placeholder="Tên hiển thị" required>
+                                <label for="displayName">Tên hiển thị</label>
+                                <small class="form-text text-light opacity-75">Tên này sẽ hiển thị công khai trong cộng đồng</small>
+                            </div>
+                            
+                            <div class="form-floating mb-3 position-relative">
+                                <i class="fas fa-envelope input-icon"></i>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                                <label for="email">Email</label>
+                                <small class="form-text text-light opacity-75">Email sẽ được sử dụng để đăng nhập và xác thực tài khoản</small>
+                            </div>
+                            
+                            <div class="form-floating mb-3 position-relative">
+                                <i class="fas fa-lock input-icon"></i>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu" required>
+                                <label for="password">Mật khẩu</label>
+                                <small class="form-text text-light opacity-75">Tối thiểu 6 ký tự, bao gồm chữ và số</small>
+                            </div>
+                            
+                            <div class="form-floating mb-4 position-relative">
+                                <i class="fas fa-lock input-icon"></i>
+                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Xác nhận mật khẩu" required>
+                                <label for="confirmPassword">Xác nhận mật khẩu</label>
+                            </div>
+                            
+                            <div class="form-check mb-2">
+                                <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
+                                <label class="form-check-label" for="rememberMe">
+                                    Ghi nhớ đăng nhập
+                                </label>
+                            </div>
+                            
+                            <div class="form-check mb-4">
+                                <input type="checkbox" class="form-check-input" id="agreeTerms" required>
+                                <label class="form-check-label" for="agreeTerms">
+                                    Tôi đồng ý với <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal" class="text-light text-decoration-underline">điều khoản sử dụng</a>
+                                </label>
+                            </div>
+                            
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary login-btn">
+                                    <i class="fas fa-user-plus me-2"></i> Đăng ký
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="account-footer">
+                        <p>Đã có tài khoản? <a asp-action="Login">Đăng nhập ngay</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Terms Modal - Updated styling -->
+<div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content bg-dark text-light">
+            <div class="modal-header border-secondary">
+                <h5 class="modal-title" id="termsModalLabel">Điều khoản sử dụng</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6>1. Điều khoản chung</h6>
+                <p>CrackHub là trang web chia sẻ các liên kết game PC miễn phí. Chúng tôi không lưu trữ bất kỳ tập tin nào trên máy chủ của mình.</p>
+                
+                <h6>2. Quyền sử dụng</h6>
+                <p>Người dùng được phép sử dụng các liên kết tại CrackHub cho mục đích cá nhân, không thương mại.</p>
+                
+                <h6>3. Trách nhiệm người dùng</h6>
+                <p>Người dùng chịu hoàn toàn trách nhiệm khi sử dụng bất kỳ nội dung nào từ các liên kết được chia sẻ trên CrackHub.</p>
+                
+                <h6>4. Tài khoản</h6>
+                <p>Khi đăng ký tài khoản, bạn phải cung cấp thông tin chính xác và cập nhật. Mỗi người dùng chỉ được tạo một tài khoản.</p>
+            </div>
+            <div class="modal-footer border-secondary">
+                <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Client-side validation
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form');
+            
+            form.addEventListener('submit', function (event) {
+                const firstName = document.getElementById('firstName').value;
+                const lastName = document.getElementById('lastName').value;
+                const displayName = document.getElementById('displayName').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                const agreeTerms = document.getElementById('agreeTerms').checked;
+                
+                let isValid = true;
+                
+                // Check name fields
+                if (firstName.trim() === '') {
+                    isValid = false;
+                    alert('Vui lòng nhập tên của bạn');
+                }
+                
+                if (lastName.trim() === '') {
+                    isValid = false;
+                    alert('Vui lòng nhập họ của bạn');
+                }
+                
+                if (displayName.trim() === '') {
+                    isValid = false;
+                    alert('Vui lòng nhập tên hiển thị');
+                }
+                
+                // Remove custom email validation and rely on HTML5 validation
+                // The browser will validate email format thanks to type="email"
+                
+                // Check password
+                if (password.length < 6) {
+                    isValid = false;
+                    alert('Mật khẩu phải có ít nhất 6 ký tự');
+                }
+                
+                // Check passwords match
+                if (password !== confirmPassword) {
+                    isValid = false;
+                    alert('Mật khẩu xác nhận không khớp');
+                }
+                
+                // Check terms agreement
+                if (!agreeTerms) {
+                    isValid = false;
+                    alert('Bạn phải đồng ý với điều khoản sử dụng');
+                }
+                
+                
+                if (!isValid) {
+                    event.preventDefault();
+                }
+            });
+            
+            // Avatar preview
+            const avatarInput = document.getElementById('avatar');
+            avatarInput.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+                    lidation via type="email" attribute
+                    reader.onload = function(e) {
+                        // If you want to add preview functionality, uncomment this and add an image element to the form
+                        // document.getElementById('avatarPreview').src = e.target.result;cument.getElementById('avatar');
+                        // document.getElementById('avatarPreviewContainer').classList.remove('d-none');e', function() {
+                    }   // document.getElementById('avatarPreviewContainer').classList.remove('d-none');s && this.files[0]) {
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        }); = e.target.result;
+    </script>'avatarPreviewContainer').classList.remove('d-none');
+}   </script>
+}

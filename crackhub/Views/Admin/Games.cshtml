@@ -1,0 +1,198 @@
+@model IEnumerable<crackhub.Models.Data.Game>
+@{
+    ViewData["Title"] = "Quản lý Game";
+    Layout = "_AdminLayout";
+    var currentPage = ViewBag.CurrentPage;
+    var totalPages = ViewBag.TotalPages;
+    var searchTerm = ViewBag.SearchTerm ?? "";
+    var currentSort = ViewBag.CurrentSort ?? "newest";
+    var titleSortParam = ViewBag.TitleSortParam;
+}
+
+<div class="admin-games">
+    <!-- Filter & Search Row -->
+    <div class="admin-card mb-4">
+        <div class="admin-card-body">
+            <div class="row">
+                <div class="col-lg-8">
+                    <form method="get" class="d-flex">
+                        <div class="input-group">
+                            <input type="text" name="searchTerm" class="form-control" placeholder="Tìm kiếm theo tên, mô tả..."
+                                   value="@searchTerm">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <input type="hidden" name="sortOrder" value="@currentSort" />
+                        <input type="hidden" name="page" value="1" />
+                    </form>
+                </div>
+                <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                    <a href="@Url.Action("CreateGame")" class="btn btn-primary">
+                        <i class="fas fa-plus-circle me-2"></i> Thêm game mới
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Games Table -->
+    <div class="admin-card">
+        <div class="admin-card-header">
+            <h5><i class="fas fa-gamepad me-2"></i>Danh sách Game</h5>
+            <div class="dropdown">
+                <button class="btn btn-sm btn-light dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-sort me-1"></i> Sắp xếp
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="sortDropdown">
+                    <li><a class="dropdown-item @(currentSort == "newest" ? "active" : "")" href="@Url.Action("Games", new { sortOrder = "newest", searchTerm = searchTerm, page = currentPage })">Mới nhất</a></li>
+                    <li><a class="dropdown-item @(currentSort == "title" ? "active" : "")" href="@Url.Action("Games", new { sortOrder = "title", searchTerm = searchTerm, page = currentPage })">Tên A-Z</a></li>
+                    <li><a class="dropdown-item @(currentSort == "title_desc" ? "active" : "")" href="@Url.Action("Games", new { sortOrder = "title_desc", searchTerm = searchTerm, page = currentPage })">Tên Z-A</a></li>
+                    <li><a class="dropdown-item @(currentSort == "downloads" ? "active" : "")" href="@Url.Action("Games", new { sortOrder = "downloads", searchTerm = searchTerm, page = currentPage })">Lượt tải nhiều nhất</a></li>
+                    <li><a class="dropdown-item @(currentSort == "rating" ? "active" : "")" href="@Url.Action("Games", new { sortOrder = "rating", searchTerm = searchTerm, page = currentPage })">Đánh giá cao nhất</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="admin-card-body p-0">
+            <div class="admin-table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên game</th>
+                            <th>Thể loại</th>
+                            <th>Nhà phát hành</th>
+                            <th>Lượt tải</th>
+                            <th>Đánh giá</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var game in Model)
+                            {
+                                <tr>
+                                    <td>@game.Id</td>
+                                    <td>
+                                        <div class="admin-table-item">
+                                            <img src="@(string.IsNullOrEmpty(game.CoverImageUrl) ? "/img/no-image.jpg" : game.CoverImageUrl)" 
+                                                 alt="@game.Title" class="admin-table-img" />
+                                            <span class="admin-table-text">@game.Title</span>
+                                        </div>
+                                    </td>
+                                    <td>@(game.Category?.CategoryName ?? "N/A")</td>
+                                    <td>@(game.Publisher ?? "N/A")</td>
+                                    <td>@game.Downloads</td>
+                                    <td>
+                                        <div class="rating">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                <i class="@(i <= Math.Round(game.AverageRating / 2) ? "fas" : "far") fa-star fa-xs"></i>
+                                            }
+                                            <span class="ms-1">@game.AverageRating.ToString("0.0")</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <a href="@Url.Action("EditGame", new { id = game.Id })" class="btn btn-sm btn-outline-primary me-1" title="Chỉnh sửa">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="@Url.Action("ManageScreenshots", new { id = game.Id })" class="btn btn-sm btn-outline-info me-1" title="Quản lý ảnh">
+                                                <i class="fas fa-images"></i>
+                                            </a>
+                                            <a href="@Url.Action("ManageLinks", new { id = game.Id })" class="btn btn-sm btn-outline-success me-1" title="Quản lý link tải">
+                                                <i class="fas fa-link"></i>
+                                            </a>
+                                            <a href="@Url.Action("DeleteGame", new { id = game.Id })" class="btn btn-sm btn-outline-danger" title="Xóa">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center py-4">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <i class="fas fa-exclamation-circle fa-3x text-muted mb-3"></i>
+                                        <h5>Không tìm thấy game nào</h5>
+                                        <p class="text-muted">Hãy thử tìm kiếm khác hoặc thêm game mới</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    @if (totalPages > 1)
+    {
+        <div class="admin-pagination">
+            @if (currentPage > 1)
+            {
+                <a href="@Url.Action("Games", new { page = currentPage - 1, sortOrder = currentSort, searchTerm = searchTerm })" class="admin-page-link">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+            }
+            else
+            {
+                <span class="admin-page-link disabled">
+                    <i class="fas fa-chevron-left"></i>
+                </span>
+            }
+
+            @{
+                int startPage = Math.Max(1, currentPage - 2);
+                int endPage = Math.Min(totalPages, startPage + 4);
+                
+                if (endPage - startPage < 4 && startPage > 1)
+                {
+                    startPage = Math.Max(1, endPage - 4);
+                }
+            }
+
+            @if (startPage > 1)
+            {
+                <a href="@Url.Action("Games", new { page = 1, sortOrder = currentSort, searchTerm = searchTerm })" class="admin-page-link">1</a>
+                if (startPage > 2)
+                {
+                    <span class="admin-page-link disabled">...</span>
+                }
+            }
+
+            @for (int i = startPage; i <= endPage; i++)
+            {
+                <a href="@Url.Action("Games", new { page = i, sortOrder = currentSort, searchTerm = searchTerm })" 
+                   class="admin-page-link @(i == currentPage ? "active" : "")">@i</a>
+            }
+
+            @if (endPage < totalPages)
+            {
+                if (endPage < totalPages - 1)
+                {
+                    <span class="admin-page-link disabled">...</span>
+                }
+                <a href="@Url.Action("Games", new { page = totalPages, sortOrder = currentSort, searchTerm = searchTerm })" class="admin-page-link">@totalPages</a>
+            }
+
+            @if (currentPage < totalPages)
+            {
+                <a href="@Url.Action("Games", new { page = currentPage + 1, sortOrder = currentSort, searchTerm = searchTerm })" class="admin-page-link">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            }
+            else
+            {
+                <span class="admin-page-link disabled">
+                    <i class="fas fa-chevron-right"></i>
+                </span>
+            }
+        </div>
+    }
+</div>

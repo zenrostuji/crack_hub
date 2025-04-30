@@ -1,0 +1,32 @@
+@using crackhub.Models.Data
+@model IEnumerable<Category>
+
+@foreach (var category in Model)
+{
+    <a class="dropdown-item" href="@Url.Action("ByCategory", "Game", new { categorySlug = category.Slug })">
+        <i class="@GetCategoryIcon(category.CategoryName) fa-fw"></i> @category.CategoryName
+    </a>
+}
+
+@functions {
+    public string GetCategoryIcon(string categoryName)
+    {
+        // Map category names to appropriate Font Awesome icons
+        return categoryName.ToLower() switch
+        {
+            "action" => "fas fa-running",
+            "adventure" => "fas fa-mountain",
+            "rpg" => "fas fa-dragon",
+            "strategy" => "fas fa-chess",
+            "simulation" => "fas fa-gamepad",
+            "sports" => "fas fa-football-ball",
+            "racing" => "fas fa-car",
+            "puzzle" => "fas fa-puzzle-piece",
+            "shooter" => "fas fa-crosshairs",
+            "horror" => "fas fa-ghost",
+            "platformer" => "fas fa-layer-group",
+            "fighting" => "fas fa-fist-raised",
+            _ => "fas fa-gamepad" // Default icon
+        };
+    }
+}

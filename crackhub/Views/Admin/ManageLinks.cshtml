@@ -1,0 +1,182 @@
+@model List<crackhub.Models.Data.GameLink>
+@{
+    ViewData["Title"] = "Quản lý Link Tải";
+    Layout = "_AdminLayout";
+    var game = ViewBag.Game as crackhub.Models.Data.Game;
+}
+
+<div class="admin-manage-links">
+    <div class="admin-page-title-container mb-4">
+        <h4 class="admin-page-title">
+            <i class="fas fa-link me-2"></i> Quản lý link tải: @game.Title
+        </h4>
+        <a href="@Url.Action("EditGame", "Admin", new { id = game.Id })" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> Quay lại
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Current Links -->
+            <div class="admin-form-section mb-4">
+                <h4>Danh sách link tải (@Model.Count)</h4>
+                
+                @if (Model.Count > 0)
+                {
+                    <div class="admin-table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Loại link</th>
+                                    <th>Link tải</th>
+                                    <th>Phần</th>
+                                    <th>Dung lượng</th>
+                                    <th>Ngày thêm</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var link in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @switch (link.LinkName.ToLower())
+                                            {
+                                                case "google drive":
+                                                    <span class="badge bg-primary">Google Drive</span>
+                                                    break;
+                                                case "mega":
+                                                    <span class="badge bg-success">Mega</span>
+                                                    break;
+                                                case "mediafire":
+                                                    <span class="badge bg-info">MediaFire</span>
+                                                    break;
+                                                case "torrent":
+                                                    <span class="badge bg-dark">Torrent</span>
+                                                    break;
+                                                case "fshare":
+                                                    <span class="badge bg-warning text-dark">Fshare</span>
+                                                    break;
+                                                default:
+                                                    <span class="badge bg-secondary">@link.LinkName</span>
+                                                    break;
+                                            }
+                                        </td>
+                                        <td>
+                                            <a href="@link.Url" target="_blank" class="text-truncate d-inline-block" style="max-width: 250px;">
+                                                @link.Url
+                                            </a>
+                                        </td>
+                                        <td>
+                                            @if (link.TotalParts > 1)
+                                            {
+                                                <span>@link.PartNumber/@link.TotalParts</span>
+                                            }
+                                            else
+                                            {
+                                                <span>-</span>
+                                            }
+                                        </td>
+                                        <td>@(string.IsNullOrEmpty(link.FileSize) ? "-" : link.FileSize)</td>
+                                        <td>@link.DateAdded.ToString("dd/MM/yyyy")</td>
+                                        <td>
+                                            <form method="post" asp-action="DeleteGameLink" asp-controller="Admin">
+                                                <input type="hidden" name="id" value="@link.Id">
+                                                <button type="submit" class="btn btn-sm btn-danger" 
+                                                        onclick="return confirm('Xác nhận xóa link này?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i> Chưa có link tải nào. Vui lòng thêm link bên dưới.
+                    </div>
+                }
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <!-- Add New Link -->
+            <div class="admin-form-section mb-4">
+                <h4>Thêm link tải mới</h4>
+                <form method="post" asp-action="AddGameLink" asp-controller="Admin">
+                    <input type="hidden" name="GameId" value="@game.Id">
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">Loại link *</label>
+                        <select name="LinkName" class="admin-form-control" required>
+                            <option value="">-- Chọn loại link --</option>
+                            <option value="Google Drive">Google Drive</option>
+                            <option value="Mega">Mega</option>
+                            <option value="MediaFire">MediaFire</option>
+                            <option value="Torrent">Torrent</option>
+                            <option value="Fshare">Fshare</option>
+                            <option value="OneDrive">OneDrive</option>
+                            <option value="Dropbox">Dropbox</option>
+                            <option value="Direct">Direct Download</option>
+                            <option value="Official">Trang chủ</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">Link tải *</label>
+                        <input type="url" name="Url" class="admin-form-control" placeholder="https://..." required>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="admin-form-label">Phần số</label>
+                            <input type="number" name="PartNumber" class="admin-form-control" value="1" min="1">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="admin-form-label">Tổng số phần</label>
+                            <input type="number" name="TotalParts" class="admin-form-control" value="1" min="1">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">Dung lượng</label>
+                        <input type="text" name="FileSize" class="admin-form-control" placeholder="Ví dụ: 15.6 GB, 800 MB">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">Mật khẩu giải nén (nếu có)</label>
+                        <input type="text" name="Password" class="admin-form-control" placeholder="Mật khẩu giải nén nếu có">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" name="IsActive" id="isActive" checked>
+                            <label class="form-check-label" for="isActive">Kích hoạt link</label>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus-circle me-2"></i> Thêm link tải
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Tips -->
+            <div class="admin-form-section">
+                <h4>Lưu ý</h4>
+                <ul>
+                    <li>Nên thêm nhiều loại link tải khác nhau để người dùng có nhiều lựa chọn</li>
+                    <li>Link tải phải hoạt động và không chứa mã độc</li>
+                    <li>Nếu file có mật khẩu giải nén, hãy điền vào ô mật khẩu</li>
+                    <li>Nếu game được chia thành nhiều phần, hãy chỉ rõ phần số và tổng số phần</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

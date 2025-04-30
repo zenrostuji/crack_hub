@@ -1,0 +1,65 @@
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var isAuthenticated = HttpContextAccessor.HttpContext.Session.GetString("UserId") != null;
+    var userName = HttpContextAccessor.HttpContext.Session.GetString("UserName");
+    var userRole = HttpContextAccessor.HttpContext.Session.GetString("UserRole");
+    var isAdmin = !string.IsNullOrEmpty(userRole) && userRole == "3"; // Admin role ID is 3
+}
+
+<ul class="navbar-nav">
+@if (isAuthenticated)
+{
+    <li class="nav-item">
+        <a class="nav-link" href="@Url.Action("Favorites", "Account")">
+            <i class="fas fa-heart me-1"></i> Yêu thích
+        </a>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-user-circle me-1"></i> @userName
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li>
+                <a class="dropdown-item" href="@Url.Action("Profile", "Account")">
+                    <i class="fas fa-user me-1"></i> Tài khoản
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item" href="@Url.Action("Favorites", "Account")">
+                    <i class="fas fa-heart me-1"></i> Game yêu thích
+                </a>
+            </li>
+            @if (isAdmin)
+            {
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <a class="dropdown-item" href="@Url.Action("Index", "Admin")">
+                        <i class="fas fa-cog me-1"></i> Quản trị hệ thống
+                    </a>
+                </li>
+            }
+            <li><hr class="dropdown-divider"></li>
+            <li>
+                <a class="dropdown-item" href="@Url.Action("Logout", "Account")">
+                    <i class="fas fa-sign-out-alt me-1"></i> Đăng xuất
+                </a>
+            </li>
+        </ul>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link" href="@Url.Action("Login", "Account")">
+            <i class="fas fa-sign-in-alt me-1"></i> Đăng nhập
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="@Url.Action("Register", "Account")">
+            <i class="fas fa-user-plus me-1"></i> Đăng ký
+        </a>
+    </li>
+}
+</ul>

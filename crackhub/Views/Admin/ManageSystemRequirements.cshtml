@@ -1,0 +1,158 @@
+@model List<crackhub.Models.Data.SystemRequirement>
+@{
+    ViewData["Title"] = "Quản lý Cấu hình";
+    Layout = "_AdminLayout";
+    var game = ViewBag.Game as crackhub.Models.Data.Game;
+    var minimumReqs = Model?.FirstOrDefault(sr => sr.RequirementType == "Minimum");
+    var recommendedReqs = Model?.FirstOrDefault(sr => sr.RequirementType == "Recommended");
+}
+
+<div class="admin-manage-system-requirements">
+    <div class="admin-page-title-container mb-4">
+        <h4 class="admin-page-title">
+            <i class="fas fa-laptop me-2"></i> Quản lý cấu hình: @game.Title
+        </h4>
+        <a href="@Url.Action("EditGame", "Admin", new { id = game.Id })" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> Quay lại
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <!-- Cấu hình tối thiểu -->
+            <div class="admin-form-section mb-4">
+                <h4>Cấu hình tối thiểu</h4>
+                <form method="post" asp-action="SaveSystemRequirement" asp-controller="Admin">
+                    <input type="hidden" name="GameId" value="@game.Id" />
+                    <input type="hidden" name="RequirementType" value="Minimum" />
+                    <input type="hidden" name="Id" value="@(minimumReqs?.Id ?? 0)" />
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">Hệ điều hành</label>
+                        <input type="text" name="OS" class="admin-form-control" value="@(minimumReqs?.OS ?? "")" placeholder="Ví dụ: Windows 10 64-bit">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">Bộ xử lý</label>
+                        <input type="text" name="Processor" class="admin-form-control" value="@(minimumReqs?.Processor ?? "")" placeholder="Ví dụ: Intel Core i5-2500K / AMD FX-8320">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">Bộ nhớ RAM</label>
+                        <input type="text" name="Memory" class="admin-form-control" value="@(minimumReqs?.Memory ?? "")" placeholder="Ví dụ: 8 GB RAM">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">Card đồ họa</label>
+                        <input type="text" name="Graphics" class="admin-form-control" value="@(minimumReqs?.Graphics ?? "")" placeholder="Ví dụ: NVIDIA GTX 760 / AMD Radeon R7 260x">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">DirectX</label>
+                        <input type="text" name="DirectX" class="admin-form-control" value="@(minimumReqs?.DirectX ?? "")" placeholder="Ví dụ: Phiên bản 11">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">Dung lượng ổ cứng</label>
+                        <input type="text" name="Storage" class="admin-form-control" value="@(minimumReqs?.Storage ?? "")" placeholder="Ví dụ: 30 GB chỗ trống">
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i> Lưu cấu hình tối thiểu
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <!-- Cấu hình đề xuất -->
+            <div class="admin-form-section mb-4">
+                <h4>Cấu hình đề xuất</h4>
+                <form method="post" asp-action="SaveSystemRequirement" asp-controller="Admin">
+                    <input type="hidden" name="GameId" value="@game.Id" />
+                    <input type="hidden" name="RequirementType" value="Recommended" />
+                    <input type="hidden" name="Id" value="@(recommendedReqs?.Id ?? 0)" />
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">Hệ điều hành</label>
+                        <input type="text" name="OS" class="admin-form-control" value="@(recommendedReqs?.OS ?? "")" placeholder="Ví dụ: Windows 10 64-bit">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">Bộ xử lý</label>
+                        <input type="text" name="Processor" class="admin-form-control" value="@(recommendedReqs?.Processor ?? "")" placeholder="Ví dụ: Intel Core i7-4790 / AMD Ryzen 5 1500X">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">Bộ nhớ RAM</label>
+                        <input type="text" name="Memory" class="admin-form-control" value="@(recommendedReqs?.Memory ?? "")" placeholder="Ví dụ: 16 GB RAM">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">Card đồ họa</label>
+                        <input type="text" name="Graphics" class="admin-form-control" value="@(recommendedReqs?.Graphics ?? "")" placeholder="Ví dụ: NVIDIA GTX 1060 / AMD RX 580">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">DirectX</label>
+                        <input type="text" name="DirectX" class="admin-form-control" value="@(recommendedReqs?.DirectX ?? "")" placeholder="Ví dụ: Phiên bản 12">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">Dung lượng ổ cứng</label>
+                        <input type="text" name="Storage" class="admin-form-control" value="@(recommendedReqs?.Storage ?? "")" placeholder="Ví dụ: 50 GB SSD">
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save me-2"></i> Lưu cấu hình đề xuất
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Hướng dẫn -->
+    <div class="row">
+        <div class="col-12">
+            <div class="admin-form-section">
+                <h4>Hướng dẫn</h4>
+                <ul class="mb-0">
+                    <li>Cấu hình tối thiểu là cấu hình thấp nhất để có thể chơi được game.</li>
+                    <li>Cấu hình đề xuất là cấu hình giúp game chạy mượt mà với đồ họa cao.</li>
+                    <li>Điền đầy đủ thông tin sẽ giúp người dùng đánh giá tốt hơn khả năng chơi game.</li>
+                    <li>Nếu game không có yêu cầu cụ thể cho mục nào đó, hãy để trống.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Hiệu ứng khi lưu thành công
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <text>
+                    showToast("@TempData["SuccessMessage"]", "success");
+                </text>
+            }
+            
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <text>
+                    showToast("@TempData["ErrorMessage"]", "error");
+                </text>
+            }
+            
+            function showToast(message, type) {
+                // Thêm xử lý hiển thị thông báo nếu cần
+                alert(message);
+            }
+        });
+    </script>
+}

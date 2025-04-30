@@ -1,0 +1,338 @@
+@{
+    ViewData["Title"] = "Trang quản trị";
+    Layout = "_AdminLayout";
+    
+    var totalGames = ViewBag.TotalGames;
+    var totalUsers = ViewBag.TotalUsers;
+    var totalDownloads = ViewBag.TotalDownloads;
+    var averageRating = ViewBag.AverageRating;
+    var recentGames = ViewBag.RecentGames as List<crackhub.Models.Data.Game>;
+    var recentUsers = ViewBag.RecentUsers as List<crackhub.Models.Data.User>;
+    var recentDownloads = ViewBag.RecentDownloads as List<crackhub.Models.Data.DownloadHistory>;
+    var popularGames = ViewBag.PopularGames as List<crackhub.Models.Data.Game>;
+}
+
+<div class="admin-dashboard">
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="admin-stat-card bg-purple">
+                <div class="admin-stat-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <div class="admin-stat-content">
+                    <h3 class="admin-stat-value">@totalGames</h3>
+                    <p class="admin-stat-label">Tổng số Games</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="admin-stat-card bg-blue">
+                <div class="admin-stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="admin-stat-content">
+                    <h3 class="admin-stat-value">@totalUsers</h3>
+                    <p class="admin-stat-label">Tổng số Users</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="admin-stat-card bg-green">
+                <div class="admin-stat-icon">
+                    <i class="fas fa-download"></i>
+                </div>
+                <div class="admin-stat-content">
+                    <h3 class="admin-stat-value">@totalDownloads</h3>
+                    <p class="admin-stat-label">Lượt tải</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="admin-stat-card bg-orange">
+                <div class="admin-stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="admin-stat-content">
+                    <h3 class="admin-stat-value">@averageRating.ToString("0.0")</h3>
+                    <p class="admin-stat-label">Đánh giá TB</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Games & Users -->
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Recent Games -->
+            <div class="admin-card mb-4">
+                <div class="admin-card-header">
+                    <h5><i class="fas fa-gamepad me-2"></i>Game mới thêm gần đây</h5>
+                    <a href="@Url.Action("Games", "Admin")" class="admin-card-link">Xem tất cả</a>
+                </div>
+                <div class="admin-card-body p-0">
+                    <div class="admin-table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Game</th>
+                                    <th>Thể loại</th>
+                                    <th>Ngày phát hành</th>
+                                    <th>Xếp hạng</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (recentGames != null && recentGames.Any())
+                                {
+                                    foreach (var game in recentGames)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="admin-table-item">
+                                                    <img src="@(string.IsNullOrEmpty(game.CoverImageUrl) ? "/img/no-image.jpg" : game.CoverImageUrl)" 
+                                                         alt="@game.Title" class="admin-table-img" />
+                                                    <span class="admin-table-text">@game.Title</span>
+                                                </div>
+                                            </td>
+                                            <td>@(game.Category?.CategoryName ?? "N/A")</td>
+                                            <td>@(game.ReleaseDate.HasValue ? game.ReleaseDate.Value.ToString("dd/MM/yyyy") : "N/A")</td>
+                                            <td>
+                                                <div class="rating">
+                                                    @for (int i = 1; i <= 5; i++)
+                                                    {
+                                                        <i class="@(i <= Math.Round(game.AverageRating / 2) ? "fas" : "far") fa-star fa-xs"></i>
+                                                    }
+                                                    <small class="ms-1">@game.AverageRating.ToString("0.0")</small>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a href="@Url.Action("EditGame", new { id = game.Id })" class="btn btn-sm btn-outline-primary" title="Chỉnh sửa">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="5" class="text-center py-3">Không có game nào được thêm gần đây.</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Downloads -->
+            <div class="admin-card mb-4">
+                <div class="admin-card-header">
+                    <h5><i class="fas fa-download me-2"></i>Lượt tải gần đây</h5>
+                </div>
+                <div class="admin-card-body p-0">
+                    <div class="admin-table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Game</th>
+                                    <th>User</th>
+                                    <th>Ngày tải</th>
+                                    <th>IP</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (recentDownloads != null && recentDownloads.Any())
+                                {
+                                    foreach (var download in recentDownloads)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="admin-table-item">
+                                                    <img src="@(string.IsNullOrEmpty(download.Game?.CoverImageUrl) ? "/img/no-image.jpg" : download.Game?.CoverImageUrl)" 
+                                                         alt="@download.Game?.Title" class="admin-table-img" />
+                                                    <span class="admin-table-text">
+                                                        <a href="@Url.Action("Details", "Game", new { id = download.GameId })">
+                                                            @download.Game?.Title
+                                                        </a>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                @if (download.User != null)
+                                                {
+                                                    <a href="@Url.Action("UserDetails", new { id = download.UserId })">
+                                                        @download.User?.DisplayName
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <span>Khách</span>
+                                                }
+                                            </td>
+                                            <td>@download.DownloadDate.ToString("dd/MM/yyyy HH:mm")</td>
+                                            <td>@download.IP</td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="4" class="text-center py-3">Không có lượt tải nào gần đây.</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <!-- Recent Users -->
+            <div class="admin-card mb-4">
+                <div class="admin-card-header">
+                    <h5><i class="fas fa-user me-2"></i>User mới đăng ký</h5>
+                    <a href="@Url.Action("Users", "Admin")" class="admin-card-link">Xem tất cả</a>
+                </div>
+                <div class="admin-card-body p-0">
+                    <div class="admin-table-responsive">
+                        <table class="admin-table">
+                            <tbody>
+                                @if (recentUsers != null && recentUsers.Any())
+                                {
+                                    foreach (var user in recentUsers)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="admin-table-item">
+                                                    <img src="@(string.IsNullOrEmpty(user.AvatarUrl) ? "/img/no-image.jpg" : user.AvatarUrl)" 
+                                                         alt="@user.DisplayName" class="admin-table-img rounded-circle" />
+                                                    <div class="d-flex flex-column">
+                                                        <a href="@Url.Action("UserDetails", new { id = user.Id })" class="admin-table-text mb-0">
+                                                            @user.DisplayName
+                                                        </a>
+                                                        <small class="text-muted">@user.CreatedAt.ToString("dd/MM/yyyy HH:mm")</small>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-end">
+                                                @if (user.Role != null)
+                                                {
+                                                    <span class="badge @(user.RoleId == 3 ? "bg-danger" : (user.RoleId == 2 ? "bg-warning text-dark" : "bg-secondary"))">
+                                                        @user.Role.Name
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary">User</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="2" class="text-center py-3">Không có user nào mới đăng ký gần đây.</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Popular Games -->
+            <div class="admin-card mb-4">
+                <div class="admin-card-header">
+                    <h5><i class="fas fa-fire me-2"></i>Game phổ biến</h5>
+                </div>
+                <div class="admin-card-body p-0">
+                    <div class="admin-table-responsive">
+                        <table class="admin-table">
+                            <tbody>
+                                @if (popularGames != null && popularGames.Any())
+                                {
+                                    foreach (var game in popularGames)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="admin-table-item">
+                                                    <img src="@(string.IsNullOrEmpty(game.CoverImageUrl) ? "/img/no-image.jpg" : game.CoverImageUrl)" 
+                                                         alt="@game.Title" class="admin-table-img" />
+                                                    <div class="d-flex flex-column">
+                                                        <a href="@Url.Action("EditGame", new { id = game.Id })" class="admin-table-text mb-0">
+                                                            @game.Title
+                                                        </a>
+                                                        <small class="text-muted">@(game.Category?.CategoryName ?? "N/A")</small>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-end">
+                                                <div class="d-flex flex-column align-items-end">
+                                                    <span class="badge bg-success mb-1">@game.Downloads tải</span>
+                                                    <div class="rating">
+                                                        @for (int i = 1; i <= 5; i++)
+                                                        {
+                                                            <i class="@(i <= Math.Round(game.AverageRating / 2) ? "fas" : "far") fa-star fa-xs"></i>
+                                                        }
+                                                        <small class="ms-1">@game.AverageRating.ToString("0.0")</small>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="2" class="text-center py-3">Không có dữ liệu.</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h5><i class="fas fa-link me-2"></i>Truy cập nhanh</h5>
+                </div>
+                <div class="admin-card-body">
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <a href="@Url.Action("CreateGame")" class="btn btn-primary w-100">
+                                <i class="fas fa-plus me-2"></i> Thêm Game
+                            </a>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <a href="@Url.Action("CreateUser")" class="btn btn-success w-100">
+                                <i class="fas fa-user-plus me-2"></i> Thêm User
+                            </a>
+                        </div>
+                        <div class="col-12">
+                            <div class="list-group">
+                                <a href="@Url.Action("Categories", "Admin")" class="list-group-item list-group-item-action">
+                                    <i class="fas fa-folder me-2"></i> Quản lý thể loại
+                                </a>
+                                <a href="@Url.Action("Tags", "Admin")" class="list-group-item list-group-item-action">
+                                    <i class="fas fa-tags me-2"></i> Quản lý tags
+                                </a>
+                                <a href="@Url.Action("Settings", "Admin")" class="list-group-item list-group-item-action">
+                                    <i class="fas fa-cog me-2"></i> Cài đặt hệ thống
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

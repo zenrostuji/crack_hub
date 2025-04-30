@@ -1,0 +1,108 @@
+@model List<crackhub.Models.Data.Screenshot>
+@{
+    ViewData["Title"] = "Quản lý Ảnh";
+    Layout = "_AdminLayout";
+    var game = ViewBag.Game as crackhub.Models.Data.Game;
+}
+
+<div class="admin-manage-screenshots">
+    <div class="admin-page-title-container mb-4">
+        <h4 class="admin-page-title">
+            <i class="fas fa-images me-2"></i> Quản lý ảnh: @game.Title
+        </h4>
+        <a href="@Url.Action("EditGame", "Admin", new { id = game.Id })" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> Quay lại
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Current Screenshots -->
+            <div class="admin-form-section mb-4">
+                <h4>Ảnh hiện tại (@Model.Count)</h4>
+                
+                @if (Model.Count > 0)
+                {
+                    <div class="row">
+                        @foreach (var screenshot in Model)
+                        {
+                            <div class="col-md-6 col-lg-4 mb-4">
+                                <div class="admin-screenshot-card">
+                                    <div class="admin-screenshot-img">
+                                        <img src="@screenshot.ImageUrl" class="img-fluid" alt="Screenshot">
+                                    </div>
+                                    <div class="admin-screenshot-content">
+                                        <form method="post" asp-action="DeleteScreenshot" asp-controller="Admin">
+                                            <input type="hidden" name="id" value="@screenshot.Id">
+                                            <button type="submit" class="btn btn-sm btn-danger" 
+                                                    onclick="return confirm('Xác nhận xóa ảnh này?')">
+                                                <i class="fas fa-trash me-1"></i> Xóa
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i> Chưa có ảnh nào. Vui lòng thêm ảnh bên dưới.
+                    </div>
+                }
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <!-- Upload New Screenshot -->
+            <div class="admin-form-section mb-4">
+                <h4>Thêm ảnh mới</h4>
+                <form method="post" enctype="multipart/form-data" asp-action="AddScreenshot" asp-controller="Admin">
+                    <input type="hidden" name="gameId" value="@game.Id">
+                    
+                    <div class="mb-3">
+                        <div class="image-preview-container mb-3">
+                            <img id="imagePreview" src="/img/no-image.jpg" alt="Preview" class="img-fluid">
+                        </div>
+                        <input type="file" class="form-control" id="imageFile" name="imageFile" accept="image/*" required 
+                               onchange="previewImage(this)">
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-cloud-upload-alt me-2"></i> Tải lên
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Tips -->
+            <div class="admin-form-section">
+                <h4>Lưu ý</h4>
+                <ul>
+                    <li>Nên sử dụng ảnh có tỷ lệ 16:9 để hiển thị đẹp nhất</li>
+                    <li>Kích thước ảnh tốt nhất là 1280x720 hoặc 1920x1080</li>
+                    <li>Định dạng hỗ trợ: JPG, PNG</li>
+                    <li>Kích thước tối đa: 5MB</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    $('#imagePreview').attr('src', e.target.result);
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+}

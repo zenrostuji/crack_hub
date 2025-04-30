@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CrackHub Admin</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        <div class="admin-sidebar">
+            <div class="admin-sidebar-header">
+                <img src="~/img/logo.png" alt="CrackHub" class="admin-logo" />
+                <h5 class="admin-title">Admin Panel</h5>
+            </div>
+            <div class="admin-sidebar-content">
+                <nav class="admin-nav">
+                    <div class="admin-nav-section">
+                        <h6 class="admin-nav-title">DASHBOARD</h6>
+                        <ul class="admin-nav-list">
+                            <li class="admin-nav-item @(ViewContext.RouteData.Values["action"].ToString() == "Index" ? "active" : "")">
+                                <a href="@Url.Action("Index", "Admin")" class="admin-nav-link">
+                                    <i class="fas fa-home admin-nav-icon"></i>
+                                    <span>Bảng điều khiển</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="admin-nav-section">
+                        <h6 class="admin-nav-title">QUẢN LÝ GAME</h6>
+                        <ul class="admin-nav-list">
+                            <li class="admin-nav-item @(ViewContext.RouteData.Values["action"].ToString() == "Games" ? "active" : "")">
+                                <a href="@Url.Action("Games", "Admin")" class="admin-nav-link">
+                                    <i class="fas fa-gamepad admin-nav-icon"></i>
+                                    <span>Danh sách game</span>
+                                </a>
+                            </li>
+                            <li class="admin-nav-item @(ViewContext.RouteData.Values["action"].ToString() == "CreateGame" ? "active" : "")">
+                                <a href="@Url.Action("CreateGame", "Admin")" class="admin-nav-link">
+                                    <i class="fas fa-plus-circle admin-nav-icon"></i>
+                                    <span>Thêm game mới</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="admin-nav-section">
+                        <h6 class="admin-nav-title">QUẢN LÝ USER</h6>
+                        <ul class="admin-nav-list">
+                            <li class="admin-nav-item @(ViewContext.RouteData.Values["action"].ToString() == "Users" ? "active" : "")">
+                                <a href="@Url.Action("Users", "Admin")" class="admin-nav-link">
+                                    <i class="fas fa-users admin-nav-icon"></i>
+                                    <span>Danh sách user</span>
+                                </a>
+                            </li>
+                            <li class="admin-nav-item @(ViewContext.RouteData.Values["action"].ToString() == "CreateUser" ? "active" : "")">
+                                <a href="@Url.Action("CreateUser", "Admin")" class="admin-nav-link">
+                                    <i class="fas fa-user-plus admin-nav-icon"></i>
+                                    <span>Thêm user mới</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="admin-nav-section">
+                        <h6 class="admin-nav-title">THIẾT LẬP</h6>
+                        <ul class="admin-nav-list">
+                            <li class="admin-nav-item">
+                                <a href="@Url.Action("Index", "Home")" class="admin-nav-link" target="_blank">
+                                    <i class="fas fa-globe admin-nav-icon"></i>
+                                    <span>Trang chủ</span>
+                                </a>
+                            </li>
+                            <li class="admin-nav-item">
+                                <a href="@Url.Action("Logout", "Account")" class="admin-nav-link">
+                                    <i class="fas fa-sign-out-alt admin-nav-icon"></i>
+                                    <span>Đăng xuất</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="admin-main">
+            <!-- Topbar -->
+            <div class="admin-topbar">
+                <div class="admin-topbar-left">
+                    <button type="button" id="sidebarToggle" class="admin-sidebar-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h4 class="admin-page-title">@ViewData["Title"]</h4>
+                </div>
+                <div class="admin-topbar-right">
+                    <div class="admin-user-dropdown">
+                        <button class="admin-user-button">
+                            <span class="admin-user-name">@Context.Session.GetString("UserName")</span>
+                            <img src="~/img/no-image.jpg" class="admin-user-avatar" />
+                        </button>
+                        <div class="admin-user-menu">
+                            <a href="@Url.Action("Profile", "Account")" class="admin-user-link">
+                                <i class="fas fa-user-circle"></i>
+                                <span>Thông tin cá nhân</span>
+                            </a>
+                            <div class="admin-dropdown-divider"></div>
+                            <a href="@Url.Action("Logout", "Account")" class="admin-user-link">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Đăng xuất</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="admin-content">
+                @RenderBody()
+            </div>
+
+            <!-- Footer -->
+            <div class="admin-footer">
+                <p>&copy; @DateTime.Now.Year - CrackHub Admin Panel</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <script>
+        $(document).ready(function () {
+            // Toggle sidebar
+            $("#sidebarToggle").click(function() {
+                $(".admin-wrapper").toggleClass("sidebar-collapsed");
+            });
+            
+            // User dropdown
+            $(".admin-user-button").click(function(e) {
+                e.stopPropagation();
+                $(".admin-user-menu").toggleClass("show");
+            });
+            
+            // Hide user menu when clicking outside
+            $(document).click(function() {
+                $(".admin-user-menu").removeClass("show");
+            });
+        });
+    </script>
+    
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

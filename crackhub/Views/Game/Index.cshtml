@@ -1,0 +1,324 @@
+@model IEnumerable<crackhub.Models.Data.Game>
+@{
+    ViewData["Title"] = "Danh sách game - CrackHub";
+    var currentPage = ViewBag.CurrentPage;
+    var totalPages = ViewBag.TotalPages;
+    var searchQuery = ViewBag.SearchQuery;
+}
+
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container hero-content">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <h1 class="hero-title animate__animated animate__fadeIn">
+                    @if (!string.IsNullOrEmpty(searchQuery))
+                    {
+                        <span><i class="fas fa-search me-2"></i>Kết quả tìm kiếm: "@searchQuery"</span>
+                    }
+                    else if (ViewBag.CategoryName != null)
+                    {
+                        <span><i class="fas fa-gamepad me-2"></i>Thể loại: @ViewBag.CategoryName</span>
+                    }
+                    else
+                    {
+                        <span><i class="fas fa-gamepad me-2"></i>Tất cả các game</span>
+                    }
+                </h1>
+                <p class="hero-subtitle animate__animated animate__fadeIn animate__delay-1s">
+                    @if (!string.IsNullOrEmpty(searchQuery))
+                    {
+                        <span>Tìm thấy @Model.Count() kết quả cho "@searchQuery"</span>
+                    }
+                    else if (ViewBag.CategoryName != null)
+                    {
+                        <span>Khám phá và tải xuống các game thuộc thể loại @ViewBag.CategoryName</span>
+                    }
+                    else
+                    {
+                        <span>Khám phá và tải xuống hàng nghìn game PC miễn phí, đã crack</span>
+                    }
+                </p>
+                
+                <!-- Search Box -->
+                <form asp-controller="Game" asp-action="Search" method="get" class="animate__animated animate__fadeIn animate__delay-2s">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control form-control-lg rounded-pill" placeholder="Tìm kiếm game..." name="query" value="@searchQuery">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary rounded-pill ms-2" type="submit">
+                                <i class="fa fa-search me-2"></i> Tìm kiếm
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                
+                <!-- Quick Stats -->
+                <div class="row text-center mt-4 animate__animated animate__fadeInUp animate__delay-3s">
+                    <div class="col-md-4 mb-3">
+                        <div class="stat-item py-2 rounded">
+                            <h3 class="counter-value">@Model.Count()</h3>
+                            <p>Game</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="stat-item py-2 rounded">
+                            <h3 class="counter-value">@(ViewBag.TotalDownloads ?? 0)</h3>
+                            <p>Lượt tải</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="stat-item py-2 rounded">
+                            <h3 class="counter-value">@(ViewBag.TotalUsers ?? 0)</h3>
+                            <p>Người dùng</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 d-none d-lg-block">
+                <div class="hero-image-container">
+                    <img src="/img/hero-image.png" alt="CrackHub Games" class="img-fluid animate__animated animate__fadeInRight custom_img">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info mt-4">
+            @if (!string.IsNullOrEmpty(searchQuery))
+            {
+                <p class="mb-0">Không tìm thấy kết quả nào cho từ khóa "@searchQuery". Vui lòng thử từ khóa khác.</p>
+            }
+            else
+            {
+                <p class="mb-0">Không có game nào trong hệ thống.</p>
+            }
+        </div>
+    }
+    else
+    {
+        <!-- Section Title -->
+        <h2 class="section-title mb-4">
+            @if (!string.IsNullOrEmpty(searchQuery))
+            {
+                <span>Kết quả tìm kiếm</span>
+            }
+            else if (ViewBag.CategoryName != null)
+            {
+                <span>Thể loại: @ViewBag.CategoryName</span>
+            }
+            else
+            {
+                <span>Tất cả các game</span>
+            }
+        </h2>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <p class="text-muted">
+                @if (!string.IsNullOrEmpty(searchQuery))
+                {
+                    <span>Tìm thấy @Model.Count() kết quả cho "@searchQuery"</span>
+                }
+                else if (ViewBag.CategoryName != null)
+                {
+                    <span>Có @Model.Count() game thuộc thể loại @ViewBag.CategoryName</span>
+                }
+                else
+                {
+                    <span>Khám phá tất cả các game tại CrackHub</span>
+                }
+            </p>
+            
+            <div class="dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-sort me-1"></i> Sắp xếp
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+                    <li><a class="dropdown-item" href="@Url.Action("Index", new { sort = "newest", query = searchQuery })"><i class="fas fa-calendar-alt me-2"></i> Mới nhất</a></li>
+                    <li><a class="dropdown-item" href="@Url.Action("Index", new { sort = "popular", query = searchQuery })"><i class="fas fa-fire me-2"></i> Phổ biến nhất</a></li>
+                    <li><a class="dropdown-item" href="@Url.Action("Index", new { sort = "rating", query = searchQuery })"><i class="fas fa-star me-2"></i> Đánh giá cao</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Games Grid -->
+        <div class="row">
+            @foreach (var game in Model)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="card game-card h-100">
+                        <div class="position-relative overflow-hidden">
+                            <img src="@game.CoverImageUrl" class="card-img-top" alt="@game.Title" 
+                                 onerror="this.src='/img/no-image.jpg'">
+                            <div class="card-overlay">
+                                <div class="overlay-buttons">
+                                    <a href="@Url.Action("Download", "Game", new { id = game.Id })" 
+                                       class="btn btn-success btn-sm"><i class="fas fa-download me-1"></i> Tải xuống</a>
+                                    <a href="@Url.Action("Details", "Game", new { id = game.Id })" 
+                                       class="btn btn-primary btn-sm mt-2"><i class="fas fa-info-circle me-1"></i> Chi tiết</a>
+                                    
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        bool isFavorite = ViewBag.FavoriteGameIds != null && ViewBag.FavoriteGameIds.Contains(game.Id);
+                                        <button class="btn @(isFavorite ? "btn-danger" : "btn-outline-danger") btn-sm mt-2 favorite-btn" 
+                                                data-game-id="@game.Id" data-type="icon">
+                                            <i class="@(isFavorite ? "fas" : "far") fa-heart me-1"></i> 
+                                            @(isFavorite ? "Bỏ yêu thích" : "Yêu thích")
+                                        </button>
+                                    }
+                                </div>
+                            </div>
+                            
+                            @if (game.AverageRating >= 9)
+                            {
+                                <span class="badge bg-warning position-absolute top-0 start-0 m-2">TOP</span>
+                            }
+                            else if (game.AverageRating >= 7.5)
+                            {
+                                <span class="badge bg-danger position-absolute top-0 start-0 m-2">HOT</span>
+                            }
+                            else if (DateTime.Now.Subtract(game.ReleaseDate ?? DateTime.Now).TotalDays < 14)
+                            {
+                                <span class="badge bg-primary position-absolute top-0 start-0 m-2">MỚI</span>
+                            }
+                        </div>
+                        
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="@Url.Action("Details", "Game", new { id = game.Id })" class="text-decoration-none">
+                                    @game.Title
+                                </a>
+                            </h5>
+                            <div class="game-meta">
+                                <span><i class="fas fa-gamepad me-1"></i>@(game.Category?.CategoryName ?? "Chưa phân loại")</span>
+                                <span><i class="fas fa-download me-1"></i>@game.Downloads</span>
+                            </div>
+                            <div class="rating mb-2">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    <i class="@(i <= Math.Round(game.AverageRating / 2) ? "fas" : "far") fa-star"></i>
+                                }
+                                <span class="ms-1 text-muted small">(@game.AverageRating.ToString("0.0"))</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Pagination -->
+        @if (totalPages > 1)
+        {
+            <nav aria-label="Page navigation" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    @if (currentPage > 1)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="@Url.Action("Index", new { page = currentPage - 1, query = searchQuery })" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    }
+
+                    @for (int i = 1; i <= totalPages; i++)
+                    {
+                        <li class="page-item @(i == currentPage ? "active" : "")">
+                            <a class="page-link" href="@Url.Action("Index", new { page = i, query = searchQuery })">@i</a>
+                        </li>
+                    }
+
+                    @if (currentPage < totalPages)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="@Url.Action("Index", new { page = currentPage + 1, query = searchQuery })" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        }
+    }
+</div>
+
+<!-- Back to top button -->
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/game-index.css" />
+    <style>
+        .rating .fas {
+            color: #ffc107;
+        }
+        .rating .far {
+            color: #e4e5e9;
+        }
+        .game-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #6c757d;
+            font-size: 0.85rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .game-meta span {
+            margin-right: 10px;
+        }
+        
+        .section-title {
+            position: relative;
+            padding-bottom: 10px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, #5d4ec7, #7e57c2);
+        }
+        
+        .custom_img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            filter: blur(11px) !important;
+        }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+        });
+    </script>
+}

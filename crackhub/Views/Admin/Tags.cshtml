@@ -1,0 +1,198 @@
+@model IEnumerable<crackhub.Models.Data.Tag>
+@{
+    ViewData["Title"] = "Quản lý Tag Game";
+    Layout = "_AdminLayout";
+    var currentPage = ViewBag.CurrentPage;
+    var totalPages = ViewBag.TotalPages;
+    var searchTerm = ViewBag.SearchTerm ?? "";
+    var currentSort = ViewBag.CurrentSort ?? "name";
+    var nameSortParam = ViewBag.NameSortParam;
+    var tagGameCounts = ViewBag.TagGameCounts as Dictionary<int, int> ?? new Dictionary<int, int>();
+}
+
+<div class="admin-tags">
+    <!-- Filter & Search Row -->
+    <div class="admin-card mb-4">
+        <div class="admin-card-body">
+            <div class="row">
+                <div class="col-lg-8">
+                    <form method="get" class="d-flex">
+                        <div class="input-group">
+                            <input type="text" name="searchTerm" class="form-control" placeholder="Tìm kiếm tag..."
+                                   value="@searchTerm">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <input type="hidden" name="sortOrder" value="@currentSort" />
+                        <input type="hidden" name="page" value="1" />
+                    </form>
+                </div>
+                <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                    <a href="@Url.Action("CreateTag")" class="btn btn-primary">
+                        <i class="fas fa-plus-circle me-2"></i> Thêm tag mới
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tags Table -->
+    <div class="admin-card">
+        <div class="admin-card-header">
+            <h5><i class="fas fa-tags me-2"></i>Danh sách Tag Game</h5>
+            <div class="dropdown">
+                <button class="btn btn-sm btn-light dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-sort me-1"></i> Sắp xếp
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="sortDropdown">
+                    <li><a class="dropdown-item @(currentSort == "name" ? "active" : "")" href="@Url.Action("Tags", new { sortOrder = "name", searchTerm = searchTerm, page = currentPage })">Tên A-Z</a></li>
+                    <li><a class="dropdown-item @(currentSort == "name_desc" ? "active" : "")" href="@Url.Action("Tags", new { sortOrder = "name_desc", searchTerm = searchTerm, page = currentPage })">Tên Z-A</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="admin-card-body p-0">
+            <div class="admin-table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên tag</th>
+                            <th>Slug</th>
+                            <th>Số game</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var tag in Model)
+                            {
+                                <tr>
+                                    <td>@tag.Id</td>
+                                    <td>@tag.Name</td>
+                                    <td>@tag.Slug</td>
+                                    <td>
+                                        @{
+                                            var gameCount = tagGameCounts.ContainsKey(tag.Id) ? tagGameCounts[tag.Id] : 0;
+                                            <span class="@(gameCount > 0 ? "badge bg-primary" : "badge bg-secondary")">@gameCount</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <a href="@Url.Action("EditTag", new { id = tag.Id })" class="btn btn-sm btn-outline-primary me-1" title="Chỉnh sửa">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="@Url.Action("DeleteTag", new { id = tag.Id })" class="btn btn-sm btn-outline-danger" title="Xóa">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center py-4">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <i class="fas fa-tags fa-3x text-muted mb-3"></i>
+                                        <h5>Không tìm thấy tag nào</h5>
+                                        <p class="text-muted">Hãy thử tìm kiếm khác hoặc thêm tag mới</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    @if (totalPages > 1)
+    {
+        <div class="admin-pagination">
+            @if (currentPage > 1)
+            {
+                <a href="@Url.Action("Tags", new { page = currentPage - 1, sortOrder = currentSort, searchTerm = searchTerm })" class="admin-page-link">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+            }
+            else
+            {
+                <span class="admin-page-link disabled">
+                    <i class="fas fa-chevron-left"></i>
+                </span>
+            }
+
+            @{
+                int startPage = Math.Max(1, currentPage - 2);
+                int endPage = Math.Min(totalPages, startPage + 4);
+                
+                if (endPage - startPage < 4 && startPage > 1)
+                {
+                    startPage = Math.Max(1, endPage - 4);
+                }
+            }
+
+            @if (startPage > 1)
+            {
+                <a href="@Url.Action("Tags", new { page = 1, sortOrder = currentSort, searchTerm = searchTerm })" class="admin-page-link">1</a>
+                if (startPage > 2)
+                {
+                    <span class="admin-page-link disabled">...</span>
+                }
+            }
+
+            @for (int i = startPage; i <= endPage; i++)
+            {
+                <a href="@Url.Action("Tags", new { page = i, sortOrder = currentSort, searchTerm = searchTerm })" 
+                   class="admin-page-link @(i == currentPage ? "active" : "")">@i</a>
+            }
+
+            @if (endPage < totalPages)
+            {
+                if (endPage < totalPages - 1)
+                {
+                    <span class="admin-page-link disabled">...</span>
+                }
+                <a href="@Url.Action("Tags", new { page = totalPages, sortOrder = currentSort, searchTerm = searchTerm })" class="admin-page-link">@totalPages</a>
+            }
+
+            @if (currentPage < totalPages)
+            {
+                <a href="@Url.Action("Tags", new { page = currentPage + 1, sortOrder = currentSort, searchTerm = searchTerm })" class="admin-page-link">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            }
+            else
+            {
+                <span class="admin-page-link disabled">
+                    <i class="fas fa-chevron-right"></i>
+                </span>
+            }
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        // Display success/error messages using TempData if available
+        $(document).ready(function() {
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <text>
+                    showNotification('success', '@TempData["SuccessMessage"]');
+                </text>
+            }
+            
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <text>
+                    showNotification('error', '@TempData["ErrorMessage"]');
+                </text>
+            }
+        });
+    </script>
+}

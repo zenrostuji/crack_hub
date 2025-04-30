@@ -1,0 +1,100 @@
+@model crackhub.Models.Data.Tag
+@{
+    ViewData["Title"] = "Thêm Tag Game";
+    Layout = "_AdminLayout";
+}
+
+<div class="admin-create-tag">
+    <div class="admin-page-title-container mb-4">
+        <h4 class="admin-page-title">
+            <i class="fas fa-plus-circle me-2"></i> Thêm tag game mới
+        </h4>
+        <a href="@Url.Action("Tags", "Admin")" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> Quay lại
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="admin-form-section">
+                <form method="post" asp-action="CreateTag" asp-controller="Admin" id="tagForm">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Name" class="admin-form-label">Tên tag *</label>
+                        <input asp-for="Name" class="admin-form-control" required />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Slug" class="admin-form-label">Slug</label>
+                        <div class="input-group">
+                            <span class="input-group-text">/tag/</span>
+                            <input asp-for="Slug" class="admin-form-control" placeholder="Để trống để tự động tạo" />
+                        </div>
+                        <span asp-validation-for="Slug" class="text-danger"></span>
+                        <small class="form-text text-muted">Để trống để tự động tạo dựa trên tên tag</small>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i> Lưu tag
+                        </button>
+                        <a href="@Url.Action("Tags", "Admin")" class="btn btn-outline-secondary">
+                            Hủy
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="admin-form-section">
+                <h4>Hướng dẫn</h4>
+                <div class="p-4 bg-light rounded">
+                    <h5><i class="fas fa-info-circle me-2"></i>Tags là gì?</h5>
+                    <p>Tags cho phép bạn phân loại các game theo nhiều thuộc tính khác nhau. Một game có thể có nhiều tags.</p>
+                    <p>Ví dụ: "Multiplayer", "Open World", "Co-op", "Indie" đều là những tags phổ biến.</p>
+                    <hr />
+                    <h5><i class="fas fa-lightbulb me-2"></i>Mẹo</h5>
+                    <ul class="mb-0">
+                        <li>Tags nên ngắn gọn và dễ nhớ</li>
+                        <li>Sử dụng danh từ hoặc cụm danh từ</li>
+                        <li>Chọn tên đã quen thuộc với người chơi game</li>
+                        <li>Tránh tags quá chung chung như "Game hay" hoặc "Game đẹp"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function() {
+            // Generate slug while typing
+            $('#Name').on('keyup', function() {
+                var title = $(this).val();
+                var slug = slugify(title);
+                
+                if ($('#Slug').val() === '' || $('#Slug').data('auto-generated')) {
+                    $('#Slug').val(slug).data('auto-generated', true);
+                }
+            });
+            
+            // Function to generate slug
+            function slugify(text) {
+                return text
+                    .toString()
+                    .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .replace(/[^a-z0-9\s-]/g, '')
+                    .replace(/\s+/g, '-')
+                    .replace(/--+/g, '-')
+                    .replace(/^-+|-+$/g, '');
+            }
+        });
+    </script>
+}

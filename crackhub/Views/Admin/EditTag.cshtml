@@ -1,0 +1,126 @@
+@model crackhub.Models.Data.Tag
+@{
+    ViewData["Title"] = "Chỉnh Sửa Tag Game";
+    Layout = "_AdminLayout";
+}
+
+<div class="admin-edit-tag">
+    <div class="admin-page-title-container mb-4">
+        <h4 class="admin-page-title">
+            <i class="fas fa-edit me-2"></i> Chỉnh sửa tag: @Model.Name
+        </h4>
+        <a href="@Url.Action("Tags", "Admin")" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> Quay lại
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="admin-form-section">
+                <form method="post" asp-action="EditTag" asp-controller="Admin" id="tagForm">
+                    <input type="hidden" asp-for="Id" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Name" class="admin-form-label">Tên tag *</label>
+                        <input asp-for="Name" class="admin-form-control" required />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Slug" class="admin-form-label">Slug</label>
+                        <div class="input-group">
+                            <span class="input-group-text">/tag/</span>
+                            <input asp-for="Slug" class="admin-form-control" />
+                        </div>
+                        <span asp-validation-for="Slug" class="text-danger"></span>
+                        <small class="form-text text-muted">Để trống để tự động tạo dựa trên tên tag</small>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i> Lưu thay đổi
+                        </button>
+                        <a href="@Url.Action("Tags", "Admin")" class="btn btn-outline-secondary">
+                            Hủy
+                        </a>
+                        <a href="@Url.Action("DeleteTag", "Admin", new { id = Model.Id })" class="btn btn-outline-danger float-end">
+                            <i class="fas fa-trash me-2"></i> Xóa tag
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="admin-form-section">
+                <h4>Thông tin</h4>
+                <div class="p-4 bg-light rounded">
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>ID:</span>
+                        <span class="fw-bold">@Model.Id</span>
+                    </div>
+                    @{
+                        var tagGameCounts = ViewBag.TagGameCounts as Dictionary<int, int> ?? new Dictionary<int, int>();
+                        var gameCount = tagGameCounts.ContainsKey(Model.Id) ? tagGameCounts[Model.Id] : 0;
+                    }
+                    <div class="d-flex justify-content-between">
+                        <span>Số game sử dụng:</span>
+                        <span class="fw-bold">
+                            @if (ViewBag.GameCount != null)
+                            {
+                                @ViewBag.GameCount
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Chưa có dữ liệu</span>
+                            }
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="admin-form-section mt-4">
+                <h4>Hướng dẫn</h4>
+                <div class="p-4 bg-light rounded">
+                    <h5><i class="fas fa-lightbulb me-2"></i>Mẹo</h5>
+                    <ul class="mb-0">
+                        <li>Tags nên ngắn gọn và dễ nhớ</li>
+                        <li>Sử dụng danh từ hoặc cụm danh từ</li>
+                        <li>Chọn tên đã quen thuộc với người chơi game</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function() {
+            // Generate slug while typing
+            $('#Name').on('keyup', function() {
+                var title = $(this).val();
+                var slug = slugify(title);
+                
+                if ($('#Slug').val() === '' || $('#Slug').data('auto-generated')) {
+                    $('#Slug').val(slug).data('auto-generated', true);
+                }
+            });
+            
+            // Function to generate slug
+            function slugify(text) {
+                return text
+                    .toString()
+                    .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .replace(/[^a-z0-9\s-]/g, '')
+                    .replace(/\s+/g, '-')
+                    .replace(/--+/g, '-')
+                    .replace(/^-+|-+$/g, '');
+            }
+        });
+    </script>
+}

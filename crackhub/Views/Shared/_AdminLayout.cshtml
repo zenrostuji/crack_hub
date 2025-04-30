@@ -40,12 +40,24 @@
                                     <span>Danh sách game</span>
                                 </a>
                             </li>
-                            <li class="admin-nav-item @(ViewContext.RouteData.Values["action"].ToString() == "CreateGame" ? "active" : "")">
+                            <li class="admin-nav-item @(ViewContext.RouteData.Values["action"].ToString() == "Categories" || ViewContext.RouteData.Values["action"].ToString() == "CreateCategory" || ViewContext.RouteData.Values["action"].ToString() == "EditCategory" || ViewContext.RouteData.Values["action"].ToString() == "DeleteCategory" ? "active" : "")">
+                                <a href="@Url.Action("Categories", "Admin")" class="admin-nav-link">
+                                    <i class="fas fa-list admin-nav-icon"></i>
+                                    <span>Thể loại game</span>
+                                </a>
+                            </li>
+                            <li class="admin-nav-item @(ViewContext.RouteData.Values["action"].ToString() == "Tags" || ViewContext.RouteData.Values["action"].ToString() == "CreateTag" || ViewContext.RouteData.Values["action"].ToString() == "EditTag" || ViewContext.RouteData.Values["action"].ToString() == "DeleteTag" ? "active" : "")">
+                                <a href="@Url.Action("Tags", "Admin")" class="admin-nav-link">
+                                    <i class="fas fa-tags admin-nav-icon"></i>
+                                    <span>Tag game</span>
+                                </a>
+                            </li>
+                            @* <li class="admin-nav-item @(ViewContext.RouteData.Values["action"].ToString() == "CreateGame" ? "active" : "")">
                                 <a href="@Url.Action("CreateGame", "Admin")" class="admin-nav-link">
                                     <i class="fas fa-plus-circle admin-nav-icon"></i>
                                     <span>Thêm game mới</span>
                                 </a>
-                            </li>
+                            </li> *@
                         </ul>
                     </div>
                     <div class="admin-nav-section">
@@ -57,12 +69,12 @@
                                     <span>Danh sách user</span>
                                 </a>
                             </li>
-                            <li class="admin-nav-item @(ViewContext.RouteData.Values["action"].ToString() == "CreateUser" ? "active" : "")">
+                            @* <li class="admin-nav-item @(ViewContext.RouteData.Values["action"].ToString() == "CreateUser" ? "active" : "")">
                                 <a href="@Url.Action("CreateUser", "Admin")" class="admin-nav-link">
                                     <i class="fas fa-user-plus admin-nav-icon"></i>
                                     <span>Thêm user mới</span>
                                 </a>
-                            </li>
+                            </li> *@
                         </ul>
                     </div>
                     <div class="admin-nav-section">

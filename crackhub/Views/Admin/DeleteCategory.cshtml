@@ -1,0 +1,98 @@
+@model crackhub.Models.Data.Category
+@{
+    ViewData["Title"] = "Xóa Thể Loại Game";
+    Layout = "_AdminLayout";
+    var hasGames = ViewBag.HasGames ?? false;
+    var gamesCount = ViewBag.GamesCount ?? 0;
+}
+
+<div class="admin-delete-category">
+    <div class="admin-page-title-container mb-4">
+        <h4 class="admin-page-title">
+            <i class="fas fa-trash me-2"></i> Xác nhận xóa thể loại
+        </h4>
+        <a href="@Url.Action("Categories", "Admin")" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> Quay lại
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="admin-form-section">
+                <h5 class="mb-4">Bạn có chắc chắn muốn xóa thể loại sau không?</h5>
+                
+                <div class="p-4 rounded bg-light mb-4">
+                    <div class="row mb-3">
+                        <div class="col-md-4 text-muted">ID:</div>
+                        <div class="col-md-8 fw-bold">@Model.CategoryId</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 text-muted">Tên thể loại:</div>
+                        <div class="col-md-8 fw-bold">@Model.CategoryName</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 text-muted">Slug:</div>
+                        <div class="col-md-8">@Model.Slug</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 text-muted">Icon:</div>
+                        <div class="col-md-8">
+                            @if (!string.IsNullOrEmpty(Model.IconClass))
+                            {
+                                <i class="@Model.IconClass me-2"></i> @Model.IconClass
+                            }
+                            else
+                            {
+                                <span class="text-muted">Không có</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 text-muted">Số game:</div>
+                        <div class="col-md-8">@Model.GameCount</div>
+                    </div>
+                </div>
+
+                @if (hasGames)
+                {
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Không thể xóa!</strong> Thể loại này hiện có @gamesCount game. Bạn cần phải chuyển các game này sang thể loại khác trước khi xóa thể loại này.
+                    </div>
+                }
+                else
+                {
+                    <form method="post" asp-action="DeleteCategory" asp-controller="Admin">
+                        <input type="hidden" asp-for="CategoryId" />
+                        
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>Cảnh báo!</strong> Hành động này không thể hoàn tác. Thể loại sẽ bị xóa vĩnh viễn.
+                        </div>
+                        
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-trash me-2"></i> Xóa vĩnh viễn
+                            </button>
+                            <a href="@Url.Action("Categories", "Admin")" class="btn btn-outline-secondary ms-2">
+                                Hủy
+                            </a>
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="admin-form-section">
+                <h5>Thông tin</h5>
+                <div class="p-3 bg-light rounded">
+                    <p class="mb-0">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Xóa thể loại sẽ xóa vĩnh viễn thể loại này khỏi hệ thống. Các game thuộc thể loại này cần được chuyển sang thể loại khác trước khi xóa thể loại.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

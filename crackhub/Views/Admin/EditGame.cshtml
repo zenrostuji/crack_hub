@@ -1,0 +1,225 @@
+@model crackhub.Models.Data.Game
+@{
+    ViewData["Title"] = "Chỉnh Sửa Game";
+    Layout = "_AdminLayout";
+    var categories = ViewBag.Categories as List<crackhub.Models.Data.Category>;
+    var tags = ViewBag.Tags as List<crackhub.Models.Data.Tag>;
+    var selectedTagIds = ViewBag.SelectedTagIds as List<int> ?? new List<int>();
+}
+
+<div class="admin-edit-game">
+    <div class="admin-page-title-container mb-4">
+        <h4 class="admin-page-title">
+            <i class="fas fa-edit me-2"></i> Chỉnh sửa game: @Model.Title
+        </h4>
+        <a href="@Url.Action("Games", "Admin")" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> Quay lại
+        </a>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" asp-action="EditGame" asp-controller="Admin">
+        <input type="hidden" asp-for="Id" />
+        <div class="row">
+            <!-- Game Info -->
+            <div class="col-lg-8">
+                <div class="admin-form-section mb-4">
+                    <h4>Thông tin game</h4>
+                    
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label asp-for="Title" class="admin-form-label">Tên game *</label>
+                            <input asp-for="Title" type="text" class="admin-form-control" required>
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Developer" class="admin-form-label">Nhà phát triển</label>
+                            <input asp-for="Developer" type="text" class="admin-form-control">
+                            <span asp-validation-for="Developer" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Publisher" class="admin-form-label">Nhà phát hành</label>
+                            <input asp-for="Publisher" type="text" class="admin-form-control">
+                            <span asp-validation-for="Publisher" class="text-danger"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ReleaseDate" class="admin-form-label">Ngày phát hành</label>
+                            <input asp-for="ReleaseDate" type="date" class="admin-form-control">
+                            <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="CategoryId" class="admin-form-label">Thể loại *</label>
+                            <select asp-for="CategoryId" class="admin-form-control" required>
+                                <option value="">-- Chọn thể loại --</option>
+                                @if (categories != null)
+                                {
+                                    foreach (var category in categories)
+                                    {
+                                        <option value="@category.CategoryId">@category.CategoryName</option>
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="admin-form-label">Tags</label>
+                        <div class="admin-tags-container">
+                            @if (tags != null)
+                            {
+                                foreach (var tag in tags)
+                                {
+                                    <div class="admin-form-check form-check-inline">
+                                        <input class="admin-form-check-input" type="checkbox" 
+                                               name="tagIds" id="tag_@tag.Id" value="@tag.Id"
+                                               @(selectedTagIds.Contains(tag.Id) ? "checked" : "")>
+                                        <label class="form-check-label" for="tag_@tag.Id">@tag.Name</label>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="ShortDescription" class="admin-form-label">Mô tả ngắn *</label>
+                        <textarea asp-for="ShortDescription" class="admin-form-control" rows="3" required></textarea>
+                        <span asp-validation-for="ShortDescription" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="FullDescription" class="admin-form-label">Mô tả chi tiết</label>
+                        <textarea asp-for="FullDescription" class="admin-form-control" id="description" rows="8"></textarea>
+                        <span asp-validation-for="FullDescription" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Additional Info -->
+                <div class="admin-form-section mb-4">
+                    <h4>Thông tin bổ sung</h4>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Size" class="admin-form-label">Dung lượng</label>
+                            <input asp-for="Size" type="text" class="admin-form-control" placeholder="Ví dụ: 45 GB">
+                            <span asp-validation-for="Size" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Rating" class="admin-form-label">Đánh giá</label>
+                            <input asp-for="Rating" type="number" step="0.1" min="0" max="10" class="admin-form-control">
+                            <span asp-validation-for="Rating" class="text-danger"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="AverageRating" class="admin-form-label">Điểm đánh giá trung bình</label>
+                            <input asp-for="AverageRating" type="number" step="0.1" min="0" max="10" class="admin-form-control">
+                            <span asp-validation-for="AverageRating" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Downloads" class="admin-form-label">Lượt tải</label>
+                            <input asp-for="Downloads" type="text" class="admin-form-control">
+                            <span asp-validation-for="Downloads" class="text-danger"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="DownloadUrl" class="admin-form-label">URL tải trực tiếp</label>
+                        <input asp-for="DownloadUrl" type="text" class="admin-form-control">
+                        <span asp-validation-for="DownloadUrl" class="text-danger"></span>
+                    </div>
+                </div>
+                
+                <!-- System Requirements Section -->
+                <div class="admin-form-section mb-4">
+                    <h4>Yêu cầu hệ thống</h4>
+                    <p class="text-muted">Quản lý yêu cầu hệ thống chi tiết trong phần quản lý riêng</p>
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Cover Image -->
+                <div class="admin-form-section mb-4">
+                    <h4>Ảnh Cover</h4>
+                    <div class="mb-3">
+                        <div class="image-preview-container mb-3">
+                            <img id="imagePreview" src="@(string.IsNullOrEmpty(Model.CoverImageUrl) ? "/img/no-image.jpg" : Model.CoverImageUrl)" alt="Preview" class="img-fluid">
+                        </div>
+                        <input type="file" class="form-control" id="coverImage" name="coverImage" accept="image/*" onchange="previewImage(this)">
+                        <small class="form-text text-muted">Để trống nếu không thay đổi ảnh</small>
+                    </div>
+                </div>
+
+                <!-- Publish -->
+                <div class="admin-form-section mb-4">
+                    <h4>Hành động</h4>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-save me-2"></i> Cập nhật game
+                        </button>
+                        <a href="@Url.Action("DeleteGame", new { id = Model.Id })" class="btn btn-danger">
+                            <i class="fas fa-trash me-2"></i> Xóa game
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="admin-form-section mb-4">
+                    <h4>Quản lý</h4>
+                    <div class="d-grid gap-2">
+                        <a href="@Url.Action("ManageScreenshots", new { id = Model.Id })" class="btn btn-outline-primary">
+                            <i class="fas fa-images me-2"></i> Quản lý ảnh
+                        </a>
+                        <a href="@Url.Action("ManageLinks", new { id = Model.Id })" class="btn btn-outline-success">
+                            <i class="fas fa-link me-2"></i> Quản lý link tải
+                        </a>
+                        <a href="@Url.Action("ManageSystemRequirements", new { id = Model.Id })" class="btn btn-outline-info">
+                            <i class="fas fa-laptop me-2"></i> Quản lý cấu hình
+                        </a>
+                        <a href="@Url.Action("ManageCrackInfos", new { id = Model.Id })" class="btn btn-outline-warning">
+                            <i class="fas fa-unlock me-2"></i> Quản lý thông tin crack
+                        </a>
+                        <a href="@Url.Action("ManageFeatures", new { id = Model.Id })" class="btn btn-outline-dark">
+                            <i class="fas fa-list-check me-2"></i> Quản lý tính năng
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    $('#imagePreview').attr('src', e.target.result);
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        $(document).ready(function() {
+            // Initialize rich text editor for description
+            if (typeof tinymce !== 'undefined') {
+                tinymce.init({
+                    selector: '#description',
+                    height: 300,
+                    plugins: 'lists link image code table',
+                    toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link image | table | code'
+                });
+            }
+        });
+    </script>
+}

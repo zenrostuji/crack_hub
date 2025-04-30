@@ -1,0 +1,199 @@
+@model crackhub.Models.Data.User
+@{
+    ViewData["Title"] = "Chỉnh Sửa User";
+    Layout = "_AdminLayout";
+    var roles = ViewBag.Roles as List<crackhub.Models.Data.Role>;
+}
+
+<div class="admin-edit-user">
+    <div class="admin-page-title-container mb-4">
+        <h4 class="admin-page-title">
+            <i class="fas fa-user-edit me-2"></i> Chỉnh sửa user: @Model.DisplayName
+        </h4>
+        <div>
+            <a href="@Url.Action("UserDetails", new { id = Model.Id })" class="btn btn-outline-info me-2">
+                <i class="fas fa-info-circle me-2"></i> Xem chi tiết
+            </a>
+            <a href="@Url.Action("Users", "Admin")" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-2"></i> Quay lại
+            </a>
+        </div>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" asp-action="EditUser" asp-controller="Admin">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="CreatedAt" />
+        <input type="hidden" asp-for="PasswordHash" />
+        <input type="hidden" asp-for="SecurityStamp" />
+        <input type="hidden" asp-for="NormalizedEmail" />
+        
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- User Info -->
+                <div class="admin-form-section mb-4">
+                    <h4>Thông tin tài khoản</h4>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="DisplayName" class="admin-form-label">Tên hiển thị *</label>
+                            <input asp-for="DisplayName" type="text" class="admin-form-control" required>
+                            <span asp-validation-for="DisplayName" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="newPassword" class="admin-form-label">Mật khẩu mới (để trống nếu không thay đổi)</label>
+                            <input id="newPassword" name="newPassword" type="password" class="admin-form-control">
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Email" class="admin-form-label">Email</label>
+                            <input asp-for="Email" type="email" class="admin-form-control">
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="RoleId" class="admin-form-label">Vai trò *</label>
+                            <select asp-for="RoleId" class="admin-form-control" required>
+                                @if (roles != null)
+                                {
+                                    foreach (var role in roles)
+                                    {
+                                        <option value="@role.Id" selected="@(Model.RoleId == role.Id)">@role.Name</option>
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="RoleId" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personal Info -->
+                <div class="admin-form-section mb-4">
+                    <h4>Thông tin cá nhân</h4>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="FirstName" class="admin-form-label">Tên</label>
+                            <input asp-for="FirstName" type="text" class="admin-form-control">
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="LastName" class="admin-form-label">Họ</label>
+                            <input asp-for="LastName" type="text" class="admin-form-control">
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Bio" class="admin-form-label">Tiểu sử</label>
+                        <textarea asp-for="Bio" class="admin-form-control" rows="4"></textarea>
+                        <span asp-validation-for="Bio" class="text-danger"></span>
+                    </div>
+                </div>
+                
+                <!-- Additional Settings -->
+                <div class="admin-form-section mb-4">
+                    <h4>Cài đặt bổ sung</h4>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="PremiumExpiryDate" class="admin-form-label">Hạn Premium (nếu có)</label>
+                            <input asp-for="PremiumExpiryDate" type="datetime-local" class="admin-form-control" value="@(Model.PremiumExpiryDate?.ToString("yyyy-MM-ddTHH:mm"))">
+                            <span asp-validation-for="PremiumExpiryDate" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3 d-flex align-items-center">
+                            <div class="form-check mt-4">
+                                <input asp-for="EmailConfirmed" class="form-check-input" type="checkbox">
+                                <label asp-for="EmailConfirmed" class="form-check-label">Email đã xác thực</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <!-- Avatar -->
+                <div class="admin-form-section mb-4">
+                    <h4>Ảnh đại diện</h4>
+                    <div class="mb-3">
+                        <div class="image-preview-container mb-3 text-center">
+                            <img id="avatarPreview" src="@(string.IsNullOrEmpty(Model.AvatarUrl) ? "/img/avartars/default-avatar.png" : Model.AvatarUrl)" 
+                                 alt="Preview" class="img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+                        </div>
+                        <input type="file" class="form-control" id="avatarFile" name="avatarFile" accept="image/*" onchange="previewAvatar(this)">
+                        <div class="form-text text-muted">Để trống nếu không muốn thay đổi ảnh đại diện.</div>
+                    </div>
+                </div>
+                
+                <!-- Account Details -->
+                <div class="admin-form-section mb-4">
+                    <h4>Thông tin tài khoản</h4>
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <div class="fw-bold small text-muted">ID</div>
+                            <div class="text-break">@Model.Id</div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="fw-bold small text-muted">Ngày đăng ký</div>
+                            <div>@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm:ss")</div>
+                        </div>
+                        @if (Model.PremiumExpiryDate.HasValue)
+                        {
+                            <div class="list-group-item">
+                                <div class="fw-bold small text-muted">Trạng thái Premium</div>
+                                <div>
+                                    @if (Model.PremiumExpiryDate > DateTime.Now)
+                                    {
+                                        <span class="badge bg-success">Premium</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">Hết hạn</span>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                
+                <!-- Save -->
+                <div class="admin-form-section mb-4">
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-save me-2"></i> Lưu thay đổi
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Tips -->
+                <div class="admin-form-section">
+                    <h4>Lưu ý</h4>
+                    <ul class="small">
+                        <li>Để trống mật khẩu mới nếu không muốn thay đổi mật khẩu</li>
+                        <li>Tên hiển thị không được trùng với người dùng khác</li>
+                        <li>Email nếu thay đổi phải là duy nhất trong hệ thống</li>
+                        <li>Chỉ thiết lập vai trò Admin cho người dùng đáng tin cậy</li>
+                        @if (Model.RoleId == 3)
+                        {
+                            <li class="text-danger">Cảnh báo: Đây là tài khoản Admin. Hạ cấp xuống vai trò khác cần đảm bảo còn Admin khác trong hệ thống.</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function previewAvatar(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    $('#avatarPreview').attr('src', e.target.result);
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+}

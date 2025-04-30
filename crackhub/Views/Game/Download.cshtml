@@ -1,0 +1,282 @@
+@model IEnumerable<crackhub.Models.Data.GameLink>
+@{
+    var game = ViewBag.Game as crackhub.Models.Data.Game;
+    var crackLinks = ViewBag.CrackLinks as IEnumerable<crackhub.Models.Data.CrackInfo>;
+    ViewData["Title"] = game != null ? $"Tải xuống {game.Title}" : "Tải xuống game";
+}
+
+@if (game == null)
+{
+    <div class="alert alert-danger">
+        <h4>Không tìm thấy thông tin game</h4>
+        <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Quay lại trang chủ</a>
+    </div>
+    return;
+}
+
+<div class="container download-container">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="download-card shadow">
+                <div class="download-header">
+                    <h2><i class="fas fa-download"></i> Tải xuống @game.Title</h2>
+                </div>
+                <div class="download-body">
+                    <div class="game-info d-flex">
+                        <img src="@game.CoverImageUrl" alt="@game.Title" class="me-3" onerror="this.src='/img/no-image.jpg'" />
+                        <div>
+                            <h4>@game.Title</h4>
+                            <p class="mb-1">
+                                <span class="badge bg-secondary">@game.Category?.CategoryName</span>
+                                <span class="badge bg-info">@game.Size</span>
+                            </p>
+                            <div class="rating">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    <i class="@(i <= Math.Round(game.AverageRating / 2) ? "fas" : "far") fa-star"></i>
+                                }
+                                <span class="ms-1">@game.AverageRating.ToString("0.0")/10</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="installation-guide">
+                        <h5><i class="fas fa-exclamation-triangle"></i> Hướng dẫn cài đặt</h5>
+                        <ol>
+                            <li>Tải xuống tất cả các phần của game từ các liên kết bên dưới.</li>
+                            <li>Giải nén file bằng <a href="https://www.7-zip.org/" target="_blank">7-Zip</a> hoặc <a href="https://www.win-rar.com/" target="_blank">WinRAR</a>.</li>
+                            <li>Chạy file setup.exe và làm theo hướng dẫn cài đặt.</li>
+                            <li>Sao chép nội dung thư mục crack (nếu có) vào thư mục cài đặt game.</li>
+                            <li>Chơi game và tận hưởng!</li>
+                        </ol>
+                    </div>
+                    
+                    @if (crackLinks != null && crackLinks.Any())
+                    {
+                        <div class="crack-info-container">
+                            <h5 class="crack-info-heading"><i class="fas fa-info-circle"></i> Thông tin crack</h5>
+                            @foreach (var crackInfo in crackLinks)
+                            {
+                                <div class="crack-card @(crackInfo.IsRecommended ? "recommended" : "")">
+                                    <div class="crack-card-header @(crackInfo.IsRecommended ? "recommended" : "")">
+                                        <span>
+                                            <strong>@crackInfo.Group</strong> - Phiên bản @crackInfo.Version
+                                            @if (crackInfo.IsRecommended)
+                                            {
+                                                <span class="badge recommended ms-2">Khuyên dùng</span>
+                                            }
+                                        </span>
+                                        <small>@(crackInfo.ReleaseDate?.ToString("dd/MM/yyyy") ?? "N/A")</small>
+                                    </div>
+                                    <div class="crack-card-body">
+                                        <p>@crackInfo.Description</p>
+                                        @if (!string.IsNullOrEmpty(crackInfo.DownloadUrl))
+                                        {
+                                            <div class="text-center">
+                                                <a href="@crackInfo.DownloadUrl" class="crack-download-btn" target="_blank">
+                                                    <i class="fas fa-download"></i> Tải crack (@crackInfo.FileSize)
+                                                </a>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+
+                    <!-- Download Links -->
+                    @if (Model != null && Model.Any())
+                    {
+                        <div class="download-link-container">
+                            <h5 class="crack-info-heading"><i class="fas fa-link"></i> Liên kết tải xuống</h5>
+                            
+                            <!-- Group by LinkName -->
+                            @foreach (var linkGroup in Model.GroupBy(l => l.LinkName))
+                            {
+                                <div class="mb-4">
+                                    <div class="link-header">
+                                        <i class="@GetLinkIcon(linkGroup.Key)"></i> @linkGroup.Key
+                                    </div>
+                                    <div class="link-body">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Phần</th>
+                                                        <th>Dung lượng</th>
+                                                        <th>Tải xuống</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var link in linkGroup)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                @if (link.TotalParts > 1)
+                                                                {
+                                                                    <span>Phần @link.PartNumber/@link.TotalParts</span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span>File đầy đủ</span>
+                                                                }
+                                                            </td>
+                                                            <td>@link.FileSize</td>
+                                                            <td>
+                                                                <div class="d-flex align-items-center">
+                                                                    <a href="@link.Url" target="_blank" class="download-btn download-link" data-game-id="@link.GameId">
+                                                                        <i class="fas fa-download"></i> Tải xuống
+                                                                    </a>
+                                                                    @if (!string.IsNullOrEmpty(link.Password))
+                                                                    {
+                                                                        <button class="password-btn ms-2 copy-password" 
+                                                                           data-password="@link.Password" title="Sao chép mật khẩu giải nén">
+                                                                            <i class="fas fa-key"></i>
+                                                                        </button>
+                                                                    }
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-circle me-2"></i> Không có liên kết tải game nào!
+                        </div>
+                    }
+                    
+                    <!-- Game Localizations -->
+                    @if (game.LocalizationInfos != null && game.LocalizationInfos.Any())
+                    {
+                        <div class="localization-container">
+                            <h5 class="crack-info-heading"><i class="fas fa-language"></i> Bản Việt hóa</h5>
+                            
+                            @foreach (var localization in game.LocalizationInfos)
+                            {
+                                <div class="localization-card">
+                                    <div class="localization-header">
+                                        <span><i class="fas fa-language"></i> @localization.LocalizationType</span>
+                                        @if (localization.IsComplete)
+                                        {
+                                            <span class="badge localization-complete">Việt hóa đầy đủ</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge localization-partial">Việt hóa một phần</span>
+                                        }
+                                    </div>
+                                    <div class="localization-body">
+                                        <div class="localization-info mb-3">
+                                            <div class="localization-info-item">
+                                                <strong>Thực hiện bởi:</strong> @localization.LocalizedBy
+                                            </div>
+                                            <div class="localization-info-item">
+                                                <strong>Phiên bản:</strong> @localization.LocalizationVersion
+                                            </div>
+                                            <div class="localization-info-item">
+                                                <strong>Ngày phát hành:</strong> @(localization.LocalizationDate?.ToString("dd/MM/yyyy") ?? "N/A")
+                                            </div>
+                                            <div class="localization-info-item">
+                                                <strong>Dung lượng:</strong> @localization.FileSize
+                                            </div>
+                                        </div>
+                                        
+                                        @if (!string.IsNullOrEmpty(localization.Description))
+                                        {
+                                            <div class="localization-description">
+                                                <h6 class="mb-2">Mô tả:</h6>
+                                                <p class="mb-0">@localization.Description</p>
+                                            </div>
+                                        }
+                                        
+                                        @if (!string.IsNullOrEmpty(localization.InstallationGuide))
+                                        {
+                                            <div class="localization-guide">
+                                                <h6 class="mb-2">Hướng dẫn cài đặt:</h6>
+                                                <p class="mb-0">@localization.InstallationGuide</p>
+                                            </div>
+                                        }
+                                        
+                                        @if (!string.IsNullOrEmpty(localization.DownloadUrl))
+                                        {
+                                            <div class="localization-download">
+                                                <a href="@localization.DownloadUrl" class="localization-btn" target="_blank">
+                                                    <i class="fas fa-download"></i> Tải bản Việt hóa (@localization.FileSize)
+                                                </a>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    
+                    <div class="action-buttons">
+                        <a href="@Url.Action("Details", "Game", new { id = game.Id })" class="btn-action secondary">
+                            <i class="fas fa-arrow-left"></i> Quay lại trang game
+                        </a>
+                        
+                        <a href="@Url.Action("Index", "Home")" class="btn-action light">
+                            <i class="fas fa-home"></i> Trang chủ
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Ghi nhận lượt tải
+            $(document).on('click', '.download-link', function() {
+                var gameId = $(this).data('game-id');
+                $.ajax({
+                    url: '@Url.Action("AddDownloadHistory", "Game")',
+                    type: 'POST',
+                    data: { gameId: gameId }
+                });
+            });
+            
+            // Sao chép mật khẩu giải nén
+            $(document).on('click', '.copy-password', function() {
+                var password = $(this).data('password');
+                navigator.clipboard.writeText(password).then(function() {
+                    showNotification('Đã sao chép mật khẩu: ' + password, 'success');
+                }).catch(function() {
+                    alert('Đã sao chép mật khẩu: ' + password);
+                });
+            });
+        });
+    </script>
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/download.css" />
+}
+
+@functions {
+    public string GetLinkIcon(string linkName)
+    {
+        return linkName.ToLower() switch
+        {
+            "download" => "fas fa-download",
+            "torrent" => "fas fa-magnet",
+            "google drive" => "fab fa-google-drive",
+            "mega" => "fas fa-cloud",
+            "mediafire" => "fas fa-fire",
+            "fshare" => "fas fa-share-alt",
+            "official site" => "fas fa-external-link-alt",
+            _ => "fas fa-link"
+        };
+    }
+}

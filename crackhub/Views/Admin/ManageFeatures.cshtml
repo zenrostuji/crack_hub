@@ -1,0 +1,234 @@
+@model List<crackhub.Models.Data.Feature>
+@{
+    ViewData["Title"] = "Quản lý Tính Năng";
+    Layout = "_AdminLayout";
+    var game = ViewBag.Game as crackhub.Models.Data.Game;
+}
+
+<div class="admin-manage-features">
+    <div class="admin-page-title-container mb-4">
+        <h4 class="admin-page-title">
+            <i class="fas fa-list-check me-2"></i> Quản lý tính năng: @game.Title
+        </h4>
+        <a href="@Url.Action("EditGame", "Admin", new { id = game.Id })" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> Quay lại
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Danh sách tính năng hiện tại -->
+            <div class="admin-form-section mb-4">
+                <h4>Danh sách tính năng (@Model.Count)</h4>
+                
+                @if (Model.Any())
+                {
+                    <div id="featuresList" class="admin-features-list">
+                        @foreach (var feature in Model)
+                        {
+                            <div class="feature-item" id="feature-@feature.Id">
+                                <div class="feature-text">
+                                    <i class="fas fa-check-circle feature-icon"></i>
+                                    <span>@feature.FeatureDescription</span>
+                                </div>
+                                <div class="feature-actions">
+                                    <button type="button" class="btn btn-sm btn-outline-primary edit-feature-btn me-2"
+                                            data-id="@feature.Id" data-description="@feature.FeatureDescription">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger delete-feature-btn"
+                                            data-id="@feature.Id">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    
+                    <form id="deleteFeatureForm" method="post" asp-action="DeleteFeature" asp-controller="Admin">
+                        <input type="hidden" id="deleteFeatureId" name="id">
+                    </form>
+                }
+                else
+                {
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i> Chưa có thông tin tính năng nào cho game này. Vui lòng thêm tính năng mới.
+                    </div>
+                }
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <!-- Thêm tính năng mới -->
+            <div class="admin-form-section mb-4">
+                <h4 id="feature-form-title">Thêm tính năng mới</h4>
+                <form id="featureForm" method="post" asp-action="AddFeature" asp-controller="Admin">
+                    <input type="hidden" name="GameId" value="@game.Id">
+                    <input type="hidden" id="featureId" name="Id" value="0">
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">Mô tả tính năng*</label>
+                        <textarea id="featureDescription" name="FeatureDescription" class="admin-form-control" 
+                                  rows="3" required placeholder="Nhập mô tả tính năng của game"></textarea>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" id="submitBtn" class="btn btn-primary">
+                            <i class="fas fa-plus-circle me-2"></i> Thêm tính năng
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Gợi ý -->
+            <div class="admin-form-section">
+                <h4>Gợi ý tính năng</h4>
+                <div class="feature-suggestions">
+                    <div class="suggestion-item" onclick="addSuggestion('Đồ họa chân thực với công nghệ ray-tracing')">
+                        <i class="fas fa-lightbulb me-2"></i> Đồ họa chân thực với công nghệ ray-tracing
+                    </div>
+                    <div class="suggestion-item" onclick="addSuggestion('Chế độ chơi nhiều người trực tuyến')">
+                        <i class="fas fa-lightbulb me-2"></i> Chế độ chơi nhiều người trực tuyến
+                    </div>
+                    <div class="suggestion-item" onclick="addSuggestion('Thế giới mở rộng lớn để khám phá')">
+                        <i class="fas fa-lightbulb me-2"></i> Thế giới mở rộng lớn để khám phá
+                    </div>
+                    <div class="suggestion-item" onclick="addSuggestion('Hệ thống nâng cấp nhân vật phong phú')">
+                        <i class="fas fa-lightbulb me-2"></i> Hệ thống nâng cấp nhân vật phong phú
+                    </div>
+                    <div class="suggestion-item" onclick="addSuggestion('Hỗ trợ mod từ cộng đồng người chơi')">
+                        <i class="fas fa-lightbulb me-2"></i> Hỗ trợ mod từ cộng đồng người chơi
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Hướng dẫn -->
+            <div class="admin-form-section mt-4">
+                <h4>Hướng dẫn</h4>
+                <ul class="mb-0">
+                    <li>Tính năng nên được mô tả ngắn gọn, rõ ràng.</li>
+                    <li>Mỗi đặc điểm quan trọng của game nên được liệt kê thành một tính năng riêng biệt.</li>
+                    <li>Nhấn vào gợi ý để nhanh chóng thêm các tính năng phổ biến.</li>
+                    <li>Các tính năng này sẽ được hiển thị trên trang chi tiết game.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            var isEditMode = false;
+            
+            // Hiệu ứng khi thêm/sửa thành công
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <text>
+                    showToast("@TempData["SuccessMessage"]", "success");
+                </text>
+            }
+            
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <text>
+                    showToast("@TempData["ErrorMessage"]", "error");
+                </text>
+            }
+            
+            // Xử lý nút sửa
+            $('.edit-feature-btn').click(function() {
+                var id = $(this).data('id');
+                var description = $(this).data('description');
+                
+                // Thay đổi form sang chế độ chỉnh sửa
+                $('#featureId').val(id);
+                $('#featureDescription').val(description);
+                $('#feature-form-title').text('Chỉnh sửa tính năng');
+                $('#submitBtn').html('<i class="fas fa-save me-2"></i> Lưu thay đổi');
+                
+                isEditMode = true;
+                
+                // Đổi action của form
+                $('#featureForm').attr('action', '@Url.Action("EditFeature", "Admin")');
+                
+                // Scroll đến form
+                $('html, body').animate({
+                    scrollTop: $('#featureForm').offset().top - 100
+                }, 500);
+            });
+            
+            // Xử lý nút xóa
+            $('.delete-feature-btn').click(function() {
+                var id = $(this).data('id');
+                
+                if (confirm('Bạn có chắc chắn muốn xóa tính năng này?')) {
+                    $('#deleteFeatureId').val(id);
+                    $('#deleteFeatureForm').submit();
+                }
+            });
+        });
+        
+        // Hàm thêm gợi ý vào form
+        function addSuggestion(text) {
+            $('#featureDescription').val(text);
+        }
+        
+        function showToast(message, type) {
+            // Thêm xử lý hiển thị thông báo nếu cần
+            alert(message);
+        }
+    </script>
+    
+    <style>
+        .admin-features-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .feature-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.75rem;
+            background-color: #f8f9fa;
+            border-radius: 0.5rem;
+            border-left: 4px solid #5d4ec7;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            background-color: #f0f2f5;
+            transform: translateY(-2px);
+        }
+        
+        .feature-text {
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-icon {
+            color: #5d4ec7;
+            margin-right: 10px;
+        }
+        
+        .feature-suggestions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .suggestion-item {
+            padding: 8px 12px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .suggestion-item:hover {
+            background-color: #e9ecef;
+        }
+    </style>
+}

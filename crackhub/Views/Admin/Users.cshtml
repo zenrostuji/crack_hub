@@ -1,0 +1,334 @@
+@model IEnumerable<crackhub.Models.Data.User>
+@{
+    ViewData["Title"] = "Quản lý User";
+    Layout = "_AdminLayout";
+    var currentPage = ViewBag.CurrentPage;
+    var totalPages = ViewBag.TotalPages;
+    var searchTerm = ViewBag.SearchTerm ?? "";
+    var currentSort = ViewBag.CurrentSort ?? "newest";
+    var premiumFilter = ViewBag.PremiumFilter ?? "all";
+    var roleFilter = ViewBag.RoleFilter ?? "all";
+}
+
+<div class="admin-users">
+    <!-- Filter & Search Row -->
+    <div class="admin-card mb-4">
+        <div class="admin-card-body">
+            <div class="row">
+                <div class="col-lg-8">
+                    <form method="get" class="d-flex flex-wrap gap-2">
+                        <div class="input-group flex-grow-1">
+                            <input type="text" name="searchTerm" class="form-control" placeholder="Tìm kiếm theo tên, email..."
+                                   value="@searchTerm">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <!-- Role Filter -->
+                            <select name="roleFilter" class="form-select">
+                                <option value="all" selected="@(roleFilter == "all")">Tất cả quyền</option>
+                                <option value="1" selected="@(roleFilter == "1")">User</option>
+                                <option value="2" selected="@(roleFilter == "2")">Moderator</option>
+                                <option value="3" selected="@(roleFilter == "3")">Admin</option>
+                            </select>
+                            
+                            <!-- Premium Filter -->
+                            <select name="premiumFilter" class="form-select">
+                                <option value="all" selected="@(premiumFilter == "all")">Tất cả</option>
+                                <option value="premium" selected="@(premiumFilter == "premium")">Premium</option>
+                                <option value="free" selected="@(premiumFilter == "free")">Free</option>
+                            </select>
+                        </div>
+                        <input type="hidden" name="sortOrder" value="@currentSort" />
+                        <input type="hidden" name="page" value="1" />
+                    </form>
+                </div>
+                <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                    <a href="@Url.Action("CreateUser")" class="btn btn-primary">
+                        <i class="fas fa-user-plus me-2"></i> Thêm user mới
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Users Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="admin-card border-start border-4 border-primary h-100">
+                <div class="admin-card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fs-5 fw-bold text-primary">@Model.Count()</div>
+                            <div class="text-muted small">Tổng số người dùng</div>
+                        </div>
+                        <div class="text-primary">
+                            <i class="fas fa-users fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="admin-card border-start border-4 border-success h-100">
+                <div class="admin-card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fs-5 fw-bold text-success">@Model.Count(u => u.PremiumExpiryDate.HasValue && u.PremiumExpiryDate > DateTime.Now)</div>
+                            <div class="text-muted small">Premium Users</div>
+                        </div>
+                        <div class="text-success">
+                            <i class="fas fa-crown fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="admin-card border-start border-4 border-warning h-100">
+                <div class="admin-card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fs-5 fw-bold text-warning">@Model.Count(u => u.RoleId == 2)</div>
+                            <div class="text-muted small">Moderators</div>
+                        </div>
+                        <div class="text-warning">
+                            <i class="fas fa-shield-alt fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="admin-card border-start border-4 border-danger h-100">
+                <div class="admin-card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fs-5 fw-bold text-danger">@Model.Count(u => u.RoleId == 3)</div>
+                            <div class="text-muted small">Admins</div>
+                        </div>
+                        <div class="text-danger">
+                            <i class="fas fa-user-shield fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Users Table -->
+    <div class="admin-card">
+        <div class="admin-card-header">
+            <h5><i class="fas fa-users me-2"></i>Danh sách User</h5>
+            <div class="dropdown">
+                <button class="btn btn-sm btn-light dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-sort me-1"></i> Sắp xếp
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="sortDropdown">
+                    <li><a class="dropdown-item @(currentSort == "newest" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "newest", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter })">Mới nhất</a></li>
+                    <li><a class="dropdown-item @(currentSort == "oldest" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "oldest", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter })">Cũ nhất</a></li>
+                    <li><a class="dropdown-item @(currentSort == "name" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "name", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter })">Tên A-Z</a></li>
+                    <li><a class="dropdown-item @(currentSort == "name_desc" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "name_desc", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter })">Tên Z-A</a></li>
+                    <li><a class="dropdown-item @(currentSort == "email" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "email", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter })">Email A-Z</a></li>
+                    <li><a class="dropdown-item @(currentSort == "email_desc" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "email_desc", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter })">Email Z-A</a></li>
+                    <li><a class="dropdown-item @(currentSort == "role" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "role", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter })">Quyền (thấp-cao)</a></li>
+                    <li><a class="dropdown-item @(currentSort == "role_desc" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "role_desc", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter })">Quyền (cao-thấp)</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="admin-card-body p-0">
+            <div class="admin-table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên hiển thị</th>
+                            <th>Họ và tên</th>
+                            <th>Email</th>
+                            <th>Quyền</th>
+                            <th>Premium</th>
+                            <th>Đánh giá</th>
+                            <th>Ngày đăng ký</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var user in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <span class="text-muted small">@user.Id.Substring(0, Math.Min(8, user.Id.Length))...</span>
+                                    </td>
+                                    <td>
+                                        <div class="admin-table-item">
+                                            <img src="@(string.IsNullOrEmpty(user.AvatarUrl) ? "/img/avartars/default-avatar.png" : user.AvatarUrl)" 
+                                                 alt="@user.DisplayName" class="admin-table-img rounded-circle" />
+                                            <span class="admin-table-text">@user.DisplayName</span>
+                                        </div>
+                                    </td>
+                                    <td>@user.FirstName @user.LastName</td>
+                                    <td>
+                                        <div class="d-flex flex-column">
+                                            <span>@(user.Email ?? "N/A")</span>
+                                            @if (user.Email != null)
+                                            {
+                                                <span class="badge @(user.EmailConfirmed ? "bg-success" : "bg-warning text-dark") small">@(user.EmailConfirmed ? "Xác thực" : "Chưa xác thực")</span>
+                                            }
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @switch (user.RoleId)
+                                        {
+                                            case 3:
+                                                <span class="badge bg-danger">Admin</span>
+                                                break;
+                                            case 2:
+                                                <span class="badge bg-warning text-dark">Moderator</span>
+                                                break;
+                                            default:
+                                                <span class="badge bg-secondary">User</span>
+                                                break;
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (user.PremiumExpiryDate.HasValue)
+                                        {
+                                            if (user.PremiumExpiryDate > DateTime.Now)
+                                            {
+                                                <span class="badge bg-success">
+                                                    Premium<br>
+                                                    <small>Hết hạn: @user.PremiumExpiryDate.Value.ToString("dd/MM/yyyy")</small>
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-secondary">
+                                                    Hết hạn<br>
+                                                    <small>@user.PremiumExpiryDate.Value.ToString("dd/MM/yyyy")</small>
+                                                </span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-light text-dark">Free</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-info">@user.Reviews.Count đánh giá</span>
+                                    </td>
+                                    <td>@user.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <a href="@Url.Action("UserDetails", new { id = user.Id })" class="btn btn-sm btn-outline-info me-1" title="Chi tiết">
+                                                <i class="fas fa-info-circle"></i>
+                                            </a>
+                                            <a href="@Url.Action("EditUser", new { id = user.Id })" class="btn btn-sm btn-outline-primary me-1" title="Chỉnh sửa">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <form method="post" asp-action="DeleteUser" asp-controller="Admin" asp-route-id="@user.Id" style="display: inline;">
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Xóa" onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này?');">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="9" class="text-center py-4">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <i class="fas fa-exclamation-circle fa-3x text-muted mb-3"></i>
+                                        <h5>Không tìm thấy user nào</h5>
+                                        <p class="text-muted">Hãy thử tìm kiếm khác hoặc thêm user mới</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    @if (totalPages > 1)
+    {
+        <div class="admin-pagination">
+            @if (currentPage > 1)
+            {
+                <a href="@Url.Action("Users", new { page = currentPage - 1, sortOrder = currentSort, searchTerm = searchTerm, premiumFilter = premiumFilter, roleFilter = roleFilter })" class="admin-page-link">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+            }
+            else
+            {
+                <span class="admin-page-link disabled">
+                    <i class="fas fa-chevron-left"></i>
+                </span>
+            }
+
+            @if (totalPages > 5)
+            {
+                int startPage = Math.Max(1, currentPage - 2);
+                int endPage = Math.Min(totalPages, startPage + 4);
+                
+                if (endPage - startPage < 4 && startPage > 1)
+                {
+                    startPage = Math.Max(1, endPage - 4);
+                }
+
+                @if (startPage > 1)
+                {
+                    <a href="@Url.Action("Users", new { page = 1, sortOrder = currentSort, searchTerm = searchTerm, premiumFilter = premiumFilter, roleFilter = roleFilter })" class="admin-page-link">1</a>
+                    if (startPage > 2)
+                    {
+                        <span class="admin-page-link disabled">...</span>
+                    }
+                }
+
+                @for (int i = startPage; i <= endPage; i++)
+                {
+                    <a href="@Url.Action("Users", new { page = i, sortOrder = currentSort, searchTerm = searchTerm, premiumFilter = premiumFilter, roleFilter = roleFilter })" 
+                       class="admin-page-link @(i == currentPage ? "active" : "")">@i</a>
+                }
+
+                @if (endPage < totalPages)
+                {
+                    if (endPage < totalPages - 1)
+                    {
+                        <span class="admin-page-link disabled">...</span>
+                    }
+                    <a href="@Url.Action("Users", new { page = totalPages, sortOrder = currentSort, searchTerm = searchTerm, premiumFilter = premiumFilter, roleFilter = roleFilter })" class="admin-page-link">@totalPages</a>
+                }
+            }
+            else
+            {
+                @for (int i = 1; i <= totalPages; i++)
+                {
+                    <a href="@Url.Action("Users", new { page = i, sortOrder = currentSort, searchTerm = searchTerm, premiumFilter = premiumFilter, roleFilter = roleFilter })" 
+                       class="admin-page-link @(i == currentPage ? "active" : "")">@i</a>
+                }
+            }
+
+            @if (currentPage < totalPages)
+            {
+                <a href="@Url.Action("Users", new { page = currentPage + 1, sortOrder = currentSort, searchTerm = searchTerm, premiumFilter = premiumFilter, roleFilter = roleFilter })" class="admin-page-link">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            }
+            else
+            {
+                <span class="admin-page-link disabled">
+                    <i class="fas fa-chevron-right"></i>
+                </span>
+            }
+        </div>
+    }
+</div>

@@ -1,0 +1,272 @@
+@model List<crackhub.Models.Data.CrackInfo>
+@{
+    ViewData["Title"] = "Quản lý Thông tin Crack";
+    Layout = "_AdminLayout";
+    var game = ViewBag.Game as crackhub.Models.Data.Game;
+}
+
+<div class="admin-manage-crack-infos">
+    <div class="admin-page-title-container mb-4">
+        <h4 class="admin-page-title">
+            <i class="fas fa-unlock me-2"></i> Quản lý thông tin crack: @game.Title
+        </h4>
+        <a href="@Url.Action("EditGame", "Admin", new { id = game.Id })" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> Quay lại
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Danh sách thông tin crack hiện tại -->
+            <div class="admin-form-section mb-4">
+                <h4>Danh sách crack (@Model.Count)</h4>
+                
+                @if (Model.Any())
+                {
+                    <div class="admin-table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Nhóm</th>
+                                    <th>Phiên bản</th>
+                                    <th>Ngày phát hành</th>
+                                    <th>Kích thước</th>
+                                    <th>Đề xuất</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var crackInfo in Model)
+                                {
+                                    <tr>
+                                        <td>@crackInfo.Group</td>
+                                        <td>@crackInfo.Version</td>
+                                        <td>@(crackInfo.ReleaseDate?.ToString("dd/MM/yyyy") ?? "N/A")</td>
+                                        <td>@(crackInfo.FileSize ?? "N/A")</td>
+                                        <td>
+                                            @if (crackInfo.IsRecommended)
+                                            {
+                                                <span class="badge recommended">Khuyên dùng</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-secondary">Không</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <button type="button" class="btn btn-sm btn-outline-primary me-1"
+                                                        data-bs-toggle="modal" data-bs-target="#editCrackModal"
+                                                        data-id="@crackInfo.Id"
+                                                        data-group="@crackInfo.Group"
+                                                        data-version="@crackInfo.Version"
+                                                        data-description="@crackInfo.Description"
+                                                        data-url="@crackInfo.DownloadUrl"
+                                                        data-size="@crackInfo.FileSize"
+                                                        data-date="@(crackInfo.ReleaseDate?.ToString("yyyy-MM-dd") ?? "")"
+                                                        data-recommended="@crackInfo.IsRecommended.ToString().ToLower()">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <form method="post" asp-action="DeleteCrackInfo" asp-controller="Admin" 
+                                                      onsubmit="return confirm('Xác nhận xóa thông tin crack này?')">
+                                                    <input type="hidden" name="id" value="@crackInfo.Id" />
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                                
+                                                @if (!crackInfo.IsRecommended)
+                                                {
+                                                    <form method="post" asp-action="SetRecommendedCrack" asp-controller="Admin" class="ms-1">
+                                                        <input type="hidden" name="id" value="@crackInfo.Id" />
+                                                        <button type="submit" class="btn btn-sm btn-outline-success">
+                                                            <i class="fas fa-thumbs-up"></i>
+                                                        </button>
+                                                    </form>
+                                                }
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i> Chưa có thông tin crack nào cho game này. Vui lòng thêm thông tin bên phải.
+                    </div>
+                }
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <!-- Thêm thông tin crack mới -->
+            <div class="admin-form-section mb-4">
+                <h4>Thêm thông tin crack mới</h4>
+                <form method="post" asp-action="AddCrackInfo" asp-controller="Admin">
+                    <input type="hidden" name="GameId" value="@game.Id" />
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">Nhóm phát hành*</label>
+                        <input type="text" name="Group" class="admin-form-control" required placeholder="Ví dụ: CODEX, CPY, FitGirl">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">Phiên bản</label>
+                        <input type="text" name="Version" class="admin-form-control" placeholder="Ví dụ: v1.0, v2.3.1, DLC">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">Mô tả</label>
+                        <textarea name="Description" class="admin-form-control" rows="3" placeholder="Mô tả thông tin về bản crack này"></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">Link tải crack</label>
+                        <input type="text" name="DownloadUrl" class="admin-form-control" placeholder="URL tải trực tiếp file crack">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">Kích thước file</label>
+                        <input type="text" name="FileSize" class="admin-form-control" placeholder="Ví dụ: 5 MB, 300 KB">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="admin-form-label">Ngày phát hành</label>
+                        <input type="date" name="ReleaseDate" class="admin-form-control">
+                    </div>
+                    
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="isRecommended" name="IsRecommended">
+                        <label class="form-check-label" for="isRecommended">Đặt làm bản crack được khuyến nghị</label>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus-circle me-2"></i> Thêm thông tin crack
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Hướng dẫn -->
+            <div class="admin-form-section">
+                <h4>Hướng dẫn</h4>
+                <ul class="mb-0">
+                    <li>Một game có thể có nhiều bản crack khác nhau từ các nhóm khác nhau.</li>
+                    <li>Bạn có thể đánh dấu một bản crack làm "Khuyến nghị" để người dùng dễ chọn lựa.</li>
+                    <li>Thông tin chi tiết và mô tả rõ ràng sẽ giúp người dùng chọn đúng bản crack phù hợp.</li>
+                    <li>Đối với các game được crack bởi nhiều nhóm, nên cung cấp thông tin về ưu/nhược điểm của mỗi bản.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Chỉnh sửa -->
+<div class="modal fade" id="editCrackModal" tabindex="-1" aria-labelledby="editCrackModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCrackModalLabel">Chỉnh sửa thông tin crack</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" asp-action="EditCrackInfo" asp-controller="Admin">
+                <div class="modal-body">
+                    <input type="hidden" id="editId" name="Id">
+                    <input type="hidden" name="GameId" value="@game.Id">
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Nhóm phát hành*</label>
+                        <input type="text" class="form-control" id="editGroup" name="Group" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Phiên bản</label>
+                        <input type="text" class="form-control" id="editVersion" name="Version">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Mô tả</label>
+                        <textarea class="form-control" id="editDescription" name="Description" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Link tải crack</label>
+                        <input type="text" class="form-control" id="editUrl" name="DownloadUrl">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Kích thước file</label>
+                        <input type="text" class="form-control" id="editSize" name="FileSize">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Ngày phát hành</label>
+                        <input type="date" class="form-control" id="editDate" name="ReleaseDate">
+                    </div>
+                    
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="editRecommended" name="IsRecommended">
+                        <label class="form-check-label" for="editRecommended">Đặt làm bản crack được khuyến nghị</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Hiệu ứng khi thao tác thành công
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <text>
+                    showToast("@TempData["SuccessMessage"]", "success");
+                </text>
+            }
+            
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <text>
+                    showToast("@TempData["ErrorMessage"]", "error");
+                </text>
+            }
+            
+            // Xử lý modal chỉnh sửa
+            $('#editCrackModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var id = button.data('id');
+                var group = button.data('group');
+                var version = button.data('version');
+                var description = button.data('description');
+                var url = button.data('url');
+                var size = button.data('size');
+                var date = button.data('date');
+                var recommended = button.data('recommended') === "true";
+                
+                var modal = $(this);
+                modal.find('#editId').val(id);
+                modal.find('#editGroup').val(group);
+                modal.find('#editVersion').val(version);
+                modal.find('#editDescription').val(description);
+                modal.find('#editUrl').val(url);
+                modal.find('#editSize').val(size);
+                modal.find('#editDate').val(date);
+                modal.find('#editRecommended').prop('checked', recommended);
+            });
+            
+            function showToast(message, type) {
+                // Thêm xử lý hiển thị thông báo nếu cần
+                alert(message);
+            }
+        });
+    </script>
+}

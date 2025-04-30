@@ -1,0 +1,113 @@
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/account.css" />
+}
+
+<div class="account-page-wrapper">
+    <!-- Floating game icons -->
+    <div class="floating-icon icon-1"><i class="fas fa-gamepad"></i></div>
+    <div class="floating-icon icon-2"><i class="fas fa-dice"></i></div>
+    <div class="floating-icon icon-3"><i class="fas fa-ghost"></i></div>
+    <div class="floating-icon icon-4"><i class="fas fa-headset"></i></div>
+    
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Intro Section -->
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="intro-section">
+                    <div class="intro-content text-center text-lg-start">
+                        <div class="logo-container mb-4">
+                            <img src="~/images/logo.png" alt="CrackHub Logo" class="intro-logo" onerror="this.src='~/images/default-logo.png'; this.onerror='';">
+                        </div>
+                        <h1 class="intro-title">Chào mừng đến với CrackHub</h1>
+                        <p class="intro-text">Cổng game hàng đầu với hàng ngàn tựa game chất lượng cao, đã được crack và sẵn sàng để tải về.</p>
+                        
+                        <!-- Features List -->
+                        <div class="features-list">
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-download"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h3>Tải game miễn phí</h3>
+                                    <p>Tải xuống tất cả game mà không cần trả phí</p>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h3>An toàn & Được kiểm duyệt</h3>
+                                    <p>Tất cả game đều được kiểm tra virus và malware</p>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-sync-alt"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h3>Cập nhật thường xuyên</h3>
+                                    <p>Game mới được cập nhật hàng ngày</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Login Section -->
+            <div class="col-lg-6">
+                <div class="account-card">
+                    <div class="account-header text-center">
+                        <h2>Đăng nhập</h2>
+                    </div>
+                    <div class="account-body">
+                        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                <i class="fas fa-exclamation-circle me-2"></i>
+                                @ViewBag.ErrorMessage
+                            </div>
+                        }
+                        
+                        <form method="post" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@ViewBag.ReturnUrl">
+                            <div class="form-floating mb-3 position-relative">
+                                <i class="fas fa-user input-icon"></i>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Tên đăng nhập" required>
+                                <label for="username">Tên đăng nhập</label>
+                            </div>
+                            
+                            <div class="form-floating mb-3 position-relative">
+                                <i class="fas fa-lock input-icon"></i>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu" required>
+                                <label for="password">Mật khẩu</label>
+                            </div>
+                            
+                            <div class="form-check mb-3">
+                                <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
+                                <label class="form-check-label" for="rememberMe">
+                                    Ghi nhớ đăng nhập
+                                </label>
+                            </div>
+                            
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary login-btn">
+                                    <i class="fas fa-sign-in-alt me-2"></i> Đăng nhập
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="account-footer">
+                        <p>Chưa có tài khoản? <a asp-action="Register">Đăng ký ngay</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,249 @@
+﻿@model IEnumerable<crackhub.Models.Data.Category>
+@{
+    ViewData["Title"] = "CrackHub - Trang tải game thuốc hàng đầu";
+}
+
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container hero-content">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <h1 class="hero-title animate__animated animate__fadeIn">CrackHub - Web tải game thuốc miễn phí</h1>
+                <p class="hero-subtitle animate__animated animate__fadeIn animate__delay-1s">Với hàng nghìn game được cập nhật liên tục, CrackHub là nơi lý tưởng để bạn tìm và tải các game yêu thích!</p>
+                
+                <!-- Search Box -->
+                <form asp-controller="Game" asp-action="Search" method="get" class="animate__animated animate__fadeIn animate__delay-2s">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control form-control-lg rounded-pill" placeholder="Tìm kiếm game..." name="query">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary rounded-pill ms-2" type="submit">
+                                <i class="fa fa-search me-2"></i> Tìm kiếm
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                
+                <!-- Quick Stats -->
+                <div class="row text-center mt-4 animate__animated animate__fadeInUp animate__delay-3s">
+                    <div class="col-md-4 mb-3">
+                        <div class="stat-item py-2 rounded">
+                            <h3 class="counter-value">@ViewBag.TotalGames</h3>
+                            <p>Game</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="stat-item py-2 rounded">
+                            <h3 class="counter-value">@ViewBag.TotalDownloads</h3>
+                            <p>Lượt tải</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="stat-item py-2 rounded">
+                            <h3 class="counter-value">@ViewBag.TotalUsers</h3>
+                            <p>Người dùng</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 d-none d-lg-block">
+                <div class="hero-image-container">
+                    <img src="/img/hero-image.png" alt="CrackHub Games" class="img-fluid animate__animated animate__fadeInRight custom_img">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Latest Games Section -->
+<div class="container mt-5">
+    <h2 class="section-title mb-4">Game Mới Nhất</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <p class="text-muted">Khám phá những game mới nhất tại CrackHub</p>
+        <a href="@Url.Action("Index", "Game")" class="btn btn-primary btn-sm">
+            <i class="fas fa-th-list me-2"></i>Xem tất cả
+        </a>
+    </div>
+    
+    <div class="row">
+        @foreach (var game in ViewBag.LatestGames)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card game-card h-100">
+                    <div class="position-relative overflow-hidden">
+                        <img src="@game.CoverImageUrl" class="card-img-top" alt="@game.Title" onerror="this.src='/img/no-image.jpg'" 
+                             data-src="@game.CoverImageUrl" class="lazy">
+                        <div class="card-overlay">
+                            <div class="overlay-buttons">
+                                <a href="@Url.Action("Download", "Game", new { id = game.Id })" 
+                                   class="btn btn-success btn-sm"><i class="fas fa-download me-1"></i> Tải xuống</a>
+                                <a href="@Url.Action("Details", "Game", new { id = game.Id })" 
+                                   class="btn btn-primary btn-sm mt-2"><i class="fas fa-info-circle me-1"></i> Chi tiết</a>
+                            </div>
+                        </div>
+                        <span class="badge bg-primary position-absolute top-0 start-0 m-2">MỚI</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="@Url.Action("Details", "Game", new { id = game.Id })" class="text-decoration-none">
+                                @game.Title
+                            </a>
+                        </h5>
+                        <div class="game-meta">
+                            <span><i class="fas fa-gamepad me-1"></i>@(game.Category?.CategoryName ?? "Uncategorized")</span>
+                            <span><i class="fas fa-download me-1"></i>@game.Downloads</span>
+                        </div>
+                        <div class="rating mb-2">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <i class="@(i <= Math.Round(game.AverageRating) ? "fas" : "far") fa-star"></i>
+                            }
+                            <span class="ms-1 text-muted small">(@game.AverageRating.ToString("0.0"))</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Popular Games Section -->
+<div class="container-fluid bg-light py-5 mt-5">
+    <div class="container">
+        <h2 class="section-title mb-4">Game Phổ Biến</h2>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <p class="text-muted">Những game được tải nhiều nhất tại CrackHub</p>
+        </div>
+        
+        <div class="row">
+            @foreach (var game in ViewBag.PopularGames)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="card game-card h-100">
+                        <div class="position-relative overflow-hidden">
+                           <img src="@game.CoverImageUrl" class="card-img-top" alt="@game.Title" onerror="this.src='/img/no-image.jpg'" 
+                             data-src="@game.CoverImageUrl" class="lazy">
+                            <div class="card-overlay">
+                                <div class="overlay-buttons">
+                                    <a href="@Url.Action("Download", "Game", new { id = game.Id })" 
+                                       class="btn btn-success btn-sm"><i class="fas fa-download me-1"></i> Tải xuống</a>
+                                    <a href="@Url.Action("Details", "Game", new { id = game.Id })" 
+                                       class="btn btn-primary btn-sm mt-2"><i class="fas fa-info-circle me-1"></i> Chi tiết</a>
+                                </div>
+                            </div>
+                            <span class="badge bg-danger position-absolute top-0 start-0 m-2">HOT</span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="@Url.Action("Details", "Game", new { id = game.Id })" class="text-decoration-none">
+                                    @game.Title
+                                </a>
+                            </h5>
+                            <div class="game-meta">
+                                <span><i class="fas fa-gamepad me-1"></i>@(game.Category?.CategoryName ?? "Uncategorized")</span>
+                                <span><i class="fas fa-download me-1"></i>@game.Downloads</span>
+                            </div>
+                            <div class="rating mb-2">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    <i class="@(i <= Math.Round(game.AverageRating) ? "fas" : "far") fa-star"></i>
+                                }
+                                <span class="ms-1 text-muted small">(@game.AverageRating.ToString("0.0"))</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Top Rated Games Section -->
+<div class="container mt-5">
+    <h2 class="section-title mb-4">Game Đánh Giá Cao</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <p class="text-muted">Game có điểm đánh giá cao nhất từ cộng đồng</p>
+    </div>
+    
+    <div class="row">
+        @foreach (var game in ViewBag.TopRatedGames)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card game-card h-100">
+                    <div class="position-relative overflow-hidden">
+                        <img src="@game.CoverImageUrl" class="card-img-top" alt="@game.Title" onerror="this.src='/img/no-image.jpg'" 
+                             data-src="@game.CoverImageUrl" class="lazy">
+                        <div class="card-overlay">
+                            <div class="overlay-buttons">
+                                <a href="@Url.Action("Download", "Game", new { id = game.Id })" 
+                                   class="btn btn-success btn-sm"><i class="fas fa-download me-1"></i> Tải xuống</a>
+                                <a href="@Url.Action("Details", "Game", new { id = game.Id })" 
+                                   class="btn btn-primary btn-sm mt-2"><i class="fas fa-info-circle me-1"></i> Chi tiết</a>
+                            </div>
+                        </div>
+                        <span class="badge bg-warning position-absolute top-0 start-0 m-2">TOP</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="@Url.Action("Details", "Game", new { id = game.Id })" class="text-decoration-none">
+                                @game.Title
+                            </a>
+                        </h5>
+                        <div class="game-meta">
+                            <span><i class="fas fa-gamepad me-1"></i>@(game.Category?.CategoryName ?? "Uncategorized")</span>
+                            <span><i class="fas fa-download me-1"></i>@game.Downloads</span>
+                        </div>
+                        <div class="rating mb-2">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <i class="@(i <= Math.Round(game.AverageRating) ? "fas" : "far") fa-star"></i>
+                            }
+                            <span class="ms-1 text-muted small">(@game.AverageRating.ToString("0.0"))</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Categories Section -->
+<div class="container mt-5 mb-5">
+    <h2 class="section-title mb-4">Thể Loại Game</h2>
+    <div class="row">
+        @foreach (var category in Model)
+        {
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-3">
+                <a href="@Url.Action("ByCategory", "Game", new { categorySlug = category.Slug })" 
+                   class="category-card text-decoration-none">
+                    <div class="category-item text-center p-3 rounded h-100">
+                        <i class="@(string.IsNullOrEmpty(category.IconClass) ? "fas fa-gamepad" : category.IconClass) mb-2 category-icon"></i>
+                        <h6 class="mb-1">@category.CategoryName</h6>
+                        <span class="badge-category">@category.GameCount</span>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- CTA Section -->
+@if (!User.Identity!.IsAuthenticated && Context.Session.GetString("UserId") == null)
+{
+<div class="container-fluid bg-dark text-white py-5 mt-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 text-center text-lg-start">
+                <h2 class="mb-3">Tham gia cộng đồng CrackHub</h2>
+                <p class="lead">Khám phá thêm nhiều game hay, cập nhật nhanh chóng và chia sẻ trải nghiệm với cộng đồng.</p>
+            </div>
+            <div class="col-lg-4 text-center text-lg-end mt-3 mt-lg-0">
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+<!-- Back to top button -->
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+    <i class="fas fa-arrow-up"></i>
+</a>

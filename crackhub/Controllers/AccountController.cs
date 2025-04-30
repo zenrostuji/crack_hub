@@ -129,7 +129,7 @@ namespace crackhub.Controllers
                 Email = email,
                 PasswordHash = HashPassword(password),
                 RoleId = 1,
-                PremiumExpiryDate = DateTime.Now,
+                PremiumExpiryDate = null,
                 CreatedAt = DateTime.Now,
             };
 

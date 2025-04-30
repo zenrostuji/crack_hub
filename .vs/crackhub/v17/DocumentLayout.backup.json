@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|d:\\a_cong_viec\\code\\web_game\\crackhub\\crackhub\\controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|solutionrelative:crackhub\\controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|d:\\a_cong_viec\\code\\web_game\\crackhub\\crackhub\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|solutionrelative:crackhub\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -47,6 +51,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "GameController.cs",
+              "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\Controllers\\GameController.cs",
+              "RelativeDocumentMoniker": "crackhub\\Controllers\\GameController.cs",
+              "ToolTip": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\Controllers\\GameController.cs",
+              "RelativeToolTip": "crackhub\\Controllers\\GameController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAnwBwAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-30T09:08:43.113Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "AdminController.cs",
               "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\Controllers\\AdminController.cs",
               "RelativeDocumentMoniker": "crackhub\\Controllers\\AdminController.cs",
@@ -54,12 +71,11 @@
               "RelativeToolTip": "crackhub\\Controllers\\AdminController.cs",
               "ViewState": "AgIAAD8GAAAAAAAAAAAnwEsGAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-29T17:23:16.198Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-29T17:23:16.198Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Users.cshtml",
               "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\Views\\Admin\\Users.cshtml",
               "RelativeDocumentMoniker": "crackhub\\Views\\Admin\\Users.cshtml",
@@ -71,7 +87,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "CreateUser.cshtml",
               "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\Views\\Admin\\CreateUser.cshtml",
               "RelativeDocumentMoniker": "crackhub\\Views\\Admin\\CreateUser.cshtml",
@@ -83,7 +99,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "ManageScreenshots.cshtml",
               "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\Views\\Admin\\ManageScreenshots.cshtml",
               "RelativeDocumentMoniker": "crackhub\\Views\\Admin\\ManageScreenshots.cshtml",
@@ -95,7 +111,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "CreateGame.cshtml",
               "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\Views\\Admin\\CreateGame.cshtml",
               "RelativeDocumentMoniker": "crackhub\\Views\\Admin\\CreateGame.cshtml",
@@ -107,7 +123,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "crackhub\\Views\\Home\\Index.cshtml",
@@ -119,7 +135,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "crackhub\\Views\\Shared\\_Layout.cshtml",
@@ -131,7 +147,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "readme.md",
               "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\readme.md",
               "RelativeDocumentMoniker": "crackhub\\readme.md",

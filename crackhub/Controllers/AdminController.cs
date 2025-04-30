@@ -289,7 +289,7 @@ namespace crackhub.Controllers
             {
                 try
                 {
-                    // Get the existing game
+                    // Get the existing game with all properties
                     var existingGame = await _context.Games.FindAsync(game.Id);
                     if (existingGame == null)
                     {
@@ -316,7 +316,9 @@ namespace crackhub.Controllers
                         }
 
                         // Delete old image if exists
-                        if (!string.IsNullOrEmpty(existingGame.CoverImageUrl))
+                        if (!string.IsNullOrEmpty(existingGame.CoverImageUrl) && 
+                            !existingGame.CoverImageUrl.Contains("no-image.jpg") && 
+                            existingGame.CoverImageUrl.Contains("games"))
                         {
                             var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", 
                                 existingGame.CoverImageUrl.TrimStart('/').Replace('/', '\\'));
@@ -331,12 +333,26 @@ namespace crackhub.Controllers
                     }
                     else
                     {
-                        // Keep existing cover image
+                        // Keep existing cover image - this is important for when no new image is uploaded
                         game.CoverImageUrl = existingGame.CoverImageUrl;
                     }
-
-                    // Update game properties
-                    _context.Entry(existingGame).CurrentValues.SetValues(game);
+                    
+                    // Cập nhật từng thuộc tính thay vì sử dụng SetValues
+                    existingGame.Title = game.Title;
+                    existingGame.Developer = game.Developer; 
+                    existingGame.Publisher = game.Publisher;
+                    existingGame.ReleaseDate = game.ReleaseDate;
+                    existingGame.CategoryId = game.CategoryId;
+                    existingGame.ShortDescription = game.ShortDescription;
+                    existingGame.FullDescription = game.FullDescription;
+                    existingGame.Size = game.Size;
+                    existingGame.Rating = game.Rating;
+                    existingGame.AverageRating = game.AverageRating;
+                    existingGame.Downloads = game.Downloads;
+                    existingGame.DownloadUrl = game.DownloadUrl;
+                    existingGame.CoverImageUrl = game.CoverImageUrl; // Dùng CoverImageUrl đã xử lý ở trên
+                    
+                    _context.Update(existingGame);
                     
                     // Update tags
                     var existingTags = await _context.GameTags
@@ -361,6 +377,10 @@ namespace crackhub.Controllers
                     }
 
                     await _context.SaveChangesAsync();
+                    
+                    // Thêm thông báo thành công
+                    TempData["SuccessMessage"] = "Game đã được cập nhật thành công!";
+                    
                     return RedirectToAction(nameof(Games));
                 }
                 catch (DbUpdateConcurrencyException)
@@ -374,12 +394,21 @@ namespace crackhub.Controllers
                         throw;
                     }
                 }
+                catch (Exception ex)
+                {
+                    // Log lỗi và thêm vào ModelState để hiển thị
+                    ModelState.AddModelError("", $"Lỗi: {ex.Message}");
+                }
             }
 
             // If we got this far, something failed, redisplay form
             ViewBag.Categories = await _context.Categories.ToListAsync();
             ViewBag.Tags = await _context.Tags.ToListAsync();
             ViewBag.SelectedTagIds = tagIds;
+            
+            // Hiển thị thông báo lỗi
+            TempData["ErrorMessage"] = "Có lỗi xảy ra khi lưu thông tin game!";
+            
             return View(game);
         }
 
@@ -698,7 +727,9 @@ namespace crackhub.Controllers
             }
 
             // Create query
-            IQueryable<User> usersQuery = _context.Users.Include(u => u.Role);
+            IQueryable<User> usersQuery = _context.Users
+                .Include(u => u.Role)
+                .Include(u => u.Reviews); // Include Reviews collection to properly count them
 
             // Apply search if provided
             if (!string.IsNullOrEmpty(searchTerm))
@@ -941,12 +972,7 @@ namespace crackhub.Controllers
                         }
 
                         // Set avatar URL
-                        user.AvatarUrl = $"/img/avartars/{uniqueFileName}";
-                    }
-                    else
-                    {
-                        // Keep existing avatar
-                        user.AvatarUrl = existingUser.AvatarUrl;
+                        existingUser.AvatarUrl = $"/img/avartars/{uniqueFileName}";
                     }
 
                     // Update user properties
@@ -956,12 +982,14 @@ namespace crackhub.Controllers
                     existingUser.Email = user.Email;
                     existingUser.RoleId = user.RoleId;
                     existingUser.Bio = user.Bio;
-                    existingUser.AvatarUrl = user.AvatarUrl;
                     existingUser.PremiumExpiryDate = user.PremiumExpiryDate;
                     existingUser.EmailConfirmed = user.EmailConfirmed;
 
+                    // Update the entity
                     _context.Update(existingUser);
                     await _context.SaveChangesAsync();
+                    
+                    TempData["SuccessMessage"] = "Thông tin người dùng đã được cập nhật thành công!";
                     return RedirectToAction(nameof(Users));
                 }
                 catch (DbUpdateConcurrencyException)
@@ -1563,6 +1591,542 @@ namespace crackhub.Controllers
 
             TempData["SuccessMessage"] = "Xóa tính năng thành công!";
             return RedirectToAction(nameof(ManageFeatures), new { id = gameId });
+        }
+
+        #endregion
+
+        #region Category Management
+
+        // List all categories with pagination
+        public async Task<IActionResult> Categories(int page = 1, string searchTerm = "", string sortOrder = "name")
+        {
+            // Check if user is admin
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            // Create query
+            IQueryable<Category> categoriesQuery = _context.Categories;
+
+            // Apply search if provided
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                categoriesQuery = categoriesQuery.Where(c => c.CategoryName.Contains(searchTerm) ||
+                                                      c.Description.Contains(searchTerm));
+                ViewBag.SearchTerm = searchTerm;
+            }
+
+            // Apply sorting
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    categoriesQuery = categoriesQuery.OrderByDescending(c => c.CategoryName);
+                    break;
+                case "games":
+                    categoriesQuery = categoriesQuery.OrderByDescending(c => c.GameCount);
+                    break;
+                case "games_asc":
+                    categoriesQuery = categoriesQuery.OrderBy(c => c.GameCount);
+                    break;
+                default: // name
+                    categoriesQuery = categoriesQuery.OrderBy(c => c.CategoryName);
+                    break;
+            }
+
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParam = sortOrder == "name" ? "name_desc" : "name";
+            ViewBag.GamesSortParam = sortOrder == "games" ? "games_asc" : "games";
+
+            // Count total categories for pagination
+            var totalCategories = await categoriesQuery.CountAsync();
+            var totalPages = (int)Math.Ceiling((double)totalCategories / PageSize);
+
+            // Get categories for current page
+            var categories = await categoriesQuery
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize)
+                .ToListAsync();
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+
+            return View(categories);
+        }
+
+        // GET: Show create category form
+        public IActionResult CreateCategory()
+        {
+            // Check if user is admin
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            return View();
+        }
+
+        // POST: Create a new category
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateCategory(Category category)
+        {
+            // Check if user is admin
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (ModelState.IsValid)
+            {
+                // Generate slug if not provided
+                if (string.IsNullOrEmpty(category.Slug))
+                {
+                    category.Slug = category.CategoryName.ToLower().Replace(" ", "-");
+                }
+
+                // Check if slug already exists
+                if (await _context.Categories.AnyAsync(c => c.Slug == category.Slug))
+                {
+                    // Append a number to the slug to make it unique
+                    var baseSlug = category.Slug;
+                    var slugCount = 1;
+                    while (await _context.Categories.AnyAsync(c => c.Slug == category.Slug))
+                    {
+                        category.Slug = $"{baseSlug}-{slugCount}";
+                        slugCount++;
+                    }
+                }
+
+                _context.Add(category);
+                await _context.SaveChangesAsync();
+                
+                TempData["SuccessMessage"] = "Thể loại đã được tạo thành công!";
+                return RedirectToAction(nameof(Categories));
+            }
+
+            return View(category);
+        }
+
+        // GET: Show edit category form
+        public async Task<IActionResult> EditCategory(int? id)
+        {
+            // Check if user is admin
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var category = await _context.Categories.FindAsync(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return View(category);
+        }
+
+        // POST: Update a category
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditCategory(Category category)
+        {
+            // Check if user is admin
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Generate slug if not provided
+                    if (string.IsNullOrEmpty(category.Slug))
+                    {
+                        category.Slug = category.CategoryName.ToLower().Replace(" ", "-");
+                    }
+
+                    // Check if slug already exists for other categories
+                    var existingCategory = await _context.Categories
+                        .FirstOrDefaultAsync(c => c.Slug == category.Slug && c.CategoryId != category.CategoryId);
+
+                    if (existingCategory != null)
+                    {
+                        // Append a number to the slug to make it unique
+                        var baseSlug = category.Slug;
+                        var slugCount = 1;
+                        while (await _context.Categories.AnyAsync(c => c.Slug == category.Slug && c.CategoryId != category.CategoryId))
+                        {
+                            category.Slug = $"{baseSlug}-{slugCount}";
+                            slugCount++;
+                        }
+                    }
+
+                    _context.Update(category);
+                    await _context.SaveChangesAsync();
+                    
+                    TempData["SuccessMessage"] = "Thể loại đã được cập nhật thành công!";
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CategoryExists(category.CategoryId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Categories));
+            }
+            return View(category);
+        }
+
+        // GET: Confirm delete category
+        public async Task<IActionResult> DeleteCategory(int? id)
+        {
+            // Check if user is admin
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var category = await _context.Categories
+                .FirstOrDefaultAsync(m => m.CategoryId == id);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            // Check if category has games
+            var gamesCount = await _context.Games.CountAsync(g => g.CategoryId == id);
+            ViewBag.HasGames = gamesCount > 0;
+            ViewBag.GamesCount = gamesCount;
+
+            return View(category);
+        }
+
+        // POST: Delete a category
+        [HttpPost, ActionName("DeleteCategory")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteCategoryConfirmed(int id)
+        {
+            // Check if user is admin
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var category = await _context.Categories.FindAsync(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            // Check if category has games
+            var hasGames = await _context.Games.AnyAsync(g => g.CategoryId == id);
+            if (hasGames)
+            {
+                TempData["ErrorMessage"] = "Không thể xóa thể loại này vì có game thuộc thể loại này!";
+                return RedirectToAction(nameof(Categories));
+            }
+
+            _context.Categories.Remove(category);
+            await _context.SaveChangesAsync();
+
+            TempData["SuccessMessage"] = "Thể loại đã được xóa thành công!";
+            return RedirectToAction(nameof(Categories));
+        }
+
+        private bool CategoryExists(int id)
+        {
+            return _context.Categories.Any(c => c.CategoryId == id);
+        }
+
+        #endregion
+
+        #region Tag Management
+
+        // List all tags with pagination
+        public async Task<IActionResult> Tags(int page = 1, string searchTerm = "", string sortOrder = "name")
+        {
+            // Check if user is admin
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            // Create query
+            IQueryable<Tag> tagsQuery = _context.Tags;
+
+            // Apply search if provided
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                tagsQuery = tagsQuery.Where(t => t.Name.Contains(searchTerm) || 
+                                            (t.Slug != null && t.Slug.Contains(searchTerm)));
+                ViewBag.SearchTerm = searchTerm;
+            }
+
+            // Apply sorting
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    tagsQuery = tagsQuery.OrderByDescending(t => t.Name);
+                    break;
+                default: // name
+                    tagsQuery = tagsQuery.OrderBy(t => t.Name);
+                    break;
+            }
+
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParam = sortOrder == "name" ? "name_desc" : "name";
+
+            // Count total tags for pagination
+            var totalTags = await tagsQuery.CountAsync();
+            var totalPages = (int)Math.Ceiling((double)totalTags / PageSize);
+
+            // Get tags for current page
+            var tags = await tagsQuery
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize)
+                .ToListAsync();
+
+            // Count games for each tag
+            var tagIdCounts = await _context.GameTags
+                .GroupBy(gt => gt.TagId)
+                .Select(g => new { TagId = g.Key, Count = g.Count() })
+                .ToDictionaryAsync(g => g.TagId, g => g.Count);
+
+            ViewBag.TagGameCounts = tagIdCounts;
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+
+            return View(tags);
+        }
+
+        // GET: Show create tag form
+        public IActionResult CreateTag()
+        {
+            // Check if user is admin
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            return View();
+        }
+
+        // POST: Create a new tag
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateTag(Tag tag)
+        {
+            // Check if user is admin
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (ModelState.IsValid)
+            {
+                // Generate slug if not provided
+                if (string.IsNullOrEmpty(tag.Slug))
+                {
+                    tag.Slug = tag.Name.ToLower().Replace(" ", "-");
+                }
+
+                // Check if name already exists
+                if (await _context.Tags.AnyAsync(t => t.Name == tag.Name))
+                {
+                    ModelState.AddModelError("Name", "Tag với tên này đã tồn tại!");
+                    return View(tag);
+                }
+
+                // Check if slug already exists
+                if (await _context.Tags.AnyAsync(t => t.Slug == tag.Slug))
+                {
+                    // Append a number to the slug to make it unique
+                    var baseSlug = tag.Slug;
+                    var slugCount = 1;
+                    while (await _context.Tags.AnyAsync(t => t.Slug == tag.Slug))
+                    {
+                        tag.Slug = $"{baseSlug}-{slugCount}";
+                        slugCount++;
+                    }
+                }
+
+                _context.Add(tag);
+                await _context.SaveChangesAsync();
+                
+                TempData["SuccessMessage"] = "Tag đã được tạo thành công!";
+                return RedirectToAction(nameof(Tags));
+            }
+            return View(tag);
+        }
+
+        // GET: Show edit tag form
+        public async Task<IActionResult> EditTag(int? id)
+        {
+            // Check if user is admin
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var tag = await _context.Tags.FindAsync(id);
+            if (tag == null)
+            {
+                return NotFound();
+            }
+
+            return View(tag);
+        }
+
+        // POST: Update a tag
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditTag(Tag tag)
+        {
+            // Check if user is admin
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Generate slug if not provided
+                    if (string.IsNullOrEmpty(tag.Slug))
+                    {
+                        tag.Slug = tag.Name.ToLower().Replace(" ", "-");
+                    }
+
+                    // Check if name already exists for other tags
+                    var existingNameTag = await _context.Tags
+                        .FirstOrDefaultAsync(t => t.Name == tag.Name && t.Id != tag.Id);
+
+                    if (existingNameTag != null)
+                    {
+                        ModelState.AddModelError("Name", "Tag với tên này đã tồn tại!");
+                        return View(tag);
+                    }
+
+                    // Check if slug already exists for other tags
+                    var existingSlugTag = await _context.Tags
+                        .FirstOrDefaultAsync(t => t.Slug == tag.Slug && t.Id != tag.Id);
+
+                    if (existingSlugTag != null)
+                    {
+                        // Append a number to the slug to make it unique
+                        var baseSlug = tag.Slug;
+                        var slugCount = 1;
+                        while (await _context.Tags.AnyAsync(t => t.Slug == tag.Slug && t.Id != tag.Id))
+                        {
+                            tag.Slug = $"{baseSlug}-{slugCount}";
+                            slugCount++;
+                        }
+                    }
+
+                    _context.Update(tag);
+                    await _context.SaveChangesAsync();
+                    
+                    TempData["SuccessMessage"] = "Tag đã được cập nhật thành công!";
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TagExists(tag.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Tags));
+            }
+            return View(tag);
+        }
+
+        // GET: Confirm delete tag
+        public async Task<IActionResult> DeleteTag(int? id)
+        {
+            // Check if user is admin
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var tag = await _context.Tags.FindAsync(id);
+            if (tag == null)
+            {
+                return NotFound();
+            }
+
+            // Check if tag has games
+            var gameCount = await _context.GameTags.CountAsync(gt => gt.TagId == id);
+            ViewBag.HasGames = gameCount > 0;
+            ViewBag.GameCount = gameCount;
+
+            return View(tag);
+        }
+
+        // POST: Delete a tag
+        [HttpPost, ActionName("DeleteTag")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteTagConfirmed(int id)
+        {
+            // Check if user is admin
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var tag = await _context.Tags.FindAsync(id);
+            if (tag == null)
+            {
+                return NotFound();
+            }
+
+            // Delete all game-tag associations
+            var gameTags = await _context.GameTags.Where(gt => gt.TagId == id).ToListAsync();
+            _context.GameTags.RemoveRange(gameTags);
+
+            _context.Tags.Remove(tag);
+            await _context.SaveChangesAsync();
+
+            TempData["SuccessMessage"] = "Tag đã được xóa thành công!";
+            return RedirectToAction(nameof(Tags));
+        }
+
+        private bool TagExists(int id)
+        {
+            return _context.Tags.Any(t => t.Id == id);
         }
 
         #endregion

@@ -17,7 +17,7 @@
         </a>
     </div>
 
-    <form method="post" enctype="multipart/form-data" asp-action="EditGame" asp-controller="Admin">
+    <form method="post" enctype="multipart/form-data" asp-action="EditGame" asp-controller="Admin" id="editGameForm">
         <input type="hidden" asp-for="Id" />
         <div class="row">
             <!-- Game Info -->
@@ -160,7 +160,7 @@
                 <div class="admin-form-section mb-4">
                     <h4>Hành động</h4>
                     <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary btn-lg">
+                        <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
                             <i class="fas fa-save me-2"></i> Cập nhật game
                         </button>
                         <a href="@Url.Action("DeleteGame", new { id = Model.Id })" class="btn btn-danger">
@@ -217,9 +217,40 @@
                     selector: '#description',
                     height: 300,
                     plugins: 'lists link image code table',
-                    toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link image | table | code'
+                    toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link image | table | code',
+                    setup: function(editor) {
+                        // Update textarea contents before form submission to ensure
+                        // the value is properly included in the form data
+                        editor.on('change', function() {
+                            tinymce.triggerSave();
+                        });
+                    }
                 });
             }
+            
+            // Submit form handler - ensure TinyMCE content is synchronized
+            $('#editGameForm').on('submit', function() {
+                // Make sure content from TinyMCE is saved to the textarea
+                if (typeof tinymce !== 'undefined') {
+                    tinymce.triggerSave();
+                }
+                
+                // Add status indicator
+                $('#submitBtn').html('<i class="fas fa-spinner fa-spin me-2"></i> Đang xử lý...');
+                $('#submitBtn').prop('disabled', true);
+                
+                // The form will continue submission normally
+                return true;
+            });
+            
+            // Fix for model binding issues
+            $('select').each(function() {
+                var select = $(this);
+                var modelValue = select.data('value');
+                if (modelValue) {
+                    select.val(modelValue);
+                }
+            });
         });
     </script>
 }

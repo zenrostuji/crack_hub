@@ -37,6 +37,10 @@
       "PackagePath": "staticwebassets\\css\\game-index.css"
     },
     {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\css\\page-transition.css",
+      "PackagePath": "staticwebassets\\css\\page-transition.css"
+    },
+    {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\css\\profile.css",
       "PackagePath": "staticwebassets\\css\\profile.css"
     },
@@ -61,8 +65,16 @@
       "PackagePath": "staticwebassets\\img\\avartars\\long.jpg"
     },
     {
-      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\games\\0f8819e7-ed6d-4aae-9d80-93fc08d5f407_4cfb1575-c629-4909-b5a4-2187e44ba440_pokemon_black2.jpg",
-      "PackagePath": "staticwebassets\\img\\games\\0f8819e7-ed6d-4aae-9d80-93fc08d5f407_4cfb1575-c629-4909-b5a4-2187e44ba440_pokemon_black2.jpg"
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\games\\09ef5ae3-fdcb-48fd-b719-48168d0ca9b0_sinisistar2.jpg",
+      "PackagePath": "staticwebassets\\img\\games\\09ef5ae3-fdcb-48fd-b719-48168d0ca9b0_sinisistar2.jpg"
+    },
+    {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\games\\449a0b91-1dc2-4d2c-84b7-3194c00d3d91_fear_and_hunger.jpg",
+      "PackagePath": "staticwebassets\\img\\games\\449a0b91-1dc2-4d2c-84b7-3194c00d3d91_fear_and_hunger.jpg"
+    },
+    {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\games\\7e6d53b2-1742-483c-af59-0b50ed804ea3_4cfb1575-c629-4909-b5a4-2187e44ba440_pokemon_black2.jpg",
+      "PackagePath": "staticwebassets\\img\\games\\7e6d53b2-1742-483c-af59-0b50ed804ea3_4cfb1575-c629-4909-b5a4-2187e44ba440_pokemon_black2.jpg"
     },
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\games\\amelie.jpg",
@@ -95,10 +107,6 @@
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\games\\enthralled.jpg",
       "PackagePath": "staticwebassets\\img\\games\\enthralled.jpg"
-    },
-    {
-      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\games\\fear_and_hunger.jpg",
-      "PackagePath": "staticwebassets\\img\\games\\fear_and_hunger.jpg"
     },
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\games\\fear_and_hunger_2.jpg",
@@ -169,8 +177,8 @@
       "PackagePath": "staticwebassets\\img\\games\\screenshots\\03885944-e296-400d-a3e4-536c00fe1b94_ss_f0fbbaa5e31e477f4f131664fbd064ec61302504.1920x1080.jpg"
     },
     {
-      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\games\\screenshots\\2b113734-f45f-4702-bf2d-29368fc6f039_Pokemon-2-.webp",
-      "PackagePath": "staticwebassets\\img\\games\\screenshots\\2b113734-f45f-4702-bf2d-29368fc6f039_Pokemon-2-.webp"
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\games\\screenshots\\228593b8-4999-49c2-a413-137172db1f6f_pkmb2.jpeg",
+      "PackagePath": "staticwebassets\\img\\games\\screenshots\\228593b8-4999-49c2-a413-137172db1f6f_pkmb2.jpeg"
     },
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\games\\screenshots\\5ac0fa99-d83b-44d5-9f50-215cee13b00d_sddefault.jpg",
@@ -189,12 +197,16 @@
       "PackagePath": "staticwebassets\\img\\games\\screenshots\\824529d1-bed6-430e-b5f2-5c38b085a3f4_policenauts_6.png"
     },
     {
-      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\games\\screenshots\\f125156c-5c0d-4d9b-9ad3-02803c2940fc_policenauts_3.jpg",
-      "PackagePath": "staticwebassets\\img\\games\\screenshots\\f125156c-5c0d-4d9b-9ad3-02803c2940fc_policenauts_3.jpg"
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\games\\screenshots\\aee605f7-0f9c-42a4-83c6-90ebcb952a19_ss_673b04dcbc3f1eb26e3ae8f0aae5520df03f9adf.1920x1080.jpg",
+      "PackagePath": "staticwebassets\\img\\games\\screenshots\\aee605f7-0f9c-42a4-83c6-90ebcb952a19_ss_673b04dcbc3f1eb26e3ae8f0aae5520df03f9adf.1920x1080.jpg"
     },
     {
-      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\games\\sinisistar2.jpg",
-      "PackagePath": "staticwebassets\\img\\games\\sinisistar2.jpg"
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\games\\screenshots\\d60976d3-56f4-4139-af2e-b716aaf4057a_34GAou.png",
+      "PackagePath": "staticwebassets\\img\\games\\screenshots\\d60976d3-56f4-4139-af2e-b716aaf4057a_34GAou.png"
+    },
+    {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\games\\screenshots\\f125156c-5c0d-4d9b-9ad3-02803c2940fc_policenauts_3.jpg",
+      "PackagePath": "staticwebassets\\img\\games\\screenshots\\f125156c-5c0d-4d9b-9ad3-02803c2940fc_policenauts_3.jpg"
     },
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\games\\space_fright.jpg",
@@ -253,8 +265,16 @@
       "PackagePath": "staticwebassets\\img\\no-image.jpg"
     },
     {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\screenshots\\34GAou.png",
+      "PackagePath": "staticwebassets\\img\\screenshots\\34GAou.png"
+    },
+    {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\screenshots\\4cfb1575-c629-4909-b5a4-2187e44ba440_pokemon_black2.jpg",
       "PackagePath": "staticwebassets\\img\\screenshots\\4cfb1575-c629-4909-b5a4-2187e44ba440_pokemon_black2.jpg"
+    },
+    {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\screenshots\\IMG_UPLOAD_20250411_124024.jpg",
+      "PackagePath": "staticwebassets\\img\\screenshots\\IMG_UPLOAD_20250411_124024.jpg"
     },
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\screenshots\\amelie.jpg",
@@ -349,6 +369,10 @@
       "PackagePath": "staticwebassets\\img\\screenshots\\occult_rewrite.jpg"
     },
     {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\screenshots\\pkmb2.jpeg",
+      "PackagePath": "staticwebassets\\img\\screenshots\\pkmb2.jpeg"
+    },
+    {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\screenshots\\policenauts.jpg",
       "PackagePath": "staticwebassets\\img\\screenshots\\policenauts.jpg"
     },
@@ -379,6 +403,10 @@
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\screenshots\\spiralscouts.jpg",
       "PackagePath": "staticwebassets\\img\\screenshots\\spiralscouts.jpg"
+    },
+    {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\screenshots\\ss_673b04dcbc3f1eb26e3ae8f0aae5520df03f9adf.1920x1080.jpg",
+      "PackagePath": "staticwebassets\\img\\screenshots\\ss_673b04dcbc3f1eb26e3ae8f0aae5520df03f9adf.1920x1080.jpg"
     },
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\screenshots\\ss_f0fbbaa5e31e477f4f131664fbd064ec61302504.1920x1080.jpg",
@@ -419,6 +447,18 @@
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\screenshots\\utawarerumono_prelude.jpg",
       "PackagePath": "staticwebassets\\img\\screenshots\\utawarerumono_prelude.jpg"
+    },
+    {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\js\\game-features.js",
+      "PackagePath": "staticwebassets\\js\\game-features.js"
+    },
+    {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\js\\page-transition.js",
+      "PackagePath": "staticwebassets\\js\\page-transition.js"
+    },
+    {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\js\\screenshots-gallery.js",
+      "PackagePath": "staticwebassets\\js\\screenshots-gallery.js"
     },
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\js\\site.js",

@@ -68,6 +68,11 @@ namespace crackhub.Controllers
             HttpContext.Session.SetString("UserId", user.Id.ToString());
             HttpContext.Session.SetString("UserName", user.DisplayName ?? user.FirstName + " " + user.LastName);
             HttpContext.Session.SetString("UserRole", user.RoleId.ToString());
+            // Store avatar URL in session
+            if (!string.IsNullOrEmpty(user.AvatarUrl))
+            {
+                HttpContext.Session.SetString("AvatarUrl", user.AvatarUrl);
+            }
 
             // If return URL is specified and is local, redirect there
             if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
@@ -133,6 +138,13 @@ namespace crackhub.Controllers
                 CreatedAt = DateTime.Now,
             };
 
+            // Handle avatar if provided (code would need to be added here)
+            // If avatar URL is set, store it in session
+            if (!string.IsNullOrEmpty(user.AvatarUrl))
+            {
+                HttpContext.Session.SetString("AvatarUrl", user.AvatarUrl);
+            }
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
@@ -183,13 +195,38 @@ namespace crackhub.Controllers
                 return NotFound();
             }
 
-            // Update display name and email if provided
-            if (!string.IsNullOrEmpty(displayName))
+            // Check if user is trying to change display name
+            if (!string.IsNullOrEmpty(displayName) && user.DisplayName != displayName)
             {
+                // Check if user has permission to change DisplayName
+                bool canChangeDisplayName = 
+                    user.RoleId == 3 || // Admin
+                    user.RoleId == 2 || // Moderator
+                    (user.PremiumExpiryDate.HasValue && user.PremiumExpiryDate.Value > DateTime.Now); // Premium user
+                
+                if (!canChangeDisplayName)
+                {
+                    ModelState.AddModelError("DisplayName", "Chỉ tài khoản Admin, Moderator hoặc Premium mới được thay đổi tên hiển thị");
+                    // Load user activity history for the profile view
+                    await LoadUserActivityHistory(user.Id);
+                    return View("Profile", user);
+                }
+                
+                // Check if the new display name already exists
+                if (await _context.Users.AnyAsync(u => u.DisplayName == displayName && u.Id != id))
+                {
+                    ModelState.AddModelError("DisplayName", "Tên hiển thị này đã tồn tại");
+                    // Load user activity history for the profile view
+                    await LoadUserActivityHistory(user.Id);
+                    return View("Profile", user);
+                }
+                
+                // Update the display name
                 user.DisplayName = displayName;
                 HttpContext.Session.SetString("UserName", displayName);
             }
 
+            // Update email if provided
             if (!string.IsNullOrEmpty(email))
             {
                 user.Email = email;
@@ -227,6 +264,8 @@ namespace crackhub.Controllers
 
                 // Update user avatar URL
                 user.AvatarUrl = $"/img/avartars/{uniqueFileName}";
+                // Update avatar URL in session
+                HttpContext.Session.SetString("AvatarUrl", user.AvatarUrl);
             }
 
             // If user is trying to change password
@@ -236,6 +275,7 @@ namespace crackhub.Controllers
                 if (string.IsNullOrEmpty(currentPassword) || user.PasswordHash != HashPassword(currentPassword))
                 {
                     ModelState.AddModelError("CurrentPassword", "Mật khẩu hiện tại không chính xác");
+                    await LoadUserActivityHistory(user.Id);
                     return View("Profile", user);
                 }
 
@@ -243,6 +283,7 @@ namespace crackhub.Controllers
                 if (newPassword != confirmPassword)
                 {
                     ModelState.AddModelError("ConfirmPassword", "Mật khẩu xác nhận không khớp");
+                    await LoadUserActivityHistory(user.Id);
                     return View("Profile", user);
                 }
 

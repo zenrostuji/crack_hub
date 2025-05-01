@@ -1,0 +1,185 @@
+@model IEnumerable<crackhub.Models.Data.Game>
+@{
+    ViewData["Title"] = "Gán Tag cho Game";
+    Layout = "_ModeratorLayout";
+    var currentPage = ViewBag.CurrentPage;
+    var totalPages = ViewBag.TotalPages;
+    var searchTerm = ViewBag.SearchTerm ?? "";
+    var currentSort = ViewBag.CurrentSort ?? "newest";
+    var titleSortParam = ViewBag.TitleSortParam;
+}
+
+<div class="moderator-game-tags">
+    <!-- Filter & Search Row -->
+    <div class="admin-card mb-4">
+        <div class="admin-card-body">
+            <div class="row">
+                <div class="col-lg-8">
+                    <form method="get" class="d-flex">
+                        <div class="input-group">
+                            <input type="text" name="searchTerm" class="form-control" placeholder="Tìm kiếm game..."
+                                   value="@searchTerm">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <input type="hidden" name="sortOrder" value="@currentSort" />
+                        <input type="hidden" name="page" value="1" />
+                    </form>
+                </div>
+                <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-sort me-1"></i> Sắp xếp
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="sortDropdown">
+                            <li>
+                                <a class="dropdown-item @(currentSort == "newest" ? "active" : "")" 
+                                   href="@Url.Action("GameTags", new { searchTerm = searchTerm, sortOrder = "newest", page = currentPage })">
+                                    <i class="fas fa-calendar-alt me-2"></i> Mới nhất
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item @(currentSort == "title" ? "active" : "")" 
+                                   href="@Url.Action("GameTags", new { searchTerm = searchTerm, sortOrder = "title", page = currentPage })">
+                                    <i class="fas fa-sort-alpha-down me-2"></i> Tên (A-Z)
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item @(currentSort == "title_desc" ? "active" : "")" 
+                                   href="@Url.Action("GameTags", new { searchTerm = searchTerm, sortOrder = "title_desc", page = currentPage })">
+                                    <i class="fas fa-sort-alpha-down-alt me-2"></i> Tên (Z-A)
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Games Table -->
+    <div class="admin-card">
+        <div class="admin-card-header">
+            <h5><i class="fas fa-gamepad me-2"></i>Danh sách Game</h5>
+            <div>
+                <span class="badge bg-info">Chọn game để gán tag</span>
+            </div>
+        </div>
+        <div class="admin-card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th style="width: 70px;">ID</th>
+                            <th style="width: 90px;">Ảnh</th>
+                            <th>
+                                <a href="@Url.Action("GameTags", new { searchTerm = searchTerm, sortOrder = titleSortParam, page = currentPage })" 
+                                   class="text-decoration-none text-dark">
+                                    Tên Game
+                                    @if (currentSort == "title") { <i class="fas fa-sort-down ms-1"></i> }
+                                    else if (currentSort == "title_desc") { <i class="fas fa-sort-up ms-1"></i> }
+                                    else { <i class="fas fa-sort ms-1 text-muted opacity-50"></i> }
+                                </a>
+                            </th>
+                            <th>Thể loại</th>
+                            <th>Tags</th>
+                            <th style="width: 120px;" class="text-end">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var game in Model)
+                            {
+                                <tr>
+                                    <td>@game.Id</td>
+                                    <td>
+                                        <img src="@(string.IsNullOrEmpty(game.CoverImageUrl) ? "/img/no-image.jpg" : game.CoverImageUrl)" 
+                                             class="img-thumbnail" alt="@game.Title" style="height: 50px; width: 40px; object-fit: cover;" />
+                                    </td>
+                                    <td>
+                                        <div class="fw-bold">@game.Title</div>
+                                        <small class="text-muted">@game.Developer</small>
+                                    </td>
+                                    <td>
+                                        @if (game.Category != null)
+                                        {
+                                            <span class="badge bg-secondary">@game.Category.CategoryName</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (game.GameTags != null && game.GameTags.Any())
+                                        {
+                                            <div class="game-tags d-flex flex-wrap gap-1">
+                                                @foreach (var gameTag in game.GameTags.Take(3))
+                                                {
+                                                    <span class="badge bg-primary">@gameTag.Tag?.Name</span>
+                                                }
+                                                @if (game.GameTags.Count() > 3)
+                                                {
+                                                    <span class="badge bg-secondary">+@(game.GameTags.Count() - 3)</span>
+                                                }
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-light text-dark">Chưa có tag</span>
+                                        }
+                                    </td>
+                                    <td class="text-end">
+                                        <a href="@Url.Action("ManageGameTags", new { id = game.Id })" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-tags me-1"></i> Quản lý tags
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center py-4">
+                                    <div class="alert alert-info mb-0">
+                                        <i class="fas fa-info-circle me-2"></i> Không tìm thấy game nào.
+                                        @if (!string.IsNullOrEmpty(searchTerm))
+                                        {
+                                            <a href="@Url.Action("GameTags")" class="alert-link">Xóa bộ lọc</a>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        @if (totalPages > 1)
+        {
+            <div class="admin-card-footer">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center mb-0">
+                        <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                            <a class="page-link" href="@Url.Action("GameTags", new { searchTerm = searchTerm, sortOrder = currentSort, page = currentPage - 1 })" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        
+                        @for (int i = 1; i <= totalPages; i++)
+                        {
+                            <li class="page-item @(i == currentPage ? "active" : "")">
+                                <a class="page-link" href="@Url.Action("GameTags", new { searchTerm = searchTerm, sortOrder = currentSort, page = i })">@i</a>
+                            </li>
+                        }
+                        
+                        <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                            <a class="page-link" href="@Url.Action("GameTags", new { searchTerm = searchTerm, sortOrder = currentSort, page = currentPage + 1 })" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        }
+    </div>
+</div>

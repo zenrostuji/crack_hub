@@ -39,7 +39,22 @@
 
                         <div class="profile-form-group">
                             <label asp-for="DisplayName">Username</label>
-                            <input asp-for="DisplayName" class="form-control profile-form-control" readonly />
+                            @{
+                                bool canEditDisplayName = 
+                                    Model.RoleId == 3 || // Admin
+                                    Model.RoleId == 2 || // Moderator
+                                    (Model.PremiumExpiryDate.HasValue && Model.PremiumExpiryDate.Value > DateTime.Now); // Premium user
+                            }
+                            @if (canEditDisplayName)
+                            {
+                                <input asp-for="DisplayName" class="form-control profile-form-control" />
+                            }
+                            else
+                            {
+                                <input asp-for="DisplayName" class="form-control profile-form-control" readonly="readonly" />
+                                <small class="text-muted">Chỉ tài khoản Admin, Moderator hoặc Premium mới được thay đổi tên hiển thị</small>
+                            }
+                            <span asp-validation-for="DisplayName" class="text-danger"></span>
                         </div>
 
                         <div class="profile-form-group">

@@ -4,8 +4,18 @@
 @{
     var isAuthenticated = HttpContextAccessor.HttpContext.Session.GetString("UserId") != null;
     var userName = HttpContextAccessor.HttpContext.Session.GetString("UserName");
-    var userRole = HttpContextAccessor.HttpContext.Session.GetString("UserRole");
-    var isAdmin = !string.IsNullOrEmpty(userRole) && userRole == "3"; // Admin role ID is 3
+    var userRoleString = HttpContextAccessor.HttpContext.Session.GetString("UserRole");
+    var userRole = !string.IsNullOrEmpty(userRoleString) ? int.Parse(userRoleString) : 0;
+    var isAdmin = userRole == 3; // Admin role ID is 3
+    var isModerator = userRole == 2; // Moderator role ID is 2
+    var userId = HttpContextAccessor.HttpContext.Session.GetString("UserId");
+    var avatarUrl = HttpContextAccessor.HttpContext.Session.GetString("AvatarUrl");
+    
+    // Default avatar if none set
+    if (string.IsNullOrEmpty(avatarUrl))
+    {
+        avatarUrl = "/img/no-image.jpg";
+    }
 }
 
 <ul class="navbar-nav">
@@ -18,7 +28,7 @@
     </li>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fas fa-user-circle me-1"></i> @userName
+            <img src="@avatarUrl" class="rounded-circle me-1" style="width: 24px; height: 24px; object-fit: cover;" alt="@userName"> @userName
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
             <li>
@@ -37,6 +47,15 @@
                 <li>
                     <a class="dropdown-item" href="@Url.Action("Index", "Admin")">
                         <i class="fas fa-cog me-1"></i> Quản trị hệ thống
+                    </a>
+                </li>
+            }
+            @if (isModerator || isAdmin) // Cả Moderator và Admin đều có thể quản lý tag
+            {
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <a class="dropdown-item" href="@Url.Action("Index", "Moderator")">
+                        <i class="fas fa-tags me-1"></i> Quản lý Tag
                     </a>
                 </li>
             }

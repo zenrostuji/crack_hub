@@ -345,7 +345,7 @@ namespace crackhub.Controllers
                 return Json(new { success = false, message = "Bạn cần đăng nhập để đánh giá game!" });
             }
 
-            if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(content) || rating < 1 || rating > 5)
+            if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(content) || rating < 1 || rating > 10)
             {
                 return Json(new { success = false, message = "Vui lòng điền đầy đủ thông tin đánh giá!" });
             }
@@ -478,6 +478,164 @@ namespace crackhub.Controllers
             }
             
             return userId;
+        }
+
+        // GET: /Game/Tag/{tagSlug}
+        public async Task<IActionResult> Tag(string id, int page = 1, string sort = "newest")
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return RedirectToAction("Index");
+            }
+
+            // Tìm tag theo slug hoặc theo id
+            Tag tag;
+            if (int.TryParse(id, out int tagId))
+            {
+                tag = await _context.Tags.FindAsync(tagId);
+            }
+            else
+            {
+                tag = await _context.Tags.FirstOrDefaultAsync(t => t.Slug == id);
+            }
+
+            if (tag == null)
+            {
+                return NotFound();
+            }
+
+            // Lấy tất cả game có tag này
+            var gamesQuery = _context.Games
+                .Include(g => g.Category)
+                .Include(g => g.GameTags)
+                .Where(g => g.GameTags.Any(gt => gt.TagId == tag.Id));
+
+            // Áp dụng sắp xếp
+            switch (sort.ToLower())
+            {
+                case "popular":
+                    gamesQuery = gamesQuery.OrderByDescending(g => g.Downloads);
+                    break;
+                case "rating":
+                    gamesQuery = gamesQuery.OrderByDescending(g => g.AverageRating);
+                    break;
+                default: // newest
+                    gamesQuery = gamesQuery.OrderByDescending(g => g.Id);
+                    break;
+            }
+
+            // Đếm tổng số game có tag này
+            var totalGames = await gamesQuery.CountAsync();
+            var totalPages = (int)Math.Ceiling((double)totalGames / PageSize);
+
+            // Lấy game cho trang hiện tại
+            var games = await gamesQuery
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize)
+                .ToListAsync();
+
+            // Lấy tất cả các tag để hiển thị filter
+            var allTags = await _context.Tags
+                .OrderBy(t => t.Name)
+                .ToListAsync();
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.Tag = tag;
+            ViewBag.AllTags = allTags;
+            ViewBag.CurrentSort = sort;
+            ViewBag.TotalGameCount = totalGames;
+            ViewBag.TagIds = new List<int> { tag.Id };
+
+            // Get user's favorite games for favorites button
+            var userId = GetUserId();
+            if (!string.IsNullOrEmpty(userId))
+            {
+                var favoriteGameIds = await _context.FavoriteGames
+                    .Where(fg => fg.UserId == userId)
+                    .Select(fg => fg.GameId)
+                    .ToListAsync();
+                
+                ViewBag.FavoriteGameIds = favoriteGameIds;
+            }
+
+            return View("ByTag", games);
+        }
+
+        // GET: /Game/Tags - Lọc game theo nhiều tag
+        public async Task<IActionResult> Tags(List<int> tags, int page = 1, string sort = "newest")
+        {
+            if (tags == null || !tags.Any())
+            {
+                return RedirectToAction("Index");
+            }
+
+            // Lấy thông tin của các tag đã chọn
+            var selectedTags = await _context.Tags
+                .Where(t => tags.Contains(t.Id))
+                .ToListAsync();
+
+            if (!selectedTags.Any())
+            {
+                return RedirectToAction("Index");
+            }
+
+            // Lấy tất cả game có chứa một trong các tag đã chọn
+            var gamesQuery = _context.Games
+                .Include(g => g.Category)
+                .Include(g => g.GameTags)
+                .Where(g => g.GameTags.Any(gt => tags.Contains(gt.TagId)));
+
+            // Áp dụng sắp xếp
+            switch (sort.ToLower())
+            {
+                case "popular":
+                    gamesQuery = gamesQuery.OrderByDescending(g => g.Downloads);
+                    break;
+                case "rating":
+                    gamesQuery = gamesQuery.OrderByDescending(g => g.AverageRating);
+                    break;
+                default: // newest
+                    gamesQuery = gamesQuery.OrderByDescending(g => g.Id);
+                    break;
+            }
+
+            // Đếm tổng số game thoả mãn điều kiện
+            var totalGames = await gamesQuery.CountAsync();
+            var totalPages = (int)Math.Ceiling((double)totalGames / PageSize);
+
+            // Lấy game cho trang hiện tại
+            var games = await gamesQuery
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize)
+                .ToListAsync();
+
+            // Lấy tất cả các tag để hiển thị filter
+            var allTags = await _context.Tags
+                .OrderBy(t => t.Name)
+                .ToListAsync();
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.SelectedTags = selectedTags;
+            ViewBag.AllTags = allTags;
+            ViewBag.CurrentSort = sort;
+            ViewBag.TotalGameCount = totalGames;
+            ViewBag.TagIds = tags;
+
+            // Get user's favorite games for favorites button
+            var userId = GetUserId();
+            if (!string.IsNullOrEmpty(userId))
+            {
+                var favoriteGameIds = await _context.FavoriteGames
+                    .Where(fg => fg.UserId == userId)
+                    .Select(fg => fg.GameId)
+                    .ToListAsync();
+                
+                ViewBag.FavoriteGameIds = favoriteGameIds;
+            }
+
+            return View("ByTag", games);
         }
     }
 }

@@ -1,0 +1,256 @@
+@model crackhub.Models.Data.Game
+@{
+    ViewData["Title"] = $"Quản lý Tag cho {Model.Title}";
+    Layout = "_ModeratorLayout";
+    var allTags = ViewBag.AllTags as List<crackhub.Models.Data.Tag>;
+    var selectedTagIds = ViewBag.SelectedTagIds as List<int>;
+}
+
+<div class="moderator-manage-game-tags">
+    <div class="admin-page-title-container mb-4">
+        <h4 class="admin-page-title">
+            <i class="fas fa-tags me-2"></i> Quản lý tags cho game: @Model.Title
+        </h4>
+        <a href="@Url.Action("GameTags", "Moderator")" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> Quay lại
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="admin-form-section">
+                <form method="post" asp-action="UpdateGameTags" asp-controller="Moderator">
+                    <input type="hidden" name="gameId" value="@Model.Id" />
+                    
+                    <div class="mb-4">
+                        <label class="admin-form-label">Chọn tags cho game này</label>
+                        <div class="tag-selector">
+                            @if (allTags != null && allTags.Any())
+                            {
+                                foreach (var tag in allTags)
+                                {
+                                    bool isSelected = selectedTagIds != null && selectedTagIds.Contains(tag.Id);
+                                    <div class="tag-item @(isSelected ? "selected" : "")">
+                                        <input type="checkbox" name="tagIds" value="@tag.Id" id="tag_@tag.Id" 
+                                               @(isSelected ? "checked" : "") class="d-none" />
+                                        <label for="tag_@tag.Id" class="tag-label">
+                                            @tag.Name
+                                        </label>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle me-2"></i> Chưa có tag nào. Hãy <a href="@Url.Action("CreateTag", "Moderator")">tạo tag mới</a> trước.
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-4">
+                        <div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i> Lưu thay đổi
+                            </button>
+                            <a href="@Url.Action("GameTags", "Moderator")" class="btn btn-outline-secondary">
+                                Hủy
+                            </a>
+                        </div>
+                        <div>
+                            <a href="@Url.Action("CreateTag", "Moderator")" class="btn btn-outline-primary">
+                                <i class="fas fa-plus-circle me-2"></i> Thêm tag mới
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="admin-form-section">
+                <h4>Thông tin Game</h4>
+                <div class="game-info-card">
+                    <div class="game-cover">
+                        <img src="@(string.IsNullOrEmpty(Model.CoverImageUrl) ? "/img/no-image.jpg" : Model.CoverImageUrl)" 
+                             alt="@Model.Title" />
+                    </div>
+                    <div class="game-details">
+                        <h5>@Model.Title</h5>
+                        <div class="game-meta">
+                            <div class="meta-item">
+                                <span class="meta-label">Nhà phát triển:</span>
+                                <span class="meta-value">@(string.IsNullOrEmpty(Model.Developer) ? "Không có" : Model.Developer)</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Thể loại:</span>
+                                <span class="meta-value">
+                                    @if (Model.Category != null)
+                                    {
+                                        <span class="badge bg-secondary">@Model.Category.CategoryName</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Không có</span>
+                                    }
+                                </span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Ngày phát hành:</span>
+                                <span class="meta-value">
+                                    @(Model.ReleaseDate.HasValue ? Model.ReleaseDate.Value.ToString("dd/MM/yyyy") : "Không có")
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <h5>Tag hiện tại (@(selectedTagIds?.Count ?? 0))</h5>
+                    <div class="current-tags">
+                        @if (Model.GameTags != null && Model.GameTags.Any())
+                        {
+                            foreach (var gameTag in Model.GameTags)
+                            {
+                                <span class="badge bg-primary">@gameTag.Tag?.Name</span>
+                            }
+                        }
+                        else
+                        {
+                            <div class="alert alert-light">
+                                <i class="fas fa-info-circle me-2"></i> Game này chưa có tag nào.
+                            </div>
+                        }
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <div class="alert alert-info">
+                        <i class="fas fa-lightbulb me-2"></i> <strong>Mẹo:</strong><br>
+                        Tags giúp người dùng tìm kiếm game dễ dàng hơn. Hãy thêm các tag phù hợp với nội dung, cốt truyện, lối chơi và thể loại của game.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .tag-selector {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+        padding: 15px;
+        border: 1px solid #e0e0e0;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    
+    .tag-item {
+        position: relative;
+        transition: all 0.2s;
+    }
+    
+    .tag-label {
+        display: inline-block;
+        padding: 8px 15px;
+        background-color: #e9ecef;
+        color: #495057;
+        border-radius: 30px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        user-select: none;
+    }
+    
+    .tag-item.selected .tag-label {
+        background-color: #3461aa;
+        color: white;
+    }
+    
+    .tag-label:hover {
+        background-color: #dee2e6;
+    }
+    
+    .tag-item.selected .tag-label:hover {
+        background-color: #2a4d87;
+    }
+    
+    .game-info-card {
+        display: flex;
+        flex-direction: column;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    
+    .game-cover {
+        height: 200px;
+        overflow: hidden;
+    }
+    
+    .game-cover img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .game-details {
+        padding: 15px;
+        background-color: #f8f9fa;
+    }
+    
+    .game-details h5 {
+        margin-bottom: 10px;
+        color: #343a40;
+    }
+    
+    .game-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .meta-item {
+        display: flex;
+        font-size: 0.9rem;
+    }
+    
+    .meta-label {
+        color: #6c757d;
+        width: 110px;
+        flex-shrink: 0;
+    }
+    
+    .meta-value {
+        color: #343a40;
+        font-weight: 500;
+    }
+    
+    .current-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 10px;
+    }
+    
+    .current-tags .badge {
+        font-size: 0.85rem;
+        padding: 6px 10px;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Toggle tag selection when clicking on labels
+            $('.tag-label').on('click', function() {
+                $(this).parent().toggleClass('selected');
+            });
+        });
+    </script>
+}

@@ -296,6 +296,9 @@ namespace crackhub.Controllers
                         return NotFound();
                     }
 
+                    // Lưu đường dẫn ảnh cũ trước để sau này gán lại nếu không có ảnh mới
+                    string existingCoverImageUrl = existingGame.CoverImageUrl;
+
                     // Handle cover image upload if provided
                     if (coverImage != null && coverImage.Length > 0)
                     {
@@ -316,12 +319,12 @@ namespace crackhub.Controllers
                         }
 
                         // Delete old image if exists
-                        if (!string.IsNullOrEmpty(existingGame.CoverImageUrl) && 
-                            !existingGame.CoverImageUrl.Contains("no-image.jpg") && 
-                            existingGame.CoverImageUrl.Contains("games"))
+                        if (!string.IsNullOrEmpty(existingCoverImageUrl) && 
+                            !existingCoverImageUrl.Contains("no-image.jpg") && 
+                            existingCoverImageUrl.Contains("games"))
                         {
                             var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", 
-                                existingGame.CoverImageUrl.TrimStart('/').Replace('/', '\\'));
+                                existingCoverImageUrl.TrimStart('/').Replace('/', '\\'));
                             if (System.IO.File.Exists(oldFilePath))
                             {
                                 System.IO.File.Delete(oldFilePath);
@@ -334,7 +337,7 @@ namespace crackhub.Controllers
                     else
                     {
                         // Keep existing cover image - this is important for when no new image is uploaded
-                        game.CoverImageUrl = existingGame.CoverImageUrl;
+                        game.CoverImageUrl = existingCoverImageUrl;
                     }
                     
                     // Cập nhật từng thuộc tính thay vì sử dụng SetValues
@@ -910,99 +913,108 @@ namespace crackhub.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            if (ModelState.IsValid)
+            try
             {
-                try
+                // Get existing user from database
+                var existingUser = await _context.Users.FindAsync(user.Id);
+                if (existingUser == null)
                 {
-                    var existingUser = await _context.Users.FindAsync(user.Id);
-                    if (existingUser == null)
-                    {
-                        return NotFound();
-                    }
-
-                    // Check username uniqueness if changed
-                    if (existingUser.DisplayName != user.DisplayName && 
-                        await _context.Users.AnyAsync(u => u.DisplayName == user.DisplayName))
-                    {
-                        ModelState.AddModelError("DisplayName", "Username already exists");
-                        ViewBag.Roles = await _context.Roles.ToListAsync();
-                        return View(user);
-                    }
-
-                    // Check email uniqueness if changed
-                    if (!string.IsNullOrEmpty(user.Email) && existingUser.Email != user.Email && 
-                        await _context.Users.AnyAsync(u => u.Email == user.Email))
-                    {
-                        ModelState.AddModelError("Email", "Email already exists");
-                        ViewBag.Roles = await _context.Roles.ToListAsync();
-                        return View(user);
-                    }
-
-                    // Update password if provided
-                    if (!string.IsNullOrEmpty(newPassword))
-                    {
-                        existingUser.PasswordHash = HashPassword(newPassword);
-                    }
-
-                    // Handle avatar upload if provided
-                    if (avatarFile != null && avatarFile.Length > 0)
-                    {
-                        var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "avartars");
-                        if (!Directory.Exists(uploadsFolder))
-                        {
-                            Directory.CreateDirectory(uploadsFolder);
-                        }
-
-                        // Use DisplayName as filename, ensure no invalid characters
-                        string fileName = user.DisplayName.Trim();
-                        fileName = string.Join("_", fileName.Split(Path.GetInvalidFileNameChars()));
-                        string uniqueFileName = $"{fileName}.jpg";
-                        var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                        // If file exists, delete it
-                        if (System.IO.File.Exists(filePath))
-                        {
-                            System.IO.File.Delete(filePath);
-                        }
-
-                        // Save the file
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await avatarFile.CopyToAsync(fileStream);
-                        }
-
-                        // Set avatar URL
-                        existingUser.AvatarUrl = $"/img/avartars/{uniqueFileName}";
-                    }
-
-                    // Update user properties
-                    existingUser.FirstName = user.FirstName;
-                    existingUser.LastName = user.LastName;
-                    existingUser.DisplayName = user.DisplayName;
-                    existingUser.Email = user.Email;
-                    existingUser.RoleId = user.RoleId;
-                    existingUser.Bio = user.Bio;
-                    existingUser.PremiumExpiryDate = user.PremiumExpiryDate;
-                    existingUser.EmailConfirmed = user.EmailConfirmed;
-
-                    // Update the entity
-                    _context.Update(existingUser);
-                    await _context.SaveChangesAsync();
-                    
-                    TempData["SuccessMessage"] = "Thông tin người dùng đã được cập nhật thành công!";
-                    return RedirectToAction(nameof(Users));
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
+
+                // Check username uniqueness if changed
+                if (existingUser.DisplayName != user.DisplayName && 
+                    await _context.Users.AnyAsync(u => u.DisplayName == user.DisplayName))
                 {
-                    if (!UserExists(user.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    ModelState.AddModelError("DisplayName", "Username already exists");
+                    ViewBag.Roles = await _context.Roles.ToListAsync();
+                    return View(user);
                 }
+
+                // Check email uniqueness if changed
+                if (!string.IsNullOrEmpty(user.Email) && existingUser.Email != user.Email && 
+                    await _context.Users.AnyAsync(u => u.Email == user.Email))
+                {
+                    ModelState.AddModelError("Email", "Email already exists");
+                    ViewBag.Roles = await _context.Roles.ToListAsync();
+                    return View(user);
+                }
+
+                // Update password if provided
+                if (!string.IsNullOrEmpty(newPassword))
+                {
+                    existingUser.PasswordHash = HashPassword(newPassword);
+                }
+
+                // Handle avatar upload if provided
+                if (avatarFile != null && avatarFile.Length > 0)
+                {
+                    var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "avartars");
+                    if (!Directory.Exists(uploadsFolder))
+                    {
+                        Directory.CreateDirectory(uploadsFolder);
+                    }
+
+                    // Use DisplayName as filename, ensure no invalid characters
+                    string fileName = user.DisplayName.Trim();
+                    fileName = string.Join("_", fileName.Split(Path.GetInvalidFileNameChars()));
+                    string uniqueFileName = $"{fileName}.jpg";
+                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    // If file exists, delete it
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+
+                    // Save the file
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await avatarFile.CopyToAsync(fileStream);
+                    }
+
+                    // Set avatar URL
+                    existingUser.AvatarUrl = $"/img/avartars/{uniqueFileName}";
+                }
+
+                // Update user properties
+                existingUser.DisplayName = user.DisplayName;
+                existingUser.FirstName = user.FirstName;
+                existingUser.LastName = user.LastName;
+                existingUser.Email = user.Email;
+                existingUser.RoleId = user.RoleId;
+                existingUser.Bio = user.Bio;
+                existingUser.PremiumExpiryDate = user.PremiumExpiryDate;
+                existingUser.EmailConfirmed = user.EmailConfirmed;
+                existingUser.NormalizedEmail = user.Email?.ToUpper();
+                existingUser.RememberMe = user.RememberMe;
+                existingUser.SecurityStamp = user.SecurityStamp;
+
+                // Update the entity using Entry method
+                _context.Entry(existingUser).State = EntityState.Modified;
+                
+                // Save changes to database
+                var result = await _context.SaveChangesAsync();
+                
+                TempData["SuccessMessage"] = $"Thông tin người dùng đã được cập nhật thành công! ({result} records affected)";
+                return RedirectToAction(nameof(Users));
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserExists(user.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log lỗi và thêm vào ModelState để hiển thị
+                ModelState.AddModelError("", $"Lỗi: {ex.Message}");
+                TempData["ErrorMessage"] = $"Có lỗi xảy ra: {ex.Message}";
             }
 
             // If we got this far, something failed

@@ -1,0 +1,123 @@
+/* Page Transition Effects */
+
+/* Lớp chứa hiệu ứng chuyển trang */
+.page-transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #5d4ec7;
+    z-index: 9999;
+    transform: translateY(100%);
+    transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-transition-overlay.active {
+    transform: translateY(0);
+}
+
+.page-transition-overlay.fade-out {
+    transform: translateY(-100%);
+}
+
+/* Logo hiển thị khi chuyển trang */
+.transition-logo {
+    width: 80px;
+    height: 80px;
+    background-image: url('/img/logo.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    animation: pulse 1s infinite alternate;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.transition-logo.visible {
+    opacity: 1;
+}
+
+/* Hiệu ứng loading cho logo */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+/* Loader xoay tròn */
+.transition-spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spinner 0.8s linear infinite;
+    position: absolute;
+}
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Thông báo loading */
+.transition-text {
+    position: absolute;
+    bottom: 60px;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.transition-text.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hiệu ứng fade cho nội dung trang */
+body {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+body.page-transitioning {
+    opacity: 0.8;
+}
+
+/* Thêm hiệu ứng hover cho các liên kết */
+a {
+    transition: color 0.3s ease;
+}
+
+/* Hiệu ứng riêng cho các nút */
+.btn {
+    transition: all 0.3s ease;
+}
+
+/* Phiên bản nhỏ cho màn hình di động */
+@media (max-width: 768px) {
+    .transition-logo {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .transition-spinner {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .transition-text {
+        font-size: 16px;
+    }
+}

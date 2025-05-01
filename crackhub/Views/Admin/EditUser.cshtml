@@ -25,7 +25,8 @@
         <input type="hidden" asp-for="CreatedAt" />
         <input type="hidden" asp-for="PasswordHash" />
         <input type="hidden" asp-for="SecurityStamp" />
-        <input type="hidden" asp-for="NormalizedEmail" />
+        <input type="hidden" asp-for="RememberMe" />
+        <input type="hidden" asp-for="NormalizedEmail" value="@(Model.Email?.ToUpper())" />
         
         <div class="row">
             <div class="col-lg-8">

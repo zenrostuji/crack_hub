@@ -96,6 +96,8 @@ namespace crackhub.Controllers
                 .Include(g => g.Screenshots)
                 .Include(g => g.SystemRequirements)
                 .Include(g => g.Features)
+                .Include(g => g.GameTags)
+                    .ThenInclude(gt => gt.Tag)
                 .Include(g => g.Reviews)
                     .ThenInclude(r => r.User)
                 .FirstOrDefaultAsync(g => g.Id == id);

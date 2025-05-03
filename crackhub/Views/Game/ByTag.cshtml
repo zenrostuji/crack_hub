@@ -430,8 +430,8 @@
     
     public int GetGameCountForTag(int tagId)
     {
-        // Count games for the tag - placeholder function
-        // In a real implementation, this would be populated from the controller
-        return 0; // Default value if not found
+        // Get count of games for the tag from ViewBag
+        var tagGameCounts = ViewBag.TagGameCounts as Dictionary<int, int> ?? new Dictionary<int, int>();
+        return tagGameCounts.ContainsKey(tagId) ? tagGameCounts[tagId] : 0;
     }
 }

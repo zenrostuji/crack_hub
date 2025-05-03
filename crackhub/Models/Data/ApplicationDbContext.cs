@@ -28,6 +28,8 @@ namespace crackhub.Models.Data
         public DbSet<GameTag> GameTags { get; set; }
         public DbSet<LocalizationInfo> LocalizationInfos { get; set; }
         public DbSet<RelatedGame> RelatedGames { get; set; }
+        public DbSet<AvatarFrame> AvatarFrames { get; set; }
+        public DbSet<UserAvatarFrame> UserAvatarFrames { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -118,6 +120,24 @@ namespace crackhub.Models.Data
                 .HasOne(rg => rg.RelatedTo)
                 .WithMany()
                 .HasForeignKey(rg => rg.RelatedGameId);
+                
+            // Cấu hình cho AvatarFrame và UserAvatarFrame
+            modelBuilder.Entity<AvatarFrame>()
+                .ToTable("AvatarFrames");
+                
+            modelBuilder.Entity<UserAvatarFrame>()
+                .ToTable("UserAvatarFrames")
+                .HasKey(uaf => new { uaf.UserId, uaf.FrameId });
+                
+            modelBuilder.Entity<UserAvatarFrame>()
+                .HasOne(uaf => uaf.User)
+                .WithMany(u => u.UserAvatarFrames)
+                .HasForeignKey(uaf => uaf.UserId);
+                
+            modelBuilder.Entity<UserAvatarFrame>()
+                .HasOne(uaf => uaf.AvatarFrame)
+                .WithMany(af => af.UserAvatarFrames)
+                .HasForeignKey(uaf => uaf.FrameId);
 
             base.OnModelCreating(modelBuilder);
         }

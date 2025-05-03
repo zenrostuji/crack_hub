@@ -77,6 +77,18 @@
       "PackagePath": "staticwebassets\\img\\avartars\\mesouya.jpg"
     },
     {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\frameAvartar\\basic_frame.png",
+      "PackagePath": "staticwebassets\\img\\frameAvartar\\basic_frame.png"
+    },
+    {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\frameAvartar\\nomal_frame.png",
+      "PackagePath": "staticwebassets\\img\\frameAvartar\\nomal_frame.png"
+    },
+    {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\frameAvartar\\tess_frame.png",
+      "PackagePath": "staticwebassets\\img\\frameAvartar\\tess_frame.png"
+    },
+    {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crackhub\\crackhub\\wwwroot\\img\\games\\449a0b91-1dc2-4d2c-84b7-3194c00d3d91_fear_and_hunger.jpg",
       "PackagePath": "staticwebassets\\img\\games\\449a0b91-1dc2-4d2c-84b7-3194c00d3d91_fear_and_hunger.jpg"
     },

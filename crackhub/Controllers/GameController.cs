@@ -538,6 +538,12 @@ namespace crackhub.Controllers
             var allTags = await _context.Tags
                 .OrderBy(t => t.Name)
                 .ToListAsync();
+                
+            // Đếm số lượng game cho mỗi tag
+            var tagGameCounts = await _context.GameTags
+                .GroupBy(gt => gt.TagId)
+                .Select(g => new { TagId = g.Key, Count = g.Count() })
+                .ToDictionaryAsync(g => g.TagId, g => g.Count);
 
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = totalPages;
@@ -546,6 +552,7 @@ namespace crackhub.Controllers
             ViewBag.CurrentSort = sort;
             ViewBag.TotalGameCount = totalGames;
             ViewBag.TagIds = new List<int> { tag.Id };
+            ViewBag.TagGameCounts = tagGameCounts;
 
             // Get user's favorite games for favorites button
             var userId = GetUserId();
@@ -580,11 +587,13 @@ namespace crackhub.Controllers
                 return RedirectToAction("Index");
             }
 
-            // Lấy tất cả game có chứa một trong các tag đã chọn
+            // Lấy tất cả game có chứa TẤT CẢ các tag đã chọn
             var gamesQuery = _context.Games
                 .Include(g => g.Category)
                 .Include(g => g.GameTags)
-                .Where(g => g.GameTags.Any(gt => tags.Contains(gt.TagId)));
+                .Where(g => tags.All(tagId => 
+                    g.GameTags.Any(gt => gt.TagId == tagId)
+                ));
 
             // Áp dụng sắp xếp
             switch (sort.ToLower())
@@ -614,6 +623,12 @@ namespace crackhub.Controllers
             var allTags = await _context.Tags
                 .OrderBy(t => t.Name)
                 .ToListAsync();
+                
+            // Đếm số lượng game cho mỗi tag
+            var tagGameCounts = await _context.GameTags
+                .GroupBy(gt => gt.TagId)
+                .Select(g => new { TagId = g.Key, Count = g.Count() })
+                .ToDictionaryAsync(g => g.TagId, g => g.Count);
 
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = totalPages;
@@ -622,6 +637,7 @@ namespace crackhub.Controllers
             ViewBag.CurrentSort = sort;
             ViewBag.TotalGameCount = totalGames;
             ViewBag.TagIds = tags;
+            ViewBag.TagGameCounts = tagGameCounts;
 
             // Get user's favorite games for favorites button
             var userId = GetUserId();

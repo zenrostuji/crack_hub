@@ -15,10 +15,12 @@ namespace crackhub.Controllers
     public class AccountController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public AccountController(ApplicationDbContext context)
+        public AccountController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _hostEnvironment = hostEnvironment;
         }
 
         [HttpGet]
@@ -175,12 +177,26 @@ namespace crackhub.Controllers
             }
 
             // Get user details
-            var user = await _context.Users.FindAsync(userId);
+            var user = await _context.Users
+                .Include(u => u.UserAvatarFrames)
+                .ThenInclude(uaf => uaf.AvatarFrame)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+                
             if (user == null)
             {
                 return NotFound();
             }
 
+            // Get all available avatar frames
+            var allFrames = await _context.AvatarFrames.ToListAsync();
+            ViewBag.AllAvatarFrames = allFrames;
+            
+            // Get user's equipped frame
+            var equippedFrame = user.UserAvatarFrames?.FirstOrDefault(f => f.IsEquipped)?.AvatarFrame;
+            ViewBag.EquippedFrame = equippedFrame;
+
+            await LoadUserActivityHistory(user.Id);
+            
             return View(user);
         }
 
@@ -365,6 +381,144 @@ namespace crackhub.Controllers
                 .ToListAsync();
 
             return View(favorites);
+        }
+
+        [HttpGet]
+        public IActionResult GetAvatarFrames()
+        {
+            try
+            {
+                // Get all avatar frames from the directory
+                string frameDirectory = Path.Combine(_hostEnvironment.WebRootPath, "img", "frameAvartar");
+                
+                if (!Directory.Exists(frameDirectory))
+                {
+                    Directory.CreateDirectory(frameDirectory);
+                }
+                
+                var framePaths = Directory.GetFiles(frameDirectory, "*.png")
+                                         .Concat(Directory.GetFiles(frameDirectory, "*.jpg"))
+                                         .Concat(Directory.GetFiles(frameDirectory, "*.gif"));
+                
+                var frames = framePaths.Select(path => new
+                {
+                    name = Path.GetFileNameWithoutExtension(path),
+                    path = $"/img/frameAvartar/{Path.GetFileName(path)}"
+                }).ToList();
+                
+                return Json(frames);
+            }
+            catch (Exception ex)
+            {
+                return Json(new List<object>());
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EquipAvatarFrame(int frameId)
+        {
+            // Check if user is logged in
+            var userId = HttpContext.Session.GetString("UserId");
+            if (userId == null)
+            {
+                return Json(new { success = false, message = "Bạn cần đăng nhập để thực hiện chức năng này" });
+            }
+
+            try
+            {
+                // First, unequip all currently equipped frames for the user
+                var userFrames = await _context.UserAvatarFrames
+                    .Where(f => f.UserId == userId && f.IsEquipped)
+                    .ToListAsync();
+                
+                foreach (var frame in userFrames)
+                {
+                    frame.IsEquipped = false;
+                }
+                
+                // Check if the user has this frame
+                var userFrame = await _context.UserAvatarFrames
+                    .FirstOrDefaultAsync(f => f.UserId == userId && f.FrameId == frameId);
+                
+                if (userFrame != null)
+                {
+                    // User has this frame, equip it
+                    userFrame.IsEquipped = true;
+                }
+                else
+                {
+                    // User doesn't have this frame, check if it's a free frame
+                    var frame = await _context.AvatarFrames.FindAsync(frameId);
+                    if (frame == null)
+                    {
+                        return Json(new { success = false, message = "Khung avatar không tồn tại" });
+                    }
+                    
+                    if (!frame.IsDefault && !frame.IsPremium)
+                    {
+                        // This is not a default or premium frame, check if user meets level requirement
+                        // TODO: Add user level check logic here if needed
+                    }
+                    
+                    // Add frame to user's collection and equip it
+                    userFrame = new UserAvatarFrame
+                    {
+                        UserId = userId,
+                        FrameId = frameId,
+                        IsEquipped = true,
+                        ObtainedDate = DateTime.Now
+                    };
+                    _context.UserAvatarFrames.Add(userFrame);
+                }
+                
+                await _context.SaveChangesAsync();
+                
+                var equippedFrame = await _context.AvatarFrames.FindAsync(frameId);
+                return Json(new { 
+                    success = true, 
+                    message = "Đã trang bị khung avatar thành công", 
+                    frameUrl = equippedFrame?.FrameUrl 
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Có lỗi xảy ra: " + ex.Message });
+            }
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> UnequipAvatarFrame()
+        {
+            // Check if user is logged in
+            var userId = HttpContext.Session.GetString("UserId");
+            if (userId == null)
+            {
+                return Json(new { success = false, message = "Bạn cần đăng nhập để thực hiện chức năng này" });
+            }
+
+            try
+            {
+                // Unequip all currently equipped frames for the user
+                var userFrames = await _context.UserAvatarFrames
+                    .Where(f => f.UserId == userId && f.IsEquipped)
+                    .ToListAsync();
+                
+                foreach (var frame in userFrames)
+                {
+                    frame.IsEquipped = false;
+                }
+                
+                await _context.SaveChangesAsync();
+                
+                return Json(new { 
+                    success = true, 
+                    message = "Đã gỡ khung avatar thành công"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Có lỗi xảy ra: " + ex.Message });
+            }
         }
 
         private string HashPassword(string password)

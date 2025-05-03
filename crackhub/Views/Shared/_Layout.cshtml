@@ -54,15 +54,20 @@
                             <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-tags me-1"></i> Thể loại
                             </a>
-                            <ul class="dropdown-menu category-dropdown-menu" id="categoryDropdownMenu" aria-labelledby="categoryDropdown">
+                            <ul class="dropdown-menu category-dropdown-menu" id="categoryDropdownMenu" aria-labelledby="categoryDropdown" style="margin-top: -2px !important ;">
                                 <div class="category-grid">
                                     @await Component.InvokeAsync("CategoryMenu")
                                 </div>
                             </ul>
                         </li>
-                        <li class="nav-item">
+                        @* <li class="nav-item">
                             <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#contactModal">
                                 <i class="fas fa-envelope me-1"></i> Liên hệ
+                            </a>
+                        </li> *@
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Home" && ViewContext.RouteData.Values["action"].ToString() == "Premium" ? "active" : "")" asp-controller="Home" asp-action="Premium">
+                                <i class="fas fa-crown me-1 text-warning"></i> Premium
                             </a>
                         </li>
                     </ul>

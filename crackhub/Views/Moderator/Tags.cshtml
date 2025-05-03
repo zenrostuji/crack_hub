@@ -1,0 +1,189 @@
+@model IEnumerable<crackhub.Models.Data.Tag>
+@{
+    ViewData["Title"] = "Quản lý Tag Game";
+    Layout = "_ModeratorLayout";
+    var currentPage = ViewBag.CurrentPage;
+    var totalPages = ViewBag.TotalPages;
+    var searchTerm = ViewBag.SearchTerm ?? "";
+    var currentSort = ViewBag.CurrentSort ?? "name";
+    var nameSortParam = ViewBag.NameSortParam;
+    var idSortParam = ViewBag.IdSortParam;
+    var tagGameCounts = ViewBag.TagGameCounts as Dictionary<int, int> ?? new Dictionary<int, int>();
+}
+
+<div class="moderator-tags">
+    <!-- Filter & Search Row -->
+    <div class="admin-card mb-4">
+        <div class="admin-card-body">
+            <div class="row">
+                <div class="col-lg-8">
+                    <form method="get" class="d-flex">
+                        <div class="input-group">
+                            <input type="text" name="searchTerm" class="form-control" placeholder="Tìm kiếm tag..."
+                                   value="@searchTerm">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <input type="hidden" name="sortOrder" value="@currentSort" />
+                        <input type="hidden" name="page" value="1" />
+                    </form>
+                </div>
+                <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                    <a href="@Url.Action("CreateTag")" class="btn btn-primary">
+                        <i class="fas fa-plus-circle me-2"></i> Thêm tag mới
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tags Table -->
+    <div class="admin-card">
+        <div class="admin-card-header">
+            <h5><i class="fas fa-tags me-2"></i>Danh sách Tag Game</h5>
+            <div class="dropdown">
+                <button class="btn btn-sm btn-light dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-sort me-1"></i> Sắp xếp
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="sortDropdown">
+                    <li>
+                        <a class="dropdown-item @(currentSort == "name" ? "active" : "")"
+                           href="@Url.Action("Tags", new { searchTerm = searchTerm, sortOrder = "name", page = currentPage })">
+                            <i class="fas fa-sort-alpha-down me-2"></i> Tên (A-Z)
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item @(currentSort == "name_desc" ? "active" : "")"
+                           href="@Url.Action("Tags", new { searchTerm = searchTerm, sortOrder = "name_desc", page = currentPage })">
+                            <i class="fas fa-sort-alpha-down-alt me-2"></i> Tên (Z-A)
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item @(currentSort == "id" ? "active" : "")"
+                           href="@Url.Action("Tags", new { searchTerm = searchTerm, sortOrder = "id", page = currentPage })">
+                            <i class="fas fa-sort-numeric-down me-2"></i> ID (Thấp đến cao)
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item @(currentSort == "id_desc" ? "active" : "")"
+                           href="@Url.Action("Tags", new { searchTerm = searchTerm, sortOrder = "id_desc", page = currentPage })">
+                            <i class="fas fa-sort-numeric-down-alt me-2"></i> ID (Cao đến thấp)
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="admin-card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th style="width: 80px;">
+                                <a href="@Url.Action("Tags", new { searchTerm = searchTerm, sortOrder = idSortParam, page = currentPage })" 
+                                   class="text-decoration-none text-dark">
+                                    ID 
+                                    @if (currentSort == "id") { <i class="fas fa-sort-down ms-1"></i> }
+                                    else if (currentSort == "id_desc") { <i class="fas fa-sort-up ms-1"></i> }
+                                    else { <i class="fas fa-sort ms-1 text-muted opacity-50"></i> }
+                                </a>
+                            </th>
+                            <th>
+                                <a href="@Url.Action("Tags", new { searchTerm = searchTerm, sortOrder = nameSortParam, page = currentPage })" 
+                                   class="text-decoration-none text-dark">
+                                    Tên Tag
+                                    @if (currentSort == "name") { <i class="fas fa-sort-down ms-1"></i> }
+                                    else if (currentSort == "name_desc") { <i class="fas fa-sort-up ms-1"></i> }
+                                    else { <i class="fas fa-sort ms-1 text-muted opacity-50"></i> }
+                                </a>
+                            </th>
+                            <th>Slug</th>
+                            <th style="width: 100px;">Số Game</th>
+                            <th style="width: 150px;" class="text-end">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var tag in Model)
+                            {
+                                <tr>
+                                    <td>@tag.Id</td>
+                                    <td>
+                                        <span class="badge bg-primary">@tag.Name</span>
+                                    </td>
+                                    <td>@tag.Slug</td>
+                                    <td>
+                                        @{
+                                            int gameCount = tagGameCounts.ContainsKey(tag.Id) ? tagGameCounts[tag.Id] : 0;
+                                        }
+                                        @if (gameCount > 0)
+                                        {
+                                            <span class="badge bg-secondary">@gameCount</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-light text-dark">0</span>
+                                        }
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="btn-group">
+                                            <a href="@Url.Action("EditTag", new { id = tag.Id })" class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-edit me-1"></i> Sửa
+                                            </a>
+                                            <a href="@Url.Action("DeleteTag", new { id = tag.Id })" class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-trash me-1"></i> Xóa
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center py-4">
+                                    <div class="alert alert-info mb-0">
+                                        <i class="fas fa-info-circle me-2"></i> Không tìm thấy tag nào.
+                                        @if (!string.IsNullOrEmpty(searchTerm))
+                                        {
+                                            <a href="@Url.Action("Tags")" class="alert-link">Xóa bộ lọc</a>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        @if (totalPages > 1)
+        {
+            <div class="admin-card-footer">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center mb-0">
+                        <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                            <a class="page-link" href="@Url.Action("Tags", new { searchTerm = searchTerm, sortOrder = currentSort, page = currentPage - 1 })" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        
+                        @for (int i = 1; i <= totalPages; i++)
+                        {
+                            <li class="page-item @(i == currentPage ? "active" : "")">
+                                <a class="page-link" href="@Url.Action("Tags", new { searchTerm = searchTerm, sortOrder = currentSort, page = i })">@i</a>
+                            </li>
+                        }
+                        
+                        <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                            <a class="page-link" href="@Url.Action("Tags", new { searchTerm = searchTerm, sortOrder = currentSort, page = currentPage + 1 })" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        }
+    </div>
+</div>

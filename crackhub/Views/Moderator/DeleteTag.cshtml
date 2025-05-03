@@ -1,0 +1,65 @@
+@model crackhub.Models.Data.Tag
+@{
+    ViewData["Title"] = "Xóa Tag Game";
+    Layout = "_ModeratorLayout";
+    var hasGames = ViewBag.HasGames ?? false;
+    var gameCount = ViewBag.GameCount ?? 0;
+}
+
+<div class="moderator-delete-tag">
+    <div class="admin-page-title-container mb-4">
+        <h4 class="admin-page-title">
+            <i class="fas fa-trash me-2"></i> Xác nhận xóa tag
+        </h4>
+        <a href="@Url.Action("Tags", "Moderator")" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> Quay lại
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="admin-form-section">
+                <h5 class="mb-4">Bạn có chắc chắn muốn xóa tag sau không?</h5>
+                
+                <div class="p-4 rounded bg-light mb-4">
+                    <div class="row mb-3">
+                        <div class="col-md-4 text-muted">ID:</div>
+                        <div class="col-md-8 fw-bold">@Model.Id</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 text-muted">Tên tag:</div>
+                        <div class="col-md-8 fw-bold">@Model.Name</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 text-muted">Slug:</div>
+                        <div class="col-md-8">@Model.Slug</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 text-muted">Số game sử dụng:</div>
+                        <div class="col-md-8">@gameCount</div>
+                    </div>
+                </div>
+
+                @if (hasGames)
+                {
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Lưu ý!</strong> Tag này hiện đang được sử dụng bởi @gameCount game. Nếu xóa, tất cả liên kết giữa tag này và các game sẽ bị xóa.
+                    </div>
+                }
+                
+                <form method="post" asp-action="DeleteTag" asp-controller="Moderator">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash me-2"></i> Xóa tag
+                        </button>
+                        <a href="@Url.Action("Tags", "Moderator")" class="btn btn-outline-secondary ms-2">
+                            <i class="fas fa-times me-2"></i> Hủy
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

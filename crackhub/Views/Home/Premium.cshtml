@@ -1,0 +1,274 @@
+@{
+    ViewData["Title"] = "CrackHub Premium";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/premium.css" />
+}
+
+<div class="premium-container">
+    <!-- Floating game icons -->
+    <div class="floating-icon icon-1"><i class="fas fa-gamepad"></i></div>
+    <div class="floating-icon icon-2"><i class="fas fa-dice"></i></div>
+    <div class="floating-icon icon-3"><i class="fas fa-ghost"></i></div>
+    <div class="floating-icon icon-4"><i class="fas fa-headset"></i></div>
+    
+    <!-- Glow effects -->
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="premium-header">
+            <h1 class="premium-title">CrackHub Premium</h1>
+            <p class="premium-subtitle">Nâng tầm trải nghiệm game của bạn với đặc quyền Premium - tải game không giới hạn, tốc độ cao và nhiều tính năng độc quyền.</p>
+        </div>
+        
+        <!-- Current Status -->
+        @if (ViewBag.SuccessMessage != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle me-2"></i> @TempData["SuccessMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        
+        <div class="premium-status text-center">
+            @if (ViewBag.IsPremium)
+            {
+                <div class="premium-status-icon"><i class="fas fa-crown"></i></div>
+                <h2 class="premium-status-title">Bạn đang là thành viên Premium!</h2>
+                <p class="premium-status-text">Cảm ơn bạn đã ủng hộ CrackHub. Bạn đang được hưởng tất cả các đặc quyền Premium.</p>
+                <p class="premium-status-expiry">Hạn dùng: @ViewBag.PremiumExpiryDate?.ToString("dd/MM/yyyy")</p>
+                <p class="mt-3">Bạn có thể gia hạn gói Premium của mình bất kỳ lúc nào.</p>
+            }
+            else
+            {
+                <div class="premium-status-icon"><i class="fas fa-star"></i></div>
+                <h2 class="premium-status-title">Nâng cấp lên Premium ngay hôm nay</h2>
+                <p class="premium-status-text">Chọn gói Premium để trải nghiệm đầy đủ các tính năng cao cấp của CrackHub.</p>
+            }
+        </div>
+        
+        <!-- Pricing Cards -->
+        <div class="row">
+            @foreach (var plan in ViewBag.Plans)
+            {
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="pricing-card @(plan.Popular ? "popular" : "")">
+                        <h3 class="pricing-name">@plan.Name</h3>
+                        <div class="pricing-price">
+                            <span class="currency">₫</span>@plan.Price.ToString("#,##0")
+                            <span class="period">/@plan.Name.ToLower()</span>
+                        </div>
+                        <ul class="pricing-features">
+                            @foreach (var feature in plan.Features)
+                            {
+                                <li>@feature</li>
+                            }
+                        </ul>
+                        <form method="post" action="@Url.Action("UpgradePremium")">
+                            <input type="hidden" name="durationMonths" value="@plan.Duration" />
+                            <button type="submit" class="pricing-button pricing-button-@plan.Color">
+                                @if (ViewBag.IsPremium)
+                                {
+                                    <span>Gia hạn ngay</span>
+                                }
+                                else
+                                {
+                                    <span>Nâng cấp ngay</span>
+                                }
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+        
+        <!-- Benefits -->
+        <div class="benefits-section">
+            <h2 class="benefits-title">Đặc quyền của thành viên Premium</h2>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3 class="benefit-title">Tốc độ download vượt trội</h3>
+                        <p class="benefit-text">Không giới hạn băng thông, tải game với tốc độ tối đa mà không phải chờ đợi hay bị giới hạn.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-infinity"></i>
+                        </div>
+                        <h3 class="benefit-title">Không giới hạn lượt tải</h3>
+                        <p class="benefit-text">Tải không giới hạn số lượng game mỗi ngày, không bị hạn chế như tài khoản thông thường.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-user-edit"></i>
+                        </div>
+                        <h3 class="benefit-title">Tùy chỉnh tên hiển thị</h3>
+                        <p class="benefit-text">Thay đổi tên hiển thị của bạn bất cứ khi nào, không giới hạn số lần thay đổi.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3 class="benefit-title">Truy cập sớm</h3>
+                        <p class="benefit-text">Được truy cập sớm vào các game mới nhất trước khi phát hành cho người dùng thông thường.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-ad"></i>
+                        </div>
+                        <h3 class="benefit-title">Không quảng cáo</h3>
+                        <p class="benefit-text">Trải nghiệm CrackHub hoàn toàn không có quảng cáo, tập trung hoàn toàn vào việc chơi game.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3 class="benefit-title">Hỗ trợ ưu tiên</h3>
+                        <p class="benefit-text">Nhận hỗ trợ kỹ thuật ưu tiên từ đội ngũ CrackHub khi bạn gặp vấn đề.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h2 class="faq-title">Câu hỏi thường gặp</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">Premium có gì khác biệt so với tài khoản thường?</div>
+                <div class="faq-answer">
+                    Thành viên Premium được hưởng nhiều đặc quyền như: tốc độ tải không giới hạn, không có giới hạn số lượt tải, không hiển thị quảng cáo, ưu tiên hỗ trợ kỹ thuật, và có thể thay đổi tên hiển thị. Đối với các game mới, thành viên Premium còn được truy cập sớm trước người dùng thông thường.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Làm thế nào để nâng cấp lên Premium?</div>
+                <div class="faq-answer">
+                    Bạn chỉ cần chọn gói Premium phù hợp trên trang này, thanh toán và tài khoản của bạn sẽ được nâng cấp ngay lập tức. Chúng tôi chấp nhận nhiều phương thức thanh toán phổ biến tại Việt Nam.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Tôi có thể hủy Premium sau khi đăng ký không?</div>
+                <div class="faq-answer">
+                    Premium là gói dịch vụ trả phí một lần cho một khoảng thời gian cố định. Sau khi thanh toán, bạn sẽ được hưởng đặc quyền Premium cho đến khi hết hạn mà không cần gia hạn tự động. Vì vậy, bạn không cần phải hủy, chỉ cần không thanh toán thêm khi hết hạn.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Tôi có thể gia hạn Premium trước khi hết hạn không?</div>
+                <div class="faq-answer">
+                    Có, bạn có thể gia hạn Premium bất cứ lúc nào. Thời gian gia hạn sẽ được cộng thêm vào thời hạn Premium hiện tại của bạn.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Nếu tôi đổi thiết bị, tài khoản Premium của tôi có còn không?</div>
+                <div class="faq-answer">
+                    Tài khoản Premium của bạn được liên kết với tài khoản CrackHub, không phải với thiết bị. Bạn có thể đăng nhập vào tài khoản CrackHub của mình trên bất kỳ thiết bị nào và vẫn được hưởng đầy đủ đặc quyền Premium.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Testimonials -->
+        <div class="testimonial-section">
+            <h2 class="testimonial-title">Người dùng nói gì về Premium?</h2>
+            
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="testimonial-item">
+                        <div class="testimonial-quote">"</div>
+                        <p class="testimonial-text">Tải game không còn là nỗi lo với Premium. Tốc độ tải cực nhanh, không giới hạn, đáng đồng tiền bát gạo!</p>
+                        <div class="testimonial-author">
+                            <img src="/img/avartars/default-avatar.png" alt="User Avatar" class="testimonial-avatar">
+                            <div class="testimonial-info">
+                                <h4 class="testimonial-name">Minh Đức</h4>
+                                <div class="testimonial-role">Premium từ 6 tháng trước</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="testimonial-item">
+                        <div class="testimonial-quote">"</div>
+                        <p class="testimonial-text">Trải nghiệm không quảng cáo là lý do tôi đăng ký Premium. Giờ đây tôi tải game mà không bị phiền nhiễu.</p>
+                        <div class="testimonial-author">
+                            <img src="/img/avartars/default-avatar.png" alt="User Avatar" class="testimonial-avatar">
+                            <div class="testimonial-info">
+                                <h4 class="testimonial-name">Thu Hà</h4>
+                                <div class="testimonial-role">Premium từ 3 tháng trước</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="testimonial-item">
+                        <div class="testimonial-quote">"</div>
+                        <p class="testimonial-text">Đội ngũ hỗ trợ phản hồi cực nhanh khi tôi gặp vấn đề. Đây là đặc quyền tuyệt vời của Premium!</p>
+                        <div class="testimonial-author">
+                            <img src="/img/avartars/default-avatar.png" alt="User Avatar" class="testimonial-avatar">
+                            <div class="testimonial-info">
+                                <h4 class="testimonial-name">Hoàng Nam</h4>
+                                <div class="testimonial-role">Premium từ 1 năm trước</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Final CTA -->
+        <div class="cta-section">
+            <h2 class="cta-title">Sẵn sàng nâng cấp trải nghiệm của bạn?</h2>
+            <p class="cta-text">Trở thành thành viên Premium ngay hôm nay và khám phá thế giới game không giới hạn với CrackHub.</p>
+            <a href="#pricing" class="cta-button">Nâng cấp ngay</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Smooth scroll to pricing section
+        document.querySelector('.cta-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('.premium-status').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        });
+        
+        // FAQ toggle
+        document.querySelectorAll('.faq-question').forEach(function(question) {
+            question.addEventListener('click', function() {
+                const faqItem = this.parentElement;
+                faqItem.classList.toggle('open');
+            });
+        });
+        
+        // Auto-hide success message after 5 seconds
+        setTimeout(function() {
+            const alert = document.querySelector('.alert-success');
+            if (alert) {
+                const bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            }
+        }, 5000);
+    </script>
+}

@@ -1,0 +1,103 @@
+@{
+    ViewData["Title"] = ViewData["Title"] ?? "Moderator Dashboard";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CrackHub</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+<body>
+    <div class="admin-wrapper">
+        <div class="admin-sidebar">
+            <div class="admin-sidebar-header">
+                <a href="@Url.Action("Index", "Home")" class="site-logo">
+                    <span>CrackHub</span> <span class="color-accent">Moderator</span>
+                </a>
+                <button class="sidebar-toggle d-lg-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <div class="admin-sidebar-content">
+                <nav class="admin-nav">
+                    <div class="admin-nav-section">
+                        <h6 class="admin-nav-title">QUẢN LÝ TAG</h6>
+                        <ul class="admin-nav-list">
+                            <li class="admin-nav-item @(ViewContext.RouteData.Values["action"].ToString() == "Index" ? "active" : "")">
+                                <a href="@Url.Action("Index", "Moderator")" class="admin-nav-link">
+                                    <i class="fas fa-tachometer-alt admin-nav-icon"></i>
+                                    <span>Trang chủ</span>
+                                </a>
+                            </li>
+                            <li class="admin-nav-item @(ViewContext.RouteData.Values["action"].ToString() == "Tags" || ViewContext.RouteData.Values["action"].ToString() == "CreateTag" || ViewContext.RouteData.Values["action"].ToString() == "EditTag" || ViewContext.RouteData.Values["action"].ToString() == "DeleteTag" ? "active" : "")">
+                                <a href="@Url.Action("Tags", "Moderator")" class="admin-nav-link">
+                                    <i class="fas fa-tags admin-nav-icon"></i>
+                                    <span>Quản lý Tag</span>
+                                </a>
+                            </li>
+                            <li class="admin-nav-item @(ViewContext.RouteData.Values["action"].ToString() == "GameTags" || ViewContext.RouteData.Values["action"].ToString() == "ManageGameTags" ? "active" : "")">
+                                <a href="@Url.Action("GameTags", "Moderator")" class="admin-nav-link">
+                                    <i class="fas fa-gamepad admin-nav-icon"></i>
+                                    <span>Gán Tag cho Game</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        
+        <div class="admin-main">
+            <div class="admin-topbar">
+                <div class="admin-topbar-title">
+                    <h5>@ViewData["Title"]</h5>
+                </div>
+                
+                <div class="admin-topbar-user">
+                    <a href="@Url.Action("Logout", "Account")" class="btn btn-outline-danger btn-sm">
+                        <i class="fas fa-sign-out-alt me-1"></i> Đăng xuất
+                    </a>
+                </div>
+            </div>
+            
+            <div class="admin-content">
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fas fa-check-circle me-2"></i> @TempData["SuccessMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+                
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fas fa-exclamation-circle me-2"></i> @TempData["ErrorMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+                
+                @RenderBody()
+            </div>
+            
+            <div class="admin-footer">
+                <div class="footer-copyright">
+                    &copy; @DateTime.Now.Year CrackHub - Moderator Panel
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

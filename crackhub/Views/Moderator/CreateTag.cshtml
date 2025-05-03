@@ -1,0 +1,120 @@
+@model crackhub.Models.Data.Tag
+@{
+    ViewData["Title"] = "Thêm Tag Game";
+    Layout = "_ModeratorLayout";
+}
+
+<div class="moderator-create-tag">
+    <div class="admin-page-title-container mb-4">
+        <h4 class="admin-page-title">
+            <i class="fas fa-plus-circle me-2"></i> Thêm tag game mới
+        </h4>
+        <a href="@Url.Action("Tags", "Moderator")" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i> Quay lại
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="admin-form-section">
+                <form method="post" asp-action="CreateTag" asp-controller="Moderator" id="tagForm">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Name" class="admin-form-label">Tên tag *</label>
+                        <input asp-for="Name" class="admin-form-control" required />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Slug" class="admin-form-label">Slug</label>
+                        <div class="input-group">
+                            <span class="input-group-text">/tag/</span>
+                            <input asp-for="Slug" class="admin-form-control" placeholder="Để trống để tự động tạo" />
+                        </div>
+                        <span asp-validation-for="Slug" class="text-danger"></span>
+                        <small class="form-text text-muted">Để trống để tự động tạo dựa trên tên tag</small>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i> Lưu tag
+                        </button>
+                        <a href="@Url.Action("Tags", "Moderator")" class="btn btn-outline-secondary">
+                            Hủy
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="admin-form-section">
+                <h4>Hướng dẫn</h4>
+                <div class="p-4 bg-light rounded">
+                    <h5><i class="fas fa-lightbulb me-2"></i>Mẹo</h5>
+                    <ul class="mb-0">
+                        <li>Tags nên ngắn gọn và dễ nhớ</li>
+                        <li>Sử dụng danh từ hoặc cụm danh từ</li>
+                        <li>Chọn tên đã quen thuộc với người chơi game</li>
+                        <li>Viết hoa chữ cái đầu của từng từ</li>
+                        <li>Sử dụng từ khóa phổ biến khi tìm kiếm</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="admin-form-section mt-4">
+                <h4>Ví dụ tags phổ biến</h4>
+                <div class="p-4 bg-light rounded">
+                    <div class="tags-example">
+                        <span class="badge bg-primary">Action</span>
+                        <span class="badge bg-primary">Adventure</span>
+                        <span class="badge bg-primary">RPG</span>
+                        <span class="badge bg-primary">Strategy</span>
+                        <span class="badge bg-primary">Simulation</span>
+                        <span class="badge bg-primary">Sports</span>
+                        <span class="badge bg-primary">Racing</span>
+                        <span class="badge bg-primary">Shooter</span>
+                        <span class="badge bg-primary">Puzzle</span>
+                        <span class="badge bg-primary">Indie</span>
+                        <span class="badge bg-primary">Multiplayer</span>
+                        <span class="badge bg-primary">Singleplayer</span>
+                        <span class="badge bg-primary">Open World</span>
+                        <span class="badge bg-primary">Survival</span>
+                        <span class="badge bg-primary">Horror</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .tags-example {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+    
+    .tags-example .badge {
+        margin-bottom: 5px;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Auto-generate slug from tag name
+            $('#Name').on('input', function() {
+                if ($('#Slug').val() === '') {
+                    var slug = $(this).val()
+                        .toLowerCase()
+                        .replace(/[^\w\s-]/g, '')
+                        .replace(/[\s_-]+/g, '-')
+                        .replace(/^-+|-+$/g, '');
+                    $('#Slug').val(slug);
+                }
+            });
+        });
+    </script>
+}

@@ -424,8 +424,8 @@
                             Đánh giá của bạn
                         </div>
                         <div class="review-form-body">
-                            <form id="reviewForm" method="post" action="@Url.Action("SubmitReview", "Game")">
-                                <input type="hidden" id="gameId" name="GameId" value="@Model.Id" />
+                            <form id="reviewForm" method="post">
+                                <input type="hidden" id="gameId" name="gameId" value="@Model.Id" />
                                 
                                 <div class="mb-4">
                                     <label for="rating" class="form-label fw-bold mb-3">Điểm đánh giá</label>
@@ -434,7 +434,7 @@
                                             <div class="star-rating-selection">
                                                 @for (int i = 5; i >= 1; i--)
                                                 {
-                                                    <input type="radio" id="rating-@i" name="Rating" value="@(i*2)" @(i == 5 ? "checked" : "")>
+                                                    <input type="radio" id="rating-@i" name="rating" value="@(i*2)" @(i == 5 ? "checked" : "")>
                                                     <label for="rating-@i"><i class="fas fa-star"></i></label>
                                                 }
                                             </div>
@@ -445,18 +445,18 @@
                                 
                                 <div class="mb-3">
                                     <label for="reviewTitle" class="form-label fw-bold">Tiêu đề</label>
-                                    <input type="text" class="form-control" id="reviewTitle" name="Title" maxlength="100" placeholder="Nhập tiêu đề đánh giá..." required />
+                                    <input type="text" class="form-control" id="reviewTitle" name="title" maxlength="100" placeholder="Nhập tiêu đề đánh giá..." required />
                                     <div class="invalid-feedback">Vui lòng nhập tiêu đề (tối đa 100 ký tự).</div>
                                 </div>
                                 
                                 <div class="mb-4">
                                     <label for="reviewContent" class="form-label fw-bold">Nội dung</label>
-                                    <textarea class="form-control" id="reviewContent" name="Content" rows="4" placeholder="Chia sẻ ý kiến của bạn..." required></textarea>
+                                    <textarea class="form-control" id="reviewContent" name="content" rows="4" placeholder="Chia sẻ ý kiến của bạn..." required></textarea>
                                     <div class="invalid-feedback">Vui lòng nhập nội dung đánh giá.</div>
                                 </div>
                                 
                                 <div class="text-end">
-                                    <button type="submit" class="btn submit-review-btn" id="submitReview">
+                                    <button type="button" class="btn submit-review-btn" id="submitReview">
                                         <i class="fas fa-paper-plane me-2"></i> Gửi đánh giá
                                     </button>
                                 </div>
@@ -619,6 +619,63 @@
                 }
                 
                 $('#rating-text').text(ratingText);
+            });
+            
+            // Handle review submission via AJAX
+            $('#submitReview').on('click', function() {
+                const $form = $('#reviewForm');
+                const $submitBtn = $(this);
+                const originalBtnText = $submitBtn.html();
+                
+                // Validate form
+                if (!$form[0].checkValidity()) {
+                    $form.addClass('was-validated');
+                    return;
+                }
+                
+                // Disable button and show loading state
+                $submitBtn.html('<i class="fas fa-spinner fa-spin me-2"></i> Đang gửi...').prop('disabled', true);
+                
+                // Collect form data
+                const gameId = $('#gameId').val();
+                const rating = $('input[name="rating"]:checked').val();
+                const title = $('#reviewTitle').val();
+                const content = $('#reviewContent').val();
+                
+                // Send AJAX request
+                $.ajax({
+                    url: '@Url.Action("AddReview", "Game")',
+                    type: 'POST',
+                    data: {
+                        gameId: gameId,
+                        title: title,
+                        content: content,
+                        rating: rating
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            // Show success message
+                            alert('Đánh giá của bạn đã được gửi thành công!');
+                            $form.removeClass('was-validated').trigger('reset');
+                            
+                            // Reload the page to see the new review
+                            location.reload();
+                        } else {
+                            // Reset button state
+                            $submitBtn.html(originalBtnText).prop('disabled', false);
+                            
+                            // Show error message
+                            alert(response.message || 'Có lỗi xảy ra khi gửi đánh giá');
+                        }
+                    },
+                    error: function() {
+                        // Reset button state
+                        $submitBtn.html(originalBtnText).prop('disabled', false);
+                        
+                        // Show error message
+                        alert('Có lỗi xảy ra khi gửi đánh giá. Vui lòng thử lại sau.');
+                    }
+                });
             });
             
             // Handle review submission with validation

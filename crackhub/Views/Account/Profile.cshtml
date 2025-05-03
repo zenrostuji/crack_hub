@@ -6,6 +6,208 @@
 
 @section Styles {
     <link rel="stylesheet" href="~/css/profile.css" />
+    <style>
+        /* Avatar frame styles */
+        .avatar-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 2rem;
+            
+        }
+        
+        .avatar-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+        
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .frame-selector-btn {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            background: #5d4ec7;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 3;
+        }
+        
+        .frame-selector-btn:hover {
+            background: #7e57c2;
+            transform: translateY(-3px);
+        }
+        
+        /* Frame gallery modal styles */
+        .frame-gallery-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            overflow-y: auto;
+        }
+        
+        .frame-gallery-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .frame-gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .frame-gallery-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin: 0;
+        }
+        
+        .frame-gallery-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .frame-gallery-close:hover {
+            color: #5d4ec7;
+        }
+        
+        .frame-items-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .frame-item {
+            position: relative;
+            transition: all 0.3s;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .frame-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(93, 78, 199, 0.2);
+        }
+        
+        .frame-item.active {
+            border: 3px solid #5d4ec7;
+        }
+        
+        .frame-preview {
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%; /* Square aspect ratio */
+        }
+        
+        .frame-preview-avatar {
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+            border-radius: 50%;
+            object-fit: cover;
+            z-index: 1;
+        }
+        
+        .frame-preview-frame {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
+        
+        .frame-info {
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            text-align: center;
+        }
+        
+        .frame-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .frame-rarity {
+            font-size: 0.8rem;
+            color: #888;
+        }
+        
+        .frame-rarity.common { color: #888; }
+        .frame-rarity.uncommon { color: #3caa6e; }
+        .frame-rarity.rare { color: #3c78aa; }
+        .frame-rarity.epic { color: #9c3caa; }
+        .frame-rarity.legendary { color: #aa9c3c; }
+        
+        .frame-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .unequip-frame-btn {
+            background: #666;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .unequip-frame-btn:hover {
+            background: #555;
+            transform: translateY(-2px);
+        }
+    </style>
 }
 
 <div class="container profile-container">
@@ -31,15 +233,99 @@
                         <div class="avatar-container">
                             <img src="@(string.IsNullOrEmpty(Model.AvatarUrl) ? "/img/no-image.jpg" : Model.AvatarUrl)" 
                                  class="profile-avatar" alt="@Model.DisplayName" id="avatarPreview" />
+                            
+                            @if (ViewBag.EquippedFrame != null)
+                            {
+                                <img src="@ViewBag.EquippedFrame.FrameUrl" class="avatar-frame" id="currentFrame" alt="Avatar Frame" />
+                            }
+                            
                             <label for="AvatarFile" class="avatar-upload">
                                 <i class="fas fa-camera"></i>
                             </label>
                             <input type="file" id="AvatarFile" name="AvatarFile" accept="image/*" class="avatar-upload-input" />
+                            
+                            <div class="frame-selector-btn" id="openFrameSelector">
+                                <i class="fas fa-paint-brush"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- Frame selector modal -->
+                        <div class="frame-gallery-modal" id="frameGalleryModal">
+                            <div class="frame-gallery-container">
+                                <div class="frame-gallery-header">
+                                    <h4 class="frame-gallery-title"><i class="fas fa-paint-brush me-2"></i>Chọn khung avatar</h4>
+                                    <button class="frame-gallery-close" id="closeFrameGallery">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                
+                                <div class="frame-items-container">
+                                    @if (ViewBag.AllAvatarFrames != null && ViewBag.AllAvatarFrames.Count > 0)
+                                    {
+                                        foreach (var frame in ViewBag.AllAvatarFrames)
+                                        {
+                                            bool isEquipped = ViewBag.EquippedFrame != null && ViewBag.EquippedFrame.Id == frame.Id;
+                                            bool isOwned = Model.UserAvatarFrames != null && Model.UserAvatarFrames.Any(f => f.FrameId == frame.Id);
+                                            string rarityClass = "";
+                                            string rarityText = "";
+                                            
+                                            switch (frame.RarityLevel)
+                                            {
+                                                case 1: rarityClass = "common"; rarityText = "Thường"; break;
+                                                case 2: rarityClass = "uncommon"; rarityText = "Hiếm"; break;
+                                                case 3: rarityClass = "rare"; rarityText = "Quý"; break;
+                                                case 4: rarityClass = "epic"; rarityText = "Sử thi"; break;
+                                                case 5: rarityClass = "legendary"; rarityText = "Huyền thoại"; break;
+                                                default: rarityClass = "common"; rarityText = "Thường"; break;
+                                            }
+                                            
+                                            <div class="frame-item @(isEquipped ? "active" : "")" data-frame-id="@frame.Id">
+                                                <div class="frame-preview">
+                                                    <img src="@(string.IsNullOrEmpty(Model.AvatarUrl) ? "/img/no-image.jpg" : Model.AvatarUrl)" 
+                                                         class="frame-preview-avatar" alt="Preview avatar" />
+                                                    <img src="@frame.FrameUrl" class="frame-preview-frame" alt="@frame.FrameName" />
+                                                </div>
+                                                <div class="frame-info">
+                                                    <div class="frame-name">@frame.FrameName</div>
+                                                    <div class="frame-rarity @rarityClass">@rarityText</div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="alert alert-info w-100">
+                                            <i class="fas fa-info-circle me-2"></i> Chưa có khung avatar nào được tìm thấy.
+                                        </div>
+                                    }
+                                </div>
+                                
+                                <div class="frame-actions">
+                                    <button type="button" class="unequip-frame-btn" id="unequipFrameBtn">
+                                        <i class="fas fa-trash-alt me-2"></i> Gỡ khung avatar
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="profile-form-group">
                             <label asp-for="DisplayName">Username</label>
-                            <input asp-for="DisplayName" class="form-control profile-form-control" readonly />
+                            @{
+                                bool canEditDisplayName = 
+                                    Model.RoleId == 3 || // Admin
+                                    Model.RoleId == 2 || // Moderator
+                                    (Model.PremiumExpiryDate.HasValue && Model.PremiumExpiryDate.Value > DateTime.Now); // Premium user
+                            }
+                            @if (canEditDisplayName)
+                            {
+                                <input asp-for="DisplayName" class="form-control profile-form-control" />
+                            }
+                            else
+                            {
+                                <input asp-for="DisplayName" class="form-control profile-form-control" readonly="readonly" />
+                                <small class="text-muted">Chỉ tài khoản Admin, Moderator hoặc Premium mới được thay đổi tên hiển thị</small>
+                            }
+                            <span asp-validation-for="DisplayName" class="text-danger"></span>
                         </div>
 
                         <div class="profile-form-group">
@@ -214,6 +500,8 @@
                     var reader = new FileReader();
                     reader.onload = function(e) {
                         $("#avatarPreview").attr('src', e.target.result);
+                        // Also update preview avatars in the frame selector
+                        $(".frame-preview-avatar").attr('src', e.target.result);
                     }
                     reader.readAsDataURL(this.files[0]);
                 }
@@ -229,6 +517,95 @@
             setTimeout(function() {
                 $(".alert-success").fadeOut('slow');
             }, 5000);
+            
+            // Open frame selector modal
+            $('#openFrameSelector').on('click', function() {
+                $('#frameGalleryModal').fadeIn(300);
+                $('body').addClass('overflow-hidden');
+            });
+            
+            // Close frame selector modal
+            $('#closeFrameGallery').on('click', function() {
+                $('#frameGalleryModal').fadeOut(300);
+                $('body').removeClass('overflow-hidden');
+            });
+            
+            // Close modal on outside click
+            $('#frameGalleryModal').on('click', function(e) {
+                if ($(e.target).is('#frameGalleryModal')) {
+                    $('#frameGalleryModal').fadeOut(300);
+                    $('body').removeClass('overflow-hidden');
+                }
+            });
+            
+            // Frame selection
+            $('.frame-item').on('click', function() {
+                const frameId = $(this).data('frame-id');
+                const frameUrl = $(this).find('.frame-preview-frame').attr('src');
+                
+                // Send AJAX request to equip frame
+                $.ajax({
+                    url: '@Url.Action("EquipAvatarFrame", "Account")',
+                    type: 'POST',
+                    data: { frameId: frameId },
+                    success: function(response) {
+                        if (response.success) {
+                            // Update UI to show frame is equipped
+                            $('.frame-item').removeClass('active');
+                            $(`.frame-item[data-frame-id="${frameId}"]`).addClass('active');
+                            
+                            // Update the avatar frame
+                            if ($('#currentFrame').length) {
+                                $('#currentFrame').attr('src', frameUrl);
+                            } else {
+                                $('.avatar-container').append(`<img src="${frameUrl}" class="avatar-frame" id="currentFrame" alt="Avatar Frame" />`);
+                            }
+                            
+                            // Show success toast or message
+                            alert(response.message);
+                            
+                            // Close modal
+                            $('#frameGalleryModal').fadeOut(300);
+                            $('body').removeClass('overflow-hidden');
+                        } else {
+                            // Show error message
+                            alert(response.message || 'Error equipping frame');
+                        }
+                    },
+                    error: function() {
+                        alert('Error communicating with server');
+                    }
+                });
+            });
+            
+            // Unequip frame
+            $('#unequipFrameBtn').on('click', function() {
+                // Send AJAX request to unequip frame
+                $.ajax({
+                    url: '@Url.Action("UnequipAvatarFrame", "Account")',
+                    type: 'POST',
+                    success: function(response) {
+                        if (response.success) {
+                            // Update UI to show no frame is equipped
+                            $('.frame-item').removeClass('active');
+                            $('#currentFrame').remove();
+                            
+                            // Show success toast or message
+                            alert(response.message);
+                            
+                            // Close modal
+                            $('#frameGalleryModal').fadeOut(300);
+                            $('body').removeClass('overflow-hidden');
+                        } else {
+                            // Show error message
+                            alert(response.message || 'Error removing frame');
+                        }
+                    },
+                    error: function() {
+                        alert('Error communicating with server');
+                    }
+                });
+            });
         });
     </script>
 }

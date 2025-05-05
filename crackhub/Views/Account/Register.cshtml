@@ -7,6 +7,11 @@
 }
 
 <div class="account-page-wrapper">
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" title="Chuyển đổi giao diện sáng/tối">
+        <i class="fas fa-moon"></i>
+    </button>
+    
     <!-- Floating game icons -->
     <div class="floating-icon icon-1"><i class="fas fa-gamepad"></i></div>
     <div class="floating-icon icon-2"><i class="fas fa-dice"></i></div>
@@ -185,6 +190,98 @@
 
 @section Scripts {
     <script>
+        // Theme toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const wrapper = document.querySelector('.account-page-wrapper');
+            const icon = themeToggle.querySelector('i');
+            const termsModal = document.getElementById('termsModal');
+            
+            // Check if user has previously set a theme preference
+            const savedTheme = localStorage.getItem('accountTheme');
+            if (savedTheme === 'light') {
+                wrapper.classList.add('light-theme');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                
+                // Also update the modal styling if it exists
+                if (termsModal) {
+                    termsModal.querySelector('.modal-content').classList.remove('bg-dark', 'text-light');
+                    termsModal.querySelector('.modal-content').classList.add('bg-light', 'text-dark');
+                    
+                    // Update close button
+                    const closeBtn = termsModal.querySelector('.btn-close');
+                    if (closeBtn) {
+                        closeBtn.classList.remove('btn-close-white');
+                    }
+                    
+                    // Update modal borders
+                    const modalHeader = termsModal.querySelector('.modal-header');
+                    const modalFooter = termsModal.querySelector('.modal-footer');
+                    if (modalHeader) modalHeader.classList.replace('border-secondary', 'border-light');
+                    if (modalFooter) modalFooter.classList.replace('border-secondary', 'border-light');
+                }
+            }
+            
+            // Theme toggle click handler
+            themeToggle.addEventListener('click', function() {
+                wrapper.classList.toggle('light-theme');
+                
+                // Toggle icon
+                if (wrapper.classList.contains('light-theme')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                    localStorage.setItem('accountTheme', 'light');
+                    
+                    // Update modal styling if it exists
+                    if (termsModal) {
+                        termsModal.querySelector('.modal-content').classList.remove('bg-dark', 'text-light');
+                        termsModal.querySelector('.modal-content').classList.add('bg-light', 'text-dark');
+                        
+                        // Update close button
+                        const closeBtn = termsModal.querySelector('.btn-close');
+                        if (closeBtn) {
+                            closeBtn.classList.remove('btn-close-white');
+                        }
+                        
+                        // Update modal borders
+                        const modalHeader = termsModal.querySelector('.modal-header');
+                        const modalFooter = termsModal.querySelector('.modal-footer');
+                        if (modalHeader) modalHeader.classList.replace('border-secondary', 'border-light');
+                        if (modalFooter) modalFooter.classList.replace('border-secondary', 'border-light');
+                    }
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                    localStorage.setItem('accountTheme', 'dark');
+                    
+                    // Update modal styling if it exists
+                    if (termsModal) {
+                        termsModal.querySelector('.modal-content').classList.remove('bg-light', 'text-dark');
+                        termsModal.querySelector('.modal-content').classList.add('bg-dark', 'text-light');
+                        
+                        // Update close button
+                        const closeBtn = termsModal.querySelector('.btn-close');
+                        if (closeBtn) {
+                            closeBtn.classList.add('btn-close-white');
+                        }
+                        
+                        // Update modal borders
+                        const modalHeader = termsModal.querySelector('.modal-header');
+                        const modalFooter = termsModal.querySelector('.modal-footer');
+                        if (modalHeader) modalHeader.classList.replace('border-light', 'border-secondary');
+                        if (modalFooter) modalFooter.classList.replace('border-light', 'border-secondary');
+                    }
+                }
+                
+                // Add animation class
+                themeToggle.classList.add('animate__animated', 'animate__rubberBand');
+                setTimeout(() => {
+                    themeToggle.classList.remove('animate__animated', 'animate__rubberBand');
+                }, 1000);
+            });
+        });
+        
         // Client-side validation
         document.addEventListener('DOMContentLoaded', function () {
             const form = document.querySelector('form');
@@ -248,17 +345,14 @@
             avatarInput.addEventListener('change', function() {
                 if (this.files && this.files[0]) {
                     const reader = new FileReader();
-                    lidation via type="email" attribute
                     reader.onload = function(e) {
                         // If you want to add preview functionality, uncomment this and add an image element to the form
-                        // document.getElementById('avatarPreview').src = e.target.result;cument.getElementById('avatar');
-                        // document.getElementById('avatarPreviewContainer').classList.remove('d-none');e', function() {
-                    }   // document.getElementById('avatarPreviewContainer').classList.remove('d-none');s && this.files[0]) {
+                        // document.getElementById('avatarPreview').src = e.target.result;
+                        // document.getElementById('avatarPreviewContainer').classList.remove('d-none');
                     }
                     reader.readAsDataURL(this.files[0]);
                 }
             });
-        }); = e.target.result;
-    </script>'avatarPreviewContainer').classList.remove('d-none');
-}   </script>
+        });
+    </script>
 }

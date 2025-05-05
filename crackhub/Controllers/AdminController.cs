@@ -432,7 +432,7 @@ namespace crackhub.Controllers
             var game = await _context.Games
                 .Include(g => g.Category)
                 .FirstOrDefaultAsync(g => g.Id == id);
-                
+
             if (game == null)
             {
                 return NotFound();
@@ -444,7 +444,7 @@ namespace crackhub.Controllers
         // POST: Delete a game
         [HttpPost, ActionName("DeleteGame")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteGameConfirmed(int id)
+        public async Task<IActionResult> DeleteGameConfirmed(int ? id)
         {
             // Check if user is admin
             if (!IsAdmin())
@@ -482,7 +482,17 @@ namespace crackhub.Controllers
                 var favoriteGames = await _context.FavoriteGames.Where(fg => fg.GameId == id).ToListAsync();
                 _context.FavoriteGames.RemoveRange(favoriteGames);
 
-                var downloadHistory = await _context.DownloadHistory.Where(dh => dh.GameId == id).ToListAsync();
+                // Fix: select only necessary columns to avoid IP column issue
+                var downloadHistory = await _context.DownloadHistory
+                    .Where(dh => dh.GameId == id)
+                    .Select(dh => new DownloadHistory
+                    {
+                        Id = dh.Id,
+                        UserId = dh.UserId,
+                        GameId = dh.GameId,
+                        DownloadDate = dh.DownloadDate
+                    })
+                    .ToListAsync();
                 _context.DownloadHistory.RemoveRange(downloadHistory);
 
                 var gameLinks = await _context.GameLinks.Where(gl => gl.GameId == id).ToListAsync();
@@ -519,6 +529,7 @@ namespace crackhub.Controllers
 
             return RedirectToAction(nameof(Games));
         }
+        
 
         // GET: Manage game screenshots
         public async Task<IActionResult> ManageScreenshots(int? id)

@@ -7,6 +7,11 @@
 }
 
 <div class="account-page-wrapper">
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" title="Chuyển đổi giao diện sáng/tối">
+        <i class="fas fa-moon"></i>
+    </button>
+    
     <!-- Floating game icons -->
     <div class="floating-icon icon-1"><i class="fas fa-gamepad"></i></div>
     <div class="floating-icon icon-2"><i class="fas fa-dice"></i></div>
@@ -111,3 +116,44 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        // Theme toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const wrapper = document.querySelector('.account-page-wrapper');
+            const icon = themeToggle.querySelector('i');
+            
+            // Check if user has previously set a theme preference
+            const savedTheme = localStorage.getItem('accountTheme');
+            if (savedTheme === 'light') {
+                wrapper.classList.add('light-theme');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+            
+            // Theme toggle click handler
+            themeToggle.addEventListener('click', function() {
+                wrapper.classList.toggle('light-theme');
+                
+                // Toggle icon
+                if (wrapper.classList.contains('light-theme')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                    localStorage.setItem('accountTheme', 'light');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                    localStorage.setItem('accountTheme', 'dark');
+                }
+                
+                // Add animation class
+                themeToggle.classList.add('animate__animated', 'animate__rubberBand');
+                setTimeout(() => {
+                    themeToggle.classList.remove('animate__animated', 'animate__rubberBand');
+                }, 1000);
+            });
+        });
+    </script>
+}

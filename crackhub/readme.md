@@ -1,5 +1,5 @@
 ﻿cài sql core , tool core
-database thì chạy file database.sql với cái du_lieu.sql
+database thì chạy file database.sql với cái du_lieu.sql và du_lieu.sql
 
 
 

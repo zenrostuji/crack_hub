@@ -207,6 +207,92 @@
             background: #555;
             transform: translateY(-2px);
         }
+
+        /* Dark mode toggle styles */
+        .dark-mode-toggle {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 3;
+        }
+        
+        .dark-mode-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(30deg);
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .profile-card,
+        .dark-mode .activity-card,
+        .dark-mode .frame-gallery-container {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .profile-form-control {
+            background-color: #2d2d2d;
+            border-color: #444;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .profile-form-control:focus {
+            background-color: #333;
+            border-color: #5d4ec7;
+        }
+        
+        .dark-mode .profile-form-group label {
+            color: #bbb;
+        }
+        
+        .dark-mode .password-section-title {
+            color: #bbb;
+        }
+        
+        .dark-mode .profile-nav-tabs .nav-link:not(.active) {
+            color: #bbb;
+        }
+        
+        .dark-mode .profile-list-item {
+            background-color: #1e1e1e;
+            border-color: #333;
+        }
+        
+        .dark-mode .profile-list-item:hover {
+            background-color: #2a2a2a;
+        }
+        
+        .dark-mode .frame-gallery-title,
+        .dark-mode .frame-name {
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .frame-item {
+            background-color: #2d2d2d;
+        }
+        
+        .dark-mode .frame-gallery-close {
+            color: #bbb;
+        }
+        
+        .dark-mode .empty-state {
+            color: #bbb;
+        }
     </style>
 }
 
@@ -224,6 +310,9 @@
             <div class="card profile-card">
                 <div class="profile-header">
                     <h4><i class="fas fa-user-circle me-2"></i>Profile</h4>
+                    <button class="dark-mode-toggle" id="darkModeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
                 </div>
                 <div class="profile-body">
                     <form asp-action="UpdateProfile" method="post" enctype="multipart/form-data" id="profileForm">
@@ -605,6 +694,13 @@
                         alert('Error communicating with server');
                     }
                 });
+            });
+
+            // Dark mode toggle
+            $('#darkModeToggle').on('click', function() {
+                $('body').toggleClass('dark-mode');
+                const isDarkMode = $('body').hasClass('dark-mode');
+                $(this).html(isDarkMode ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>');
             });
         });
     </script>

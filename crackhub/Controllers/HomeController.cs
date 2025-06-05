@@ -1,7 +1,7 @@
 using crackhub.Models;
 using crackhub.Models.Data;
+using crackhub.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace crackhub.Controllers
@@ -9,49 +9,41 @@ namespace crackhub.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ApplicationDbContext _context;
+        private readonly IGameRepository _gameRepository;
+        private readonly ICategoryRepository _categoryRepository;
+        private readonly IUserRepository _userRepository;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        public HomeController(
+            ILogger<HomeController> logger, 
+            IGameRepository gameRepository,
+            ICategoryRepository categoryRepository,
+            IUserRepository userRepository)
         {
             _logger = logger;
-            _context = context;
+            _gameRepository = gameRepository;
+            _categoryRepository = categoryRepository;
+            _userRepository = userRepository;
         }
 
         public async Task<IActionResult> Index()
         {
             // Lấy 8 game mới nhất
-            var latestGames = await _context.Games
-                .Include(g => g.Category)
-                .OrderByDescending(g => g.Id)
-                .Take(8)
-                .ToListAsync();
-
+            var latestGames = await _gameRepository.GetRecentGamesAsync(8);
             ViewBag.LatestGames = latestGames;
 
             // Lấy 8 game phổ biến nhất (dựa trên số lượt tải)
-            var popularGames = await _context.Games
-                .Include(g => g.Category)
-                .OrderByDescending(g => g.Downloads)
-                .Take(8)
-                .ToListAsync();
-
+            var popularGames = await _gameRepository.GetPopularGamesAsync(8);
             ViewBag.PopularGames = popularGames;
 
             // Lấy 8 game có đánh giá cao nhất
-            var topRatedGames = await _context.Games
-                .Include(g => g.Category)
-                .OrderByDescending(g => g.AverageRating)
-                .Take(8)
-                .ToListAsync();
-
+            var topRatedGames = await _gameRepository.GetTopRatedGamesAsync(8);
             ViewBag.TopRatedGames = topRatedGames;
 
             // Lấy danh sách các thể loại
-            var categories = await _context.Categories
-                .OrderBy(c => c.CategoryName)
-                .ToListAsync();
+            var categories = await _categoryRepository.GetAllAsync();
+            var sortedCategories = categories.OrderBy(c => c.CategoryName).ToList();
 
-            return View(categories);
+            return View(sortedCategories);
         }
 
         public IActionResult Privacy()
@@ -65,7 +57,7 @@ namespace crackhub.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Premium()
+        public async Task<IActionResult> Premium()
         {
             // Check if user is logged in
             var userId = HttpContext.Session.GetString("UserId");
@@ -75,7 +67,7 @@ namespace crackhub.Controllers
             }
 
             // Get user details to check current premium status
-            var user = _context.Users.Find(userId);
+            var user = await _userRepository.GetByIdAsync(userId);
             if (user == null)
             {
                 return NotFound();
@@ -152,7 +144,7 @@ namespace crackhub.Controllers
             }
 
             // Get user
-            var user = await _context.Users.FindAsync(userId);
+            var user = await _userRepository.GetByIdAsync(userId);
             if (user == null)
             {
                 return NotFound();
@@ -174,8 +166,7 @@ namespace crackhub.Controllers
 
             // Update user premium status
             user.PremiumExpiryDate = newExpiryDate;
-            _context.Update(user);
-            await _context.SaveChangesAsync();
+            await _userRepository.UpdateAsync(user);
 
             TempData["SuccessMessage"] = $"Chúc mừng! Tài khoản của bạn đã được nâng cấp lên Premium đến ngày {newExpiryDate.ToString("dd/MM/yyyy")}";
 

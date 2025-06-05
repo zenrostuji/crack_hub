@@ -39,6 +39,10 @@ namespace crackhub.Models.Data
         public string? Size { get; set; }
         
         public double AverageRating { get; set; } = 0;
+        
+        public bool IsFeatured { get; set; } = false;
+        
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
 
         // Navigation properties
         [ForeignKey("CategoryId")]

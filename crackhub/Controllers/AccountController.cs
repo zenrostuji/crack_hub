@@ -1,4 +1,5 @@
 using crackhub.Models.Data;
+using crackhub.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,12 +15,32 @@ namespace crackhub.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUserRepository _userRepository;
+        private readonly IDownloadHistoryRepository _downloadHistoryRepository;
+        private readonly IReviewRepository _reviewRepository;
+        private readonly ISearchHistoryRepository _searchHistoryRepository;
+        private readonly IFavoriteGameRepository _favoriteGameRepository;
+        private readonly IAvatarFrameRepository _avatarFrameRepository;
+        private readonly IUserAvatarFrameRepository _userAvatarFrameRepository;
         private readonly IWebHostEnvironment _hostEnvironment;
 
-        public AccountController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
+        public AccountController(
+            IUserRepository userRepository,
+            IDownloadHistoryRepository downloadHistoryRepository,
+            IReviewRepository reviewRepository,
+            ISearchHistoryRepository searchHistoryRepository,
+            IFavoriteGameRepository favoriteGameRepository,
+            IAvatarFrameRepository avatarFrameRepository,
+            IUserAvatarFrameRepository userAvatarFrameRepository,
+            IWebHostEnvironment hostEnvironment)
         {
-            _context = context;
+            _userRepository = userRepository;
+            _downloadHistoryRepository = downloadHistoryRepository;
+            _reviewRepository = reviewRepository;
+            _searchHistoryRepository = searchHistoryRepository;
+            _favoriteGameRepository = favoriteGameRepository;
+            _avatarFrameRepository = avatarFrameRepository;
+            _userAvatarFrameRepository = userAvatarFrameRepository;
             _hostEnvironment = hostEnvironment;
         }
 
@@ -55,9 +76,8 @@ namespace crackhub.Controllers
             // Hash the password
             string hashedPassword = HashPassword(password);
 
-            // Find user by username and password
-            var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.DisplayName == username && u.PasswordHash == hashedPassword);
+            // Find user by username and password using repository
+            var user = await _userRepository.AuthenticateAsync(username, hashedPassword);
 
             if (user == null)
             {
@@ -113,14 +133,14 @@ namespace crackhub.Controllers
             }
 
             // Check if username already exists
-            if (await _context.Users.AnyAsync(u => u.DisplayName == displayName))
+            if (await _userRepository.GetByDisplayNameAsync(displayName) != null)
             {
                 ViewBag.ErrorMessage = "Tên đăng nhập đã được sử dụng";
                 return View();
             }
 
             // Check if email already exists
-            if (await _context.Users.AnyAsync(u => u.Email == email))
+            if (await _userRepository.EmailExistsAsync(email))
             {
                 ViewBag.ErrorMessage = "Email đã được sử dụng";
                 return View();
@@ -147,8 +167,7 @@ namespace crackhub.Controllers
                 HttpContext.Session.SetString("AvatarUrl", user.AvatarUrl);
             }
 
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            await _userRepository.CreateAsync(user);
 
             // Store user info in session
             HttpContext.Session.SetString("UserId", user.Id.ToString());
@@ -176,11 +195,8 @@ namespace crackhub.Controllers
                 return RedirectToAction("Login");
             }
 
-            // Get user details
-            var user = await _context.Users
-                .Include(u => u.UserAvatarFrames)
-                .ThenInclude(uaf => uaf.AvatarFrame)
-                .FirstOrDefaultAsync(u => u.Id == userId);
+            // Get user details with avatar frames
+            var user = await _userRepository.GetByIdAsync(userId);
                 
             if (user == null)
             {
@@ -188,12 +204,12 @@ namespace crackhub.Controllers
             }
 
             // Get all available avatar frames
-            var allFrames = await _context.AvatarFrames.ToListAsync();
+            var allFrames = await _avatarFrameRepository.GetAllAsync();
             ViewBag.AllAvatarFrames = allFrames;
             
             // Get user's equipped frame
-            var equippedFrame = user.UserAvatarFrames?.FirstOrDefault(f => f.IsEquipped)?.AvatarFrame;
-            ViewBag.EquippedFrame = equippedFrame;
+            var equippedFrame = await _userAvatarFrameRepository.GetActiveFrameByUserAsync(userId);
+            ViewBag.EquippedFrame = equippedFrame?.AvatarFrame;
 
             await LoadUserActivityHistory(user.Id);
             
@@ -205,7 +221,7 @@ namespace crackhub.Controllers
             string currentPassword, string newPassword, string confirmPassword, IFormFile AvatarFile)
         {
             // Get user details
-            var user = await _context.Users.FindAsync(id);
+            var user = await _userRepository.GetByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -229,7 +245,7 @@ namespace crackhub.Controllers
                 }
                 
                 // Check if the new display name already exists
-                if (await _context.Users.AnyAsync(u => u.DisplayName == displayName && u.Id != id))
+                if (await _userRepository.GetByDisplayNameAsync(displayName) != null)
                 {
                     ModelState.AddModelError("DisplayName", "Tên hiển thị này đã tồn tại");
                     // Load user activity history for the profile view
@@ -307,8 +323,7 @@ namespace crackhub.Controllers
                 user.PasswordHash = HashPassword(newPassword);
             }
 
-            _context.Update(user);
-            await _context.SaveChangesAsync();
+            await _userRepository.UpdateAsync(user);
 
             ViewBag.SuccessMessage = "Thông tin tài khoản đã được cập nhật thành công";
             
@@ -322,11 +337,11 @@ namespace crackhub.Controllers
         {
             try
             {
-                // Load recent downloads - chỉ select các cột cần thiết
-                ViewBag.RecentDownloads = await _context.DownloadHistory
-                    .Include(d => d.Game)
-                    .Where(d => d.UserId == userId)
+                // Load recent downloads - get user's download history
+                var recentDownloads = await _downloadHistoryRepository.GetDownloadsByUserAsync(userId);
+                ViewBag.RecentDownloads = recentDownloads
                     .OrderByDescending(d => d.DownloadDate)
+                    .Take(10)
                     .Select(d => new
                     {
                         d.Id,
@@ -334,28 +349,25 @@ namespace crackhub.Controllers
                         d.DownloadDate,
                         Game = d.Game
                     })
-                    .Take(10)
-                    .ToListAsync();
+                    .ToList();
 
                 // Load user reviews
-                ViewBag.UserReviews = await _context.Reviews
-                    .Include(r => r.Game)
-                    .Where(r => r.UserId == userId)
+                var userReviews = await _reviewRepository.GetReviewsByUserAsync(userId);
+                ViewBag.UserReviews = userReviews
                     .OrderByDescending(r => r.DatePosted)
                     .Take(10)
-                    .ToListAsync();
+                    .ToList();
 
                 // Load search history
-                ViewBag.SearchHistory = await _context.SearchHistory
-                    .Where(s => s.UserId == userId)
+                var searchHistory = await _searchHistoryRepository.GetSearchesByUserAsync(userId);
+                ViewBag.SearchHistory = searchHistory
                     .OrderByDescending(s => s.SearchDate)
                     .Take(10)
-                    .ToListAsync();
+                    .ToList();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Ghi log lỗi và khởi tạo các ViewBag rỗng để tránh lỗi null
-                Console.WriteLine($"Error in LoadUserActivityHistory: {ex.Message}");
                 ViewBag.RecentDownloads = new List<object>();
                 ViewBag.UserReviews = new List<object>();
                 ViewBag.SearchHistory = new List<object>();
@@ -373,12 +385,7 @@ namespace crackhub.Controllers
             }
 
             // Get user's favorite games
-            var favorites = await _context.FavoriteGames
-                .Include(f => f.Game)
-                .ThenInclude(g => g.Category!)
-                .Where(f => f.UserId == userId)
-                .OrderByDescending(f => f.DateAdded)
-                .ToListAsync();
+            var favorites = await _favoriteGameRepository.GetFavoritesByUserAsync(userId);
 
             return View(favorites);
         }
@@ -408,7 +415,7 @@ namespace crackhub.Controllers
                 
                 return Json(frames);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Json(new List<object>());
             }
@@ -426,29 +433,22 @@ namespace crackhub.Controllers
 
             try
             {
-                // First, unequip all currently equipped frames for the user
-                var userFrames = await _context.UserAvatarFrames
-                    .Where(f => f.UserId == userId && f.IsEquipped)
-                    .ToListAsync();
-                
-                foreach (var frame in userFrames)
-                {
-                    frame.IsEquipped = false;
-                }
-                
                 // Check if the user has this frame
-                var userFrame = await _context.UserAvatarFrames
-                    .FirstOrDefaultAsync(f => f.UserId == userId && f.FrameId == frameId);
+                var userFrame = await _userAvatarFrameRepository.GetByIdAsync(userId, frameId);
                 
                 if (userFrame != null)
                 {
-                    // User has this frame, equip it
-                    userFrame.IsEquipped = true;
+                    // User has this frame, use repository method to set it as active
+                    var result = await _userAvatarFrameRepository.SetActiveFrameAsync(userId, frameId);
+                    if (!result)
+                    {
+                        return Json(new { success = false, message = "Không thể trang bị khung avatar" });
+                    }
                 }
                 else
                 {
                     // User doesn't have this frame, check if it's a free frame
-                    var frame = await _context.AvatarFrames.FindAsync(frameId);
+                    var frame = await _avatarFrameRepository.GetByIdAsync(frameId);
                     if (frame == null)
                     {
                         return Json(new { success = false, message = "Khung avatar không tồn tại" });
@@ -468,12 +468,13 @@ namespace crackhub.Controllers
                         IsEquipped = true,
                         ObtainedDate = DateTime.Now
                     };
-                    _context.UserAvatarFrames.Add(userFrame);
+                    await _userAvatarFrameRepository.CreateAsync(userFrame);
+                    
+                    // Deactivate other frames
+                    await _userAvatarFrameRepository.SetActiveFrameAsync(userId, frameId);
                 }
                 
-                await _context.SaveChangesAsync();
-                
-                var equippedFrame = await _context.AvatarFrames.FindAsync(frameId);
+                var equippedFrame = await _avatarFrameRepository.GetByIdAsync(frameId);
                 return Json(new { 
                     success = true, 
                     message = "Đã trang bị khung avatar thành công", 
@@ -498,17 +499,14 @@ namespace crackhub.Controllers
 
             try
             {
-                // Unequip all currently equipped frames for the user
-                var userFrames = await _context.UserAvatarFrames
-                    .Where(f => f.UserId == userId && f.IsEquipped)
-                    .ToListAsync();
+                // Get all equipped frames for the user and unequip them
+                var userFrames = await _userAvatarFrameRepository.GetUserAvatarFramesByUserAsync(userId);
                 
-                foreach (var frame in userFrames)
+                foreach (var frame in userFrames.Where(f => f.IsEquipped))
                 {
                     frame.IsEquipped = false;
+                    await _userAvatarFrameRepository.UpdateAsync(frame);
                 }
-                
-                await _context.SaveChangesAsync();
                 
                 return Json(new { 
                     success = true, 

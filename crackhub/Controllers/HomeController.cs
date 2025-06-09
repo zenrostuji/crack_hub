@@ -50,6 +50,10 @@ namespace crackhub.Controllers
         {
             return View();
         }
+        public IActionResult GameRating()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

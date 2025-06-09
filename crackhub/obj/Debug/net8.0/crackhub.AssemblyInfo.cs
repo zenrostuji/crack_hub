@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("crackhub")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f5a1e8b32f83b4dcf2c30a9020fe023348fe5548")]
 [assembly: System.Reflection.AssemblyProductAttribute("crackhub")]
 [assembly: System.Reflection.AssemblyTitleAttribute("crackhub")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -10,6 +10,9 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Google;
+using System.Security.Claims;
 
 namespace crackhub.Controllers
 {
@@ -181,6 +184,89 @@ namespace crackhub.Controllers
         {
             // Clear the session
             HttpContext.Session.Clear();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult GoogleLogin(string? returnUrl = null)
+        {
+            var redirectUrl = Url.Action("GoogleResponse", "Account", new { returnUrl });
+            var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
+            return Challenge(properties, GoogleDefaults.AuthenticationScheme);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GoogleResponse(string? returnUrl = null)
+        {
+            var result = await HttpContext.AuthenticateAsync(GoogleDefaults.AuthenticationScheme);
+            
+            if (!result.Succeeded)
+            {
+                ViewBag.ErrorMessage = "Đăng nhập Google không thành công";
+                ViewBag.ReturnUrl = returnUrl;
+                return View("Login");
+            }
+
+            var claims = result.Principal.Identities.FirstOrDefault()?.Claims;
+            var email = claims?.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+            var name = claims?.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+            var givenName = claims?.FirstOrDefault(x => x.Type == ClaimTypes.GivenName)?.Value;
+            var surname = claims?.FirstOrDefault(x => x.Type == ClaimTypes.Surname)?.Value;
+            var googleId = claims?.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(email))
+            {
+                ViewBag.ErrorMessage = "Không thể lấy thông tin email từ Google";
+                ViewBag.ReturnUrl = returnUrl;
+                return View("Login");
+            }
+
+            // Check if user already exists with this email
+            var existingUser = await _userRepository.GetByEmailAsync(email);
+            
+            if (existingUser != null)
+            {
+                // User exists, log them in
+                HttpContext.Session.SetString("UserId", existingUser.Id.ToString());
+                HttpContext.Session.SetString("UserName", existingUser.DisplayName ?? existingUser.FirstName + " " + existingUser.LastName);
+                HttpContext.Session.SetString("UserRole", existingUser.RoleId.ToString());
+                
+                if (!string.IsNullOrEmpty(existingUser.AvatarUrl))
+                {
+                    HttpContext.Session.SetString("AvatarUrl", existingUser.AvatarUrl);
+                }
+            }
+            else
+            {
+                // Create new user
+                var newUser = new User
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    FirstName = givenName ?? "",
+                    LastName = surname ?? "",
+                    DisplayName = name ?? email.Split('@')[0],
+                    Email = email,
+                    PasswordHash = HashPassword(Guid.NewGuid().ToString()), // Random password for Google users
+                    RoleId = 1, // Regular user
+                    PremiumExpiryDate = null,
+                    CreatedAt = DateTime.Now,
+                    GoogleId = googleId
+                };
+
+                await _userRepository.CreateAsync(newUser);
+
+                // Log the new user in
+                HttpContext.Session.SetString("UserId", newUser.Id.ToString());
+                HttpContext.Session.SetString("UserName", newUser.DisplayName);
+                HttpContext.Session.SetString("UserRole", newUser.RoleId.ToString());
+            }
+
+            // If return URL is specified and is local, redirect there
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
 
             return RedirectToAction("Index", "Home");
         }

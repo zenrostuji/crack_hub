@@ -1,6 +1,8 @@
 using crackhub.Models.Data;
 using crackhub.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +37,20 @@ builder.Services.AddScoped<IUserAvatarFrameRepository, EFUserAvatarFrameReposito
 // Add HttpContextAccessor
 builder.Services.AddHttpContextAccessor();
 
+// Thêm dịch vụ Authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+})
+.AddCookie()
+.AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
+{
+    options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    options.CallbackPath = "/signin-google";
+});
+
 // Thêm dịch vụ Session
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
@@ -59,6 +75,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 // Thêm middleware Session

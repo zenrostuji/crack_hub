@@ -17,219 +17,219 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = crackhub
 build_property.RootNamespace = crackhub
-build_property.ProjectDir = D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\
+build_property.ProjectDir = D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub
+build_property.MSBuildProjectDirectory = D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Account/Favorites.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Account/Favorites.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxGYXZvcml0ZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Account/Login.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Account/Profile.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Account/Profile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxQcm9maWxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Account/Register.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Admin/Categories.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Admin/Categories.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ2F0ZWdvcmllcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Admin/CreateCategory.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Admin/CreateCategory.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ3JlYXRlQ2F0ZWdvcnkuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Admin/CreateGame.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Admin/CreateGame.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ3JlYXRlR2FtZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Admin/CreateTag.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Admin/CreateTag.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ3JlYXRlVGFnLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Admin/CreateUser.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Admin/CreateUser.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ3JlYXRlVXNlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Admin/DeleteCategory.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Admin/DeleteCategory.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGVsZXRlQ2F0ZWdvcnkuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Admin/DeleteGame.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Admin/DeleteGame.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGVsZXRlR2FtZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Admin/DeleteTag.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Admin/DeleteTag.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGVsZXRlVGFnLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Admin/EditCategory.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Admin/EditCategory.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRWRpdENhdGVnb3J5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Admin/EditGame.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Admin/EditGame.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRWRpdEdhbWUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Admin/EditTag.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Admin/EditTag.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRWRpdFRhZy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Admin/EditUser.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Admin/EditUser.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRWRpdFVzZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Admin/Games.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Admin/Games.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cR2FtZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Admin/Index.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Admin/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Admin/ManageCrackInfos.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Admin/ManageCrackInfos.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWFuYWdlQ3JhY2tJbmZvcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Admin/ManageFeatures.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Admin/ManageFeatures.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWFuYWdlRmVhdHVyZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Admin/ManageLinks.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Admin/ManageLinks.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWFuYWdlTGlua3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Admin/ManageScreenshots.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Admin/ManageScreenshots.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWFuYWdlU2NyZWVuc2hvdHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Admin/ManageSystemRequirements.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Admin/ManageSystemRequirements.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWFuYWdlU3lzdGVtUmVxdWlyZW1lbnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Admin/Tags.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Admin/Tags.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVGFncy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Admin/UserDetails.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Admin/UserDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVXNlckRldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Admin/Users.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Admin/Users.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVXNlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Game/ByCategory.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Game/ByCategory.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2FtZVxCeUNhdGVnb3J5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Game/ByTag.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Game/ByTag.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2FtZVxCeVRhZy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Game/Details.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Game/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2FtZVxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Game/Download.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Game/Download.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2FtZVxEb3dubG9hZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Game/Index.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Game/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2FtZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Home/GameRating.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Home/GameRating.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHYW1lUmF0aW5nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Home/Index.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Home/Premium.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Home/Premium.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcmVtaXVtLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Home/Privacy.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Moderator/CreateTag.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Moderator/CreateTag.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9kZXJhdG9yXENyZWF0ZVRhZy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Moderator/DeleteTag.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Moderator/DeleteTag.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9kZXJhdG9yXERlbGV0ZVRhZy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Moderator/EditTag.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Moderator/EditTag.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9kZXJhdG9yXEVkaXRUYWcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Moderator/GameTags.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Moderator/GameTags.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9kZXJhdG9yXEdhbWVUYWdzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Moderator/Index.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Moderator/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9kZXJhdG9yXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Moderator/ManageGameTags.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Moderator/ManageGameTags.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9kZXJhdG9yXE1hbmFnZUdhbWVUYWdzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Moderator/Tags.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Moderator/Tags.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9kZXJhdG9yXFRhZ3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Shared/Components/CategoryMenu/Default.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Shared/Components/CategoryMenu/Default.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcQ2F0ZWdvcnlNZW51XERlZmF1bHQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Shared/Error.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Shared/_AdminLayout.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Shared/_AdminLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BZG1pbkxheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Shared/_BackToTopPartial.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Shared/_BackToTopPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9CYWNrVG9Ub3BQYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Shared/_LoginPartial.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Shared/_ModeratorLayout.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Shared/_ModeratorLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Nb2RlcmF0b3JMYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/_ViewImports.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/_ViewStart.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-main/crackhub/Views/Shared/_Layout.cshtml]
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-fz5pggqcxw

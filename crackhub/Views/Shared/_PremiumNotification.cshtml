@@ -1,0 +1,196 @@
+﻿@if (TempData["ShowPremiumPopup"] != null)
+{
+    <div id="premiumPopup" class="premium-popup-overlay">
+        <div class="premium-popup-container @TempData["PremiumPopupType"]">
+            <div class="premium-popup-header">
+                <h3 class="premium-popup-title">@Html.Raw(TempData["PremiumPopupTitle"])</h3>
+                <button class="premium-popup-close" onclick="closePremiumPopup()">&times;</button>
+            </div>
+            <div class="premium-popup-body">
+                <p class="premium-popup-message">@Html.Raw(TempData["PremiumPopupMessage"])</p>
+                <div class="premium-popup-actions">
+                    <button class="btn-premium-upgrade" onclick="window.location.href='Home/Premium'">
+                        💎 Gia hạn Premium
+                    </button>
+                    <button class="btn-premium-close" onclick="closePremiumPopup()">
+                        Đóng
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+    /* Premium Popup Styles */
+    .premium-popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+        .premium-popup-overlay.show {
+            opacity: 1;
+        }
+
+    .premium-popup-container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        max-width: 500px;
+        width: 90%;
+        max-height: 80vh;
+        overflow: hidden;
+        transform: translateY(-30px) scale(0.95);
+        transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+        opacity: 0;
+    }
+
+    .premium-popup-overlay.show .premium-popup-container {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    .premium-popup-container.danger {
+        border-top: 5px solid #dc3545;
+    }
+
+    .premium-popup-container.warning {
+        border-top: 5px solid #ffc107;
+    }
+
+    .premium-popup-header {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .premium-popup-title {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .premium-popup-close {
+        background: none;
+        border: none;
+        font-size: 2rem;
+        color: #666;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.2s ease;
+    }
+
+        .premium-popup-close:hover {
+            background-color: #f1f3f4;
+            color: #333;
+        }
+
+    .premium-popup-body {
+        padding: 30px 20px 20px;
+    }
+
+    .premium-popup-message {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: #555;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    .premium-popup-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn-premium-upgrade {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    }
+
+        .btn-premium-upgrade:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4);
+        }
+
+    .btn-premium-close {
+        background: #6c757d;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+        .btn-premium-close:hover {
+            background: #5a6268;
+            transform: translateY(-1px);
+        }
+</style>
+
+<script>
+    function closePremiumPopup() {
+        const popup = document.getElementById('premiumPopup');
+        if (popup) {
+            popup.classList.remove('show');
+            setTimeout(() => {
+                popup.remove();
+            }, 300);
+        }
+    }
+
+    // Hiển thị popup với animation
+    document.addEventListener('DOMContentLoaded', function() {
+        const popup = document.getElementById('premiumPopup');
+        if (popup) {
+            // Hiển thị popup
+            setTimeout(() => {
+                popup.classList.add('show');
+            }, 100);
+
+            // Đóng popup khi click outside
+            popup.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closePremiumPopup();
+                }
+            });
+
+            // Đóng popup bằng phím ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closePremiumPopup();
+                }
+            });
+        }
+    });
+</script>

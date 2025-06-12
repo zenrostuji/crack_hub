@@ -383,31 +383,34 @@
             }
             
             <!-- Related Games -->
-            @if (ViewBag.RelatedGames != null && ((IEnumerable<crackhub.Models.Data.Game>)ViewBag.RelatedGames).Any())
+            @if (ViewBag.RelatedGames != null && ((IEnumerable<crackhub.Models.Data.RelatedGame>)ViewBag.RelatedGames).Any())
             {
                 <div class="related-games">
                     <h3 class="section-header"><i class="fas fa-gamepad me-2"></i>Game tương tự</h3>
                     <div class="row">
-                        @foreach (var relGame in (IEnumerable<crackhub.Models.Data.Game>)ViewBag.RelatedGames)
+                        @foreach (var relGame in (IEnumerable<crackhub.Models.Data.RelatedGame>)ViewBag.RelatedGames)
                         {
                             <div class="col-md-3 col-6 mb-3">
                                 <div class="related-game-card h-100">
-                                    <img src="@relGame.CoverImageUrl" class="card-img-top" alt="@relGame.Title" onerror="this.src='/img/no-image.jpg'" />
-                                    <div class="card-body p-2">
-                                        <h6 class="related-game-title">
-                                            <a href="@Url.Action("Details", "Game", new { id = relGame.Id })" class="related-game-link">
-                                                @relGame.Title
-                                            </a>
-                                        </h6>
-                                        <div class="small">
-                                            <div class="rating">
-                                                @for (int i = 1; i <= 5; i++)
-                                                {
-                                                    <i class="@(i <= Math.Round(relGame.AverageRating / 2) ? "fas" : "far") fa-star fa-xs"></i>
-                                                }
+                                    @if (relGame.RelatedTo != null)
+                                    {
+                                        <img src="@relGame.RelatedTo.CoverImageUrl" class="card-img-top" alt="@relGame.RelatedTo.Title" onerror="this.src='/img/no-image.jpg'" />
+                                        <div class="card-body p-2">
+                                            <h6 class="related-game-title">
+                                                <a href="@Url.Action("Details", "Game", new { id = relGame.RelatedGameId })" class="related-game-link">
+                                                    @relGame.RelatedTo.Title
+                                                </a>
+                                            </h6>
+                                            <div class="small">
+                                                <div class="rating">
+                                                    @for (int i = 1; i <= 5; i++)
+                                                    {
+                                                        <i class="@(i <= Math.Round(relGame.RelatedTo.AverageRating / 2) ? "fas" : "far") fa-star fa-xs"></i>
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    }
                                 </div>
                             </div>
                         }

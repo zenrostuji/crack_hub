@@ -114,12 +114,14 @@ namespace crackhub.Models.Data
             modelBuilder.Entity<RelatedGame>()
                 .HasOne(rg => rg.Game)
                 .WithMany(g => g.RelatedGames)
-                .HasForeignKey(rg => rg.GameId);
+                .HasForeignKey(rg => rg.GameId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<RelatedGame>()
                 .HasOne(rg => rg.RelatedTo)
                 .WithMany()
-                .HasForeignKey(rg => rg.RelatedGameId);
+                .HasForeignKey(rg => rg.RelatedGameId)
+                .OnDelete(DeleteBehavior.NoAction);
                 
             // Cấu hình cho AvatarFrame và UserAvatarFrame
             modelBuilder.Entity<AvatarFrame>()

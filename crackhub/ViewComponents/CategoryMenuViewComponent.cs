@@ -1,6 +1,6 @@
 using crackhub.Models.Data;
+using crackhub.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System.Linq;
 
@@ -8,22 +8,20 @@ namespace crackhub.ViewComponents
 {
     public class CategoryMenuViewComponent : ViewComponent
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public CategoryMenuViewComponent(ApplicationDbContext context)
+        public CategoryMenuViewComponent(ICategoryRepository categoryRepository)
         {
-            _context = context;
+            _categoryRepository = categoryRepository;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
             // Get all categories with their game counts and order them by name
-            var categories = await _context.Categories
-                .Include(c => c.Games)
-                .OrderBy(c => c.CategoryName)
-                .ToListAsync();
+            var categories = await _categoryRepository.GetCategoriesWithGamesAsync();
+            var orderedCategories = categories.OrderBy(c => c.CategoryName).ToList();
 
-            return View(categories);
+            return View(orderedCategories);
         }
     }
 }

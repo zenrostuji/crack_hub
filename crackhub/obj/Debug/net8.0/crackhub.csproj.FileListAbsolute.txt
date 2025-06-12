@@ -166,171 +166,513 @@ D:\A_CONG_VIEC\CODE\WEB_GAME\crackhub\crackhub\obj\Debug\net8.0\refint\crackhub.
 D:\A_CONG_VIEC\CODE\WEB_GAME\crackhub\crackhub\obj\Debug\net8.0\crackhub.pdb
 D:\A_CONG_VIEC\CODE\WEB_GAME\crackhub\crackhub\obj\Debug\net8.0\crackhub.genruntimeconfig.cache
 D:\A_CONG_VIEC\CODE\WEB_GAME\crackhub\crackhub\obj\Debug\net8.0\ref\crackhub.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\appsettings.Development.json
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\appsettings.json
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\crackhub.staticwebassets.runtime.json
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\crackhub.staticwebassets.endpoints.json
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\crackhub.exe
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\crackhub.deps.json
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\crackhub.runtimeconfig.json
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\crackhub.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\crackhub.pdb
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Azure.Core.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Azure.Identity.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Humanizer.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.Build.Locator.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Design.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.Identity.Client.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\Mono.TextTemplating.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\System.ClientModel.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\System.CodeDom.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\System.Composition.AttributedModel.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\System.Composition.Convention.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\System.Composition.Hosting.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\System.Composition.Runtime.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\System.Composition.TypedParts.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\System.Drawing.Common.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\System.Formats.Asn1.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\System.IO.Pipelines.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\System.Memory.Data.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\System.Runtime.Caching.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\System.Security.Permissions.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\System.Text.Encodings.Web.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\System.Text.Json.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\System.Windows.Extensions.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
-D:\bai hoc\crack_hub\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\crackhub.csproj.AssemblyReference.cache
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\crackhub.GeneratedMSBuildEditorConfig.editorconfig
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\crackhub.AssemblyInfoInputs.cache
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\crackhub.AssemblyInfo.cs
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\crackhub.csproj.CoreCompileInputs.cache
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\crackhub.MvcApplicationPartsAssemblyInfo.cache
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\crackhub.RazorAssemblyInfo.cache
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\crackhub.RazorAssemblyInfo.cs
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\crackhub.sourcelink.json
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\scopedcss\bundle\crackhub.styles.css
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\scopedcss\projectbundle\crackhub.bundle.scp.css
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\staticwebassets.build.json
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\staticwebassets.build.json.cache
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\staticwebassets.development.json
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\crackhub.csproj.Up2Date
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\crackhub.dll
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\refint\crackhub.dll
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\crackhub.pdb
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\crackhub.genruntimeconfig.cache
-D:\bai hoc\crack_hub\crackhub\obj\Debug\net8.0\ref\crackhub.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\appsettings.Development.json
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\appsettings.json
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\crackhub.staticwebassets.runtime.json
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\crackhub.exe
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\crackhub.deps.json
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\crackhub.runtimeconfig.json
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\crackhub.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\crackhub.pdb
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Azure.Core.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Azure.Identity.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Humanizer.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.Build.Locator.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.Identity.Client.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\Mono.TextTemplating.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\System.ClientModel.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\System.CodeDom.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\System.Composition.AttributedModel.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\System.Composition.Convention.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\System.Composition.Hosting.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\System.Composition.Runtime.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\System.Composition.TypedParts.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\System.Drawing.Common.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\System.Formats.Asn1.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\System.IO.Pipelines.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\System.Memory.Data.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\System.Runtime.Caching.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\System.Security.Permissions.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\System.Text.Encodings.Web.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\System.Text.Json.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\System.Windows.Extensions.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\crackhub.csproj.AssemblyReference.cache
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\crackhub.GeneratedMSBuildEditorConfig.editorconfig
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\crackhub.AssemblyInfoInputs.cache
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\crackhub.AssemblyInfo.cs
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\crackhub.csproj.CoreCompileInputs.cache
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\crackhub.MvcApplicationPartsAssemblyInfo.cache
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\crackhub.RazorAssemblyInfo.cache
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\crackhub.RazorAssemblyInfo.cs
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\staticwebassets.build.json
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\staticwebassets.development.json
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\staticwebassets\msbuild.crackhub.Microsoft.AspNetCore.StaticWebAssets.props
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\staticwebassets\msbuild.build.crackhub.props
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.crackhub.props
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.crackhub.props
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\staticwebassets.pack.json
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\scopedcss\bundle\crackhub.styles.css
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\scopedcss\projectbundle\crackhub.bundle.scp.css
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\crackhub.csproj.Up2Date
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\crackhub.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\refint\crackhub.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\crackhub.pdb
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\crackhub.genruntimeconfig.cache
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-main\crackhub\obj\Debug\net8.0\ref\crackhub.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\appsettings.Development.json
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\appsettings.json
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\crackhub.staticwebassets.runtime.json
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\crackhub.exe
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\crackhub.deps.json
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\crackhub.runtimeconfig.json
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\crackhub.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\crackhub.pdb
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Azure.Core.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Azure.Identity.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Humanizer.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Build.Locator.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Identity.Client.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Mono.TextTemplating.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.ClientModel.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.CodeDom.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Composition.AttributedModel.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Composition.Convention.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Composition.Hosting.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Composition.Runtime.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Composition.TypedParts.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Drawing.Common.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Formats.Asn1.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.IO.Pipelines.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Memory.Data.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Runtime.Caching.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Security.Permissions.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Text.Encodings.Web.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Text.Json.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Windows.Extensions.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.csproj.AssemblyReference.cache
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.GeneratedMSBuildEditorConfig.editorconfig
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.AssemblyInfoInputs.cache
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.AssemblyInfo.cs
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.csproj.CoreCompileInputs.cache
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.MvcApplicationPartsAssemblyInfo.cache
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.RazorAssemblyInfo.cache
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.RazorAssemblyInfo.cs
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\staticwebassets.build.json
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\staticwebassets.development.json
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\staticwebassets\msbuild.crackhub.Microsoft.AspNetCore.StaticWebAssets.props
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\staticwebassets\msbuild.build.crackhub.props
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.crackhub.props
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.crackhub.props
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\staticwebassets.pack.json
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\scopedcss\bundle\crackhub.styles.css
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\scopedcss\projectbundle\crackhub.bundle.scp.css
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.csproj.Up2Date
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\refint\crackhub.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.pdb
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.genruntimeconfig.cache
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\ref\crackhub.dll
+D:\A_CONG_VIEC\CODE\WEB_GAME\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Google.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\appsettings.Development.json
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\appsettings.json
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\crackhub.staticwebassets.runtime.json
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\crackhub.staticwebassets.endpoints.json
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\crackhub.exe
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\crackhub.deps.json
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\crackhub.runtimeconfig.json
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\crackhub.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\crackhub.pdb
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Azure.Core.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Azure.Identity.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Humanizer.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Google.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Build.Locator.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Identity.Client.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\Mono.TextTemplating.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.ClientModel.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.CodeDom.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Composition.AttributedModel.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Composition.Convention.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Composition.Hosting.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Composition.Runtime.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Composition.TypedParts.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Drawing.Common.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Formats.Asn1.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.IO.Pipelines.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Memory.Data.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Runtime.Caching.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Security.Permissions.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Text.Encodings.Web.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Text.Json.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\System.Windows.Extensions.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+D:\Proj\crack_hub-co_repositories\crackhub\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.csproj.AssemblyReference.cache
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.GeneratedMSBuildEditorConfig.editorconfig
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.AssemblyInfoInputs.cache
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.AssemblyInfo.cs
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.csproj.CoreCompileInputs.cache
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.MvcApplicationPartsAssemblyInfo.cache
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.RazorAssemblyInfo.cache
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.RazorAssemblyInfo.cs
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\scopedcss\bundle\crackhub.styles.css
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\scopedcss\projectbundle\crackhub.bundle.scp.css
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\staticwebassets.build.json
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\staticwebassets.development.json
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\staticwebassets\msbuild.crackhub.Microsoft.AspNetCore.StaticWebAssets.props
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\staticwebassets\msbuild.crackhub.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\staticwebassets\msbuild.build.crackhub.props
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.crackhub.props
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.crackhub.props
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\staticwebassets.pack.json
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.csproj.Up2Date
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.dll
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\refint\crackhub.dll
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.pdb
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\crackhub.genruntimeconfig.cache
+D:\Proj\crack_hub-co_repositories\crackhub\obj\Debug\net8.0\ref\crackhub.dll

@@ -6,6 +6,7 @@ wwwroot\css\enhanced-ui.css
 wwwroot\css\favorites.css
 wwwroot\css\game-details.css
 wwwroot\css\game-index.css
+wwwroot\css\GameRating.css
 wwwroot\css\page-transition.css
 wwwroot\css\premium.css
 wwwroot\css\profile.css
@@ -14,6 +15,7 @@ wwwroot\favicon.ico
 wwwroot\img\avartars\FemboyKiller.jpg
 wwwroot\img\avartars\GiaoHopChanNhan.jpg
 wwwroot\img\avartars\lam.jpg
+wwwroot\img\avartars\long master.jpg
 wwwroot\img\avartars\long.jpg
 wwwroot\img\avartars\mesouya.jpg
 wwwroot\img\avartars\Rinri.jpg
@@ -33,22 +35,28 @@ wwwroot\img\frameAvartar\Sagittarius.png
 wwwroot\img\frameAvartar\Scorpio.png
 wwwroot\img\frameAvartar\silver.png
 wwwroot\img\frameAvartar\Taurus.png
+wwwroot\img\frameAvartar\tess_frame.png
 wwwroot\img\frameAvartar\Virgo.png
 wwwroot\img\games\09ef5ae3-fdcb-48fd-b719-48168d0ca9b0_sinisistar2.jpg
 wwwroot\img\games\0f8819e7-ed6d-4aae-9d80-93fc08d5f407_4cfb1575-c629-4909-b5a4-2187e44ba440_pokemon_black2.jpg
 wwwroot\img\games\449a0b91-1dc2-4d2c-84b7-3194c00d3d91_fear_and_hunger.jpg
 wwwroot\img\games\590378c5-7df6-4446-ab67-c166219b1dab_bloody_spell.jpg
 wwwroot\img\games\7e6d53b2-1742-483c-af59-0b50ed804ea3_4cfb1575-c629-4909-b5a4-2187e44ba440_pokemon_black2.jpg
+wwwroot\img\games\93e4c879-7990-4856-be8f-07ae325f351b_download (2).jpeg
+wwwroot\img\games\9789570c-adee-442e-b78e-b39a139d82ab_download (5).jpeg
 wwwroot\img\games\amelie.jpg
 wwwroot\img\games\bloody_spell.jpg
 wwwroot\img\games\boo_party.jpg
 wwwroot\img\games\c352061f-acc9-4252-b0ce-99571a737d71_sinisistar2.jpg
 wwwroot\img\games\c5115c4c-4d72-4f6b-80d9-21a03df8bb9d_policenauts.jpg
+wwwroot\img\games\c66f9b30-9a9d-4610-a69d-ca172f40da67_download (8).jpeg
 wwwroot\img\games\colonel_sanders.jpg
 wwwroot\img\games\cyberpunk2077.jpg
 wwwroot\img\games\death_end_request2.jpg
 wwwroot\img\games\e7d22ca1-9d5e-41b5-b4b6-43f113da2322_z6126961936990_d00acf9ea290a2dfef7df5562fe67bde.jpg
 wwwroot\img\games\enthralled.jpg
+wwwroot\img\games\f08eacac-d730-40eb-bcc4-087ef3bf058b_download.jpeg
+wwwroot\img\games\f50c0fdc-d0d0-4d38-9652-8efbbd2e1a2a_download (13).jpeg
 wwwroot\img\games\fear_and_hunger.jpg
 wwwroot\img\games\fear_and_hunger_2.jpg
 wwwroot\img\games\fifa23.jpg
@@ -69,6 +77,7 @@ wwwroot\img\games\sables_grimoire.jpg
 wwwroot\img\games\screenshots\02720126-26c2-4d07-ad42-e578b2dadb8b_48064.gif
 wwwroot\img\games\screenshots\03885944-e296-400d-a3e4-536c00fe1b94_ss_f0fbbaa5e31e477f4f131664fbd064ec61302504.1920x1080.jpg
 wwwroot\img\games\screenshots\03942b8d-4cc2-486f-b785-0e743f5402c6_ss_5f56f3553e910786e010e27b5c575e1bdee24cc5.1920x1080.jpg
+wwwroot\img\games\screenshots\04bf4ce7-4381-4749-8755-0cc4d633fbd4_download (12).jpeg
 wwwroot\img\games\screenshots\054b0a1a-5bca-4bdb-b576-1f7a073efa9c_EY_sXoiWoAQFM65.jpg
 wwwroot\img\games\screenshots\086fcbe1-8e4a-4fb4-8801-7f9944f32f38_1728989464-ef259d43b94b7ca08f643491a02da17b.jpg
 wwwroot\img\games\screenshots\0c286552-e1bd-498b-a4c0-724bdccfedc2_hq720 (3).jpg
@@ -91,9 +100,11 @@ wwwroot\img\games\screenshots\37f52231-a9f0-44d0-a181-fab977c452df_1616378931222
 wwwroot\img\games\screenshots\3e8551c6-d318-4e18-91e2-98f4e8f38c4d_depositphotos_12804673-stock-photo-eighteen-years-old-sign.jpg
 wwwroot\img\games\screenshots\3eaf9572-5d4b-4e17-91d0-aac65a361873_ss_b72c057a35a38d49e3cc7638a7e13179d47cfb41.1920x1080.jpg
 wwwroot\img\games\screenshots\3eb9041f-1ce5-4095-b0a1-8ad47f72bdba_images (17).jpeg
+wwwroot\img\games\screenshots\40fe4267-0b8b-425d-b4d1-9d08da79ca9e_download (11).jpeg
 wwwroot\img\games\screenshots\42d56672-76c2-4dbc-b74a-6b15df75ab23_images (13).jpeg
 wwwroot\img\games\screenshots\445a91d2-6f8e-471e-9944-d8b1d9237c1b_sddefault (1).jpg
 wwwroot\img\games\screenshots\47b143ec-8463-4f9a-978e-ef27d5b50dfa_ss_b9b3a809e53f430bd090e7a10f26264e466fda0a.1920x1080.jpg
+wwwroot\img\games\screenshots\4f57a565-9ebb-4969-a03c-d8f984f35988_download (7).jpeg
 wwwroot\img\games\screenshots\57f5ccee-b1a8-4eb0-9e6b-d4ba396229eb_images (4).jpeg
 wwwroot\img\games\screenshots\57f78f83-3fe9-43ec-861f-eac4cef050f7_images (11).jpeg
 wwwroot\img\games\screenshots\58f211e1-924a-41a0-ac06-397741919817_ydolaivrxczx4uam90qm.jpg
@@ -161,12 +172,12 @@ wwwroot\img\games\screenshots\fa506b20-0667-4a06-a565-a9ab7484a6e1_ss_587cae4e14
 wwwroot\img\games\screenshots\ffc28a51-87e0-4aad-8925-f8ea375e2f7f_ss_07cc686c1273acbc0402ce8e973f75221866a46b.1920x1080.jpg
 wwwroot\img\games\space_fright.jpg
 wwwroot\img\games\spiralscouts.jpg
-wwwroot\img\games\steinsgate0.jpg
+wwwroot\img\games\steins_gate.jpg
 wwwroot\img\games\steinsgate_darling.jpg
 wwwroot\img\games\steinsgate_spinoffs.jpg
-wwwroot\img\games\steins_gate.jpg
-wwwroot\img\games\thewitcher3.jpg
+wwwroot\img\games\steinsgate0.jpg
 wwwroot\img\games\the_letter.jpg
+wwwroot\img\games\thewitcher3.jpg
 wwwroot\img\games\tokyo_babel.jpg
 wwwroot\img\games\utawarerumono_mot.jpg
 wwwroot\img\games\utawarerumono_prelude.jpg
@@ -198,8 +209,8 @@ wwwroot\img\screenshots\chest.jpeg
 wwwroot\img\screenshots\colonel_sanders.jpg
 wwwroot\img\screenshots\cyberpunk2077.jpg
 wwwroot\img\screenshots\d56693139a72c70179bafa484315bc9e.webp
-wwwroot\img\screenshots\death-end-request-2_2020-11-07_009.jpg
 wwwroot\img\screenshots\death_end_request2.jpg
+wwwroot\img\screenshots\death-end-request-2_2020-11-07_009.jpg
 wwwroot\img\screenshots\depositphotos_12804673-stock-photo-eighteen-years-old-sign.jpg
 wwwroot\img\screenshots\downloa3d-1.jpg
 wwwroot\img\screenshots\download (1).jpeg
@@ -213,8 +224,8 @@ wwwroot\img\screenshots\fear_and_hunger.jpg
 wwwroot\img\screenshots\fear_and_hunger_2.jpg
 wwwroot\img\screenshots\ffbfb80cab807ebf43aeeadbb21e5fb280c8cb39.png
 wwwroot\img\screenshots\fifa23.jpg
-wwwroot\img\screenshots\find-love-or-die-trying-not-an-amazing-game-but-a-couple-of-v0-2u4bgtr3ye6d1.webp
 wwwroot\img\screenshots\find_love_or_die.jpg
+wwwroot\img\screenshots\find-love-or-die-trying-not-an-amazing-game-but-a-couple-of-v0-2u4bgtr3ye6d1.webp
 wwwroot\img\screenshots\fnf_remake.jpg
 wwwroot\img\screenshots\game-the-witcher-3-wild-hunt-complete-edition-ps5-3_706291_63eb3b4f7781e7.19334861.jpg
 wwwroot\img\screenshots\grotesque_beauty.jpg
@@ -296,13 +307,13 @@ wwwroot\img\screenshots\ss_e9a213d1ac40f603e231102be18e1c30f52783de.1920x1080.jp
 wwwroot\img\screenshots\ss_f0fbbaa5e31e477f4f131664fbd064ec61302504.1920x1080.jpg
 wwwroot\img\screenshots\ss_f8e2127602bca4a86b11b1b4498e8d51d3d02885.1920x1080 (1).jpg
 wwwroot\img\screenshots\ss_f8e2127602bca4a86b11b1b4498e8d51d3d02885.1920x1080.jpg
-wwwroot\img\screenshots\steinsgate0.jpg
+wwwroot\img\screenshots\steins_gate.jpg
 wwwroot\img\screenshots\steinsgate_darling.jpg
 wwwroot\img\screenshots\steinsgate_spinoffs.jpg
-wwwroot\img\screenshots\steins_gate.jpg
+wwwroot\img\screenshots\steinsgate0.jpg
 wwwroot\img\screenshots\sys11_02.jpg
-wwwroot\img\screenshots\thewitcher3.jpg
 wwwroot\img\screenshots\the_letter.jpg
+wwwroot\img\screenshots\thewitcher3.jpg
 wwwroot\img\screenshots\tokyo_babel.jpg
 wwwroot\img\screenshots\tumblr_69d7800cb7b429a721ea2406013e9d8d_e3785bfc_1280.jpg
 wwwroot\img\screenshots\tumblr_mkjgu4jP5H1qlh7rxo1_500.gif
@@ -312,9 +323,18 @@ wwwroot\img\screenshots\utawarerumono_prelude.jpg
 wwwroot\img\screenshots\ydolaivrxczx4uam90qm.jpg
 wwwroot\img\thu_ha.jpeg
 wwwroot\js\game-features.js
+wwwroot\js\GameRating.js
 wwwroot\js\page-transition.js
 wwwroot\js\screenshots-gallery.js
 wwwroot\js\site.js
+wwwroot\lib\bootstrap\dist\css\bootstrap.css
+wwwroot\lib\bootstrap\dist\css\bootstrap.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap.min.css
+wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css
+wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css.map
+wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css
+wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css.map
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css
@@ -339,14 +359,6 @@ wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css
 wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css.map
 wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css
 wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css.map
-wwwroot\lib\bootstrap\dist\css\bootstrap.css
-wwwroot\lib\bootstrap\dist\css\bootstrap.css.map
-wwwroot\lib\bootstrap\dist\css\bootstrap.min.css
-wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map
-wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css
-wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css.map
-wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css
-wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css.map
 wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js
 wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map
 wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js
@@ -360,15 +372,15 @@ wwwroot\lib\bootstrap\dist\js\bootstrap.js.map
 wwwroot\lib\bootstrap\dist\js\bootstrap.min.js
 wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map
 wwwroot\lib\bootstrap\LICENSE
-wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js
-wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js
-wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt
+wwwroot\lib\jquery\dist\jquery.js
+wwwroot\lib\jquery\dist\jquery.min.js
+wwwroot\lib\jquery\dist\jquery.min.map
+wwwroot\lib\jquery\LICENSE.txt
 wwwroot\lib\jquery-validation\dist\additional-methods.js
 wwwroot\lib\jquery-validation\dist\additional-methods.min.js
 wwwroot\lib\jquery-validation\dist\jquery.validate.js
 wwwroot\lib\jquery-validation\dist\jquery.validate.min.js
 wwwroot\lib\jquery-validation\LICENSE.md
-wwwroot\lib\jquery\dist\jquery.js
-wwwroot\lib\jquery\dist\jquery.min.js
-wwwroot\lib\jquery\dist\jquery.min.map
-wwwroot\lib\jquery\LICENSE.txt
+wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js
+wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js
+wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt

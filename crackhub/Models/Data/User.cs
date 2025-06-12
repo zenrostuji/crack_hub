@@ -30,6 +30,7 @@ namespace crackhub.Models.Data
         public int RoleId { get; set; } = 1;
         public DateTime? PremiumExpiryDate { get; set; }
         public bool RememberMe { get; set; }
+        public string? GoogleId { get; set; }
 
         // Navigation properties
         [ForeignKey("RoleId")]

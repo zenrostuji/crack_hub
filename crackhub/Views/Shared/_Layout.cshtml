@@ -94,6 +94,10 @@
     <div class="content-wrapper">
         <div class="container-fluid p-0">
             <main role="main" class="pb-5">
+            <div class="container">
+    @await Html.PartialAsync("_PremiumNotification")
+    @RenderBody()
+</div>
                 @RenderBody()
             </main>
         </div>

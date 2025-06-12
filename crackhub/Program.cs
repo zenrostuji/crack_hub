@@ -1,5 +1,8 @@
 using crackhub.Models.Data;
+using crackhub.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +13,43 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Register repositories
+builder.Services.AddScoped<IGameRepository, EFGameRepository>();
+builder.Services.AddScoped<ICategoryRepository, EFCategoryRepository>();
+builder.Services.AddScoped<IUserRepository, EFUserRepository>();
+builder.Services.AddScoped<IDownloadHistoryRepository, EFDownloadHistoryRepository>();
+builder.Services.AddScoped<IFavoriteGameRepository, EFFavoriteGameRepository>();
+builder.Services.AddScoped<IReviewRepository, EFReviewRepository>();
+builder.Services.AddScoped<IScreenshotRepository, EFScreenshotRepository>();
+builder.Services.AddScoped<ISystemRequirementRepository, EFSystemRequirementRepository>();
+builder.Services.AddScoped<IFeatureRepository, EFFeatureRepository>();
+builder.Services.AddScoped<IGameTagRepository, EFGameTagRepository>();
+builder.Services.AddScoped<ITagRepository, EFTagRepository>();
+builder.Services.AddScoped<IGameLinkRepository, EFGameLinkRepository>();
+builder.Services.AddScoped<ICrackInfoRepository, EFCrackInfoRepository>();
+builder.Services.AddScoped<IRelatedGameRepository, EFRelatedGameRepository>();
+builder.Services.AddScoped<ILocalizationInfoRepository, EFLocalizationInfoRepository>();
+builder.Services.AddScoped<ISearchHistoryRepository, EFSearchHistoryRepository>();
+builder.Services.AddScoped<IRoleRepository, EFRoleRepository>();
+builder.Services.AddScoped<IAvatarFrameRepository, EFAvatarFrameRepository>();
+builder.Services.AddScoped<IUserAvatarFrameRepository, EFUserAvatarFrameRepository>();
+
 // Add HttpContextAccessor
 builder.Services.AddHttpContextAccessor();
+
+// Thêm dịch vụ Authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+})
+.AddCookie()
+.AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
+{
+    options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    options.CallbackPath = "/signin-google";
+});
 
 // Thêm dịch vụ Session
 builder.Services.AddDistributedMemoryCache();
@@ -37,6 +75,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 // Thêm middleware Session

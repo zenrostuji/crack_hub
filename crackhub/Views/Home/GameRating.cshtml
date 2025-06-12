@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Bắn Súng - Chiến Trường</title>
+    <link rel="stylesheet" href="~/css/GameRating.css">
+</head>
+<body>
+    <div id="gameContainer">
+        <!-- Cutscene Trailer -->
+        <div id="trailerScreen" class="screen">
+            <canvas id="trailerCanvas"></canvas>
+            <div id="trailerUI">
+                <div id="trailerTitle" class="trailer-title">CHIẾN TRƯỜNG</div>
+                <div id="trailerSubtitle" class="trailer-subtitle">Cuộc chiến sinh tồn cuối cùng</div>
+                <div id="trailerText" class="trailer-text"></div>
+                <div id="skipButton" class="skip-button">Nhấn SPACE để bỏ qua</div>
+            </div>
+        </div>
+
+        <!-- Màn hình menu chính -->
+        <div id="mainMenu" class="screen hidden">
+            <div class="menu-content">
+                <h1>CHIẾN TRƯỜNG</h1>
+                <h2>Game Bắn Súng Top-Down</h2>
+                <div class="menu-buttons">
+                    <button id="startBtn" class="btn-primary">Bắt Đầu Chơi</button>
+                    <button id="instructionsBtn" class="btn-secondary">Hướng Dẫn</button>
+                    <button id="settingsBtn" class="btn-secondary">Cài Đặt</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Màn hình hướng dẫn -->
+        <div id="instructionsMenu" class="screen hidden">
+            <div class="menu-content">
+                <h2>HƯỚNG DẪN CHƠI</h2>
+                <div class="instructions">
+                    <div class="instruction-item">
+                        <strong>Di chuyển:</strong> Sử dụng phím W, A, S, D
+                    </div>
+                    <div class="instruction-item">
+                        <strong>Bắn:</strong> Nhấp chuột trái
+                    </div>
+                    <div class="instruction-item">
+                        <strong>Mục tiêu:</strong> Tiêu diệt kẻ thù để ghi điểm
+                    </div>
+                    <div class="instruction-item">
+                        <strong>Lưu ý:</strong> Tránh để kẻ thù chạm vào bạn
+                    </div>
+                </div>
+                <button id="backFromInstructions" class="btn-secondary">Quay Lại</button>
+            </div>
+        </div>
+
+        <!-- Màn hình cài đặt -->
+        <div id="settingsMenu" class="screen hidden">
+            <div class="menu-content">
+                <h2>CÀI ĐẶT</h2>
+                <div class="settings">
+                    <div class="setting-item">
+                        <label>Âm lượng:</label>
+                        <input type="range" id="volumeSlider" min="0" max="100" value="50">
+                        <span id="volumeValue">50%</span>
+                    </div>
+                    <div class="setting-item">
+                        <label>Độ khó:</label>
+                        <select id="difficultySelect">
+                            <option value="easy">Dễ</option>
+                            <option value="normal" selected>Bình thường</option>
+                            <option value="hard">Khó</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="backFromSettings" class="btn-secondary">Quay Lại</button>
+            </div>
+        </div>
+
+        <!-- Màn hình game -->
+        <div id="gameScreen" class="screen hidden">
+            <!-- UI game -->
+            <div id="gameUI">
+                <div class="ui-top">
+                    <div class="ui-item">
+                        <span class="ui-label">Điểm:</span>
+                        <span id="scoreValue">0</span>
+                    </div>
+                    <div class="ui-item">
+                        <span class="ui-label">Máu:</span>
+                        <div class="health-bar">
+                            <div id="healthFill" class="health-fill"></div>
+                        </div>
+                        <span id="healthValue">100</span>
+                    </div>
+                    <div class="ui-item">
+                        <span class="ui-label">Cấp độ:</span>
+                        <span id="levelValue">1</span>
+                    </div>
+                </div>
+                <div class="ui-bottom">
+                    <button id="pauseBtn" class="btn-pause">Tạm Dừng</button>
+                </div>
+            </div>
+
+            <!-- Canvas game -->
+            <canvas id="gameCanvas"></canvas>
+        </div>
+
+        <!-- Màn hình tạm dừng -->
+        <div id="pauseMenu" class="screen hidden">
+            <div class="menu-content">
+                <h2>TẠM DỪNG</h2>
+                <div class="menu-buttons">
+                    <button id="resumeBtn" class="btn-primary">Tiếp Tục</button>
+                    <button id="restartBtn" class="btn-secondary">Chơi Lại</button>
+                    <button id="mainMenuBtn" class="btn-secondary">Menu Chính</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Màn hình game over -->
+        <div id="gameOverMenu" class="screen hidden">
+            <div class="menu-content">
+                <h2>GAME OVER</h2>
+                <div class="game-over-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Điểm cuối:</span>
+                        <span id="finalScore">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Kẻ thù tiêu diệt:</span>
+                        <span id="enemiesKilled">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Thời gian sống:</span>
+                        <span id="survivalTime">0s</span>
+                    </div>
+                </div>
+                <div class="menu-buttons">
+                    <button id="playAgainBtn" class="btn-primary">Chơi Lại</button>
+                    <button id="backToMenuBtn" class="btn-secondary">Menu Chính</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/GameRating.js"></script>
+</body>
+</html>

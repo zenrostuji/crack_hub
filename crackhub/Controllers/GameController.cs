@@ -1,120 +1,126 @@
 using Microsoft.AspNetCore.Mvc;
 using crackhub.Models.Data;
-using Microsoft.EntityFrameworkCore;
+using crackhub.Repositories;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 namespace crackhub.Controllers
 {
     public class GameController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IGameRepository _gameRepository;
+        private readonly ICategoryRepository _categoryRepository;
+        private readonly IFavoriteGameRepository _favoriteGameRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IDownloadHistoryRepository _downloadHistoryRepository;
+        private readonly IReviewRepository _reviewRepository;
+        private readonly ICrackInfoRepository _crackInfoRepository;
+        private readonly IRelatedGameRepository _relatedGameRepository;
+        private readonly IGameLinkRepository _gameLinkRepository;
+        private readonly ITagRepository _tagRepository;
+        private readonly IGameTagRepository _gameTagRepository;
         private readonly int PageSize = 12; // Số game hiển thị trên mỗi trang
 
-        public GameController(ApplicationDbContext context)
+        public GameController(
+            IGameRepository gameRepository,
+            ICategoryRepository categoryRepository,
+            IFavoriteGameRepository favoriteGameRepository,
+            IUserRepository userRepository,
+            IDownloadHistoryRepository downloadHistoryRepository,
+            IReviewRepository reviewRepository,
+            ICrackInfoRepository crackInfoRepository,
+            IRelatedGameRepository relatedGameRepository,
+            IGameLinkRepository gameLinkRepository,
+            ITagRepository tagRepository,
+            IGameTagRepository gameTagRepository)
         {
-            _context = context;
-        }
-
-        // GET: /Game
-        public async Task<IActionResult> Index(int page = 1, string sort = "newest", string query = null)
+            _gameRepository = gameRepository;
+            _categoryRepository = categoryRepository;
+            _favoriteGameRepository = favoriteGameRepository;
+            _userRepository = userRepository;
+            _downloadHistoryRepository = downloadHistoryRepository;
+            _reviewRepository = reviewRepository;
+            _crackInfoRepository = crackInfoRepository;
+            _relatedGameRepository = relatedGameRepository;
+            _gameLinkRepository = gameLinkRepository;
+            _tagRepository = tagRepository;
+            _gameTagRepository = gameTagRepository;
+        }        // GET: /Game
+        public async Task<IActionResult> Index(int page = 1, string sort = "newest", string? query = null)
         {
-            IQueryable<Game> gamesQuery = _context.Games.Include(g => g.Category);
+            IEnumerable<Game> games;
             
             // Apply search query if provided
             if (!string.IsNullOrEmpty(query))
             {
-                gamesQuery = gamesQuery.Where(g => g.Title.Contains(query) || 
-                                         g.ShortDescription.Contains(query) || 
-                                         g.FullDescription.Contains(query));
+                games = await _gameRepository.SearchGamesAsync(query);
                 ViewBag.SearchQuery = query;
+            }
+            else
+            {
+                games = await _gameRepository.GetAllAsync();
             }
             
             // Apply sorting
             switch (sort.ToLower())
             {
                 case "popular":
-                    gamesQuery = gamesQuery.OrderByDescending(g => g.Downloads);
+                    games = games.OrderByDescending(g => int.TryParse(g.Downloads, out int downloads) ? downloads : 0);
                     break;
                 case "rating":
-                    gamesQuery = gamesQuery.OrderByDescending(g => g.AverageRating);
+                    games = games.OrderByDescending(g => g.AverageRating);
                     break;
                 default: // newest
-                    gamesQuery = gamesQuery.OrderByDescending(g => g.Id);
+                    games = games.OrderByDescending(g => g.Id);
                     break;
             }
             
-            var totalGames = await gamesQuery.CountAsync();
+            var totalGames = games.Count();
             var totalPages = (int)Math.Ceiling((double)totalGames / PageSize);
             
-            var games = await gamesQuery
+            var pagedGames = games
                 .Skip((page - 1) * PageSize)
                 .Take(PageSize)
-                .ToListAsync();
+                .ToList();
             
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = totalPages;
             
             // Get user's favorite games for favorites button
-            if (User.Identity.IsAuthenticated)
+            if (User.Identity?.IsAuthenticated == true)
             {
                 var userId = GetUserId();
                 
                 if (!string.IsNullOrEmpty(userId))
                 {
-                    var favoriteGameIds = await _context.FavoriteGames
-                        .Where(fg => fg.UserId == userId)
-                        .Select(fg => fg.GameId)
-                        .ToListAsync();
-                    
+                    var favoriteGames = await _favoriteGameRepository.GetFavoritesByUserAsync(userId);
+                    var favoriteGameIds = favoriteGames.Select(fg => fg.GameId).ToList();
                     ViewBag.FavoriteGameIds = favoriteGameIds;
                 }
             }
-            
-            // Get stats for hero section
-            // Fix CS8198 error by calculating downloads differently
-            var allGames = await _context.Games.ToListAsync();
-            int totalDownloads = 0;
-            foreach (var g in allGames)
-            {
-                if (int.TryParse(g.Downloads, out int downloads))
-                {
-                    totalDownloads += downloads;
-                }
-            }
+              // Get stats for hero section using efficient repository methods
+            var totalDownloads = await _downloadHistoryRepository.GetTotalDownloadsCountAsync();
             ViewBag.TotalDownloads = totalDownloads;
-            ViewBag.TotalUsers = await _context.Users.CountAsync();
+            var totalUsers = await _userRepository.GetTotalUsersCountAsync();
+            ViewBag.TotalUsers = totalUsers;
 
-            return View(games);
+            return View(pagedGames);
         }
 
         // GET: /Game/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var game = await _context.Games
-                .Include(g => g.Category)
-                .Include(g => g.Screenshots)
-                .Include(g => g.SystemRequirements)
-                .Include(g => g.Features)
-                .Include(g => g.GameTags)
-                    .ThenInclude(gt => gt.Tag)
-                .Include(g => g.Reviews)
-                    .ThenInclude(r => r.User)
-                .FirstOrDefaultAsync(g => g.Id == id);
+            var game = await _gameRepository.GetByIdAsync(id);
 
             if (game == null)
             {
                 return NotFound();
-            }
-
-            try
+            }            try
             {
                 // Try to include CrackInfos
-                var gameCrackInfos = await _context.CrackInfo
-                    .Where(c => c.GameId == id)
-                    .ToListAsync();
-                    
-                game.CrackInfos = gameCrackInfos;
+                var gameCrackInfos = await _crackInfoRepository.GetCrackInfosByGameAsync(id);
+                game.CrackInfos = gameCrackInfos.ToList();
             }
             catch (Exception)
             {
@@ -126,9 +132,7 @@ namespace crackhub.Controllers
             var userId = HttpContext.Session.GetString("UserId");
             if (!string.IsNullOrEmpty(userId))
             {
-                var isFavorite = await _context.FavoriteGames
-                    .AnyAsync(fg => fg.GameId == id && fg.UserId == userId);
-                
+                var isFavorite = await _favoriteGameRepository.IsFavoriteAsync(userId, id);
                 ViewBag.IsFavorite = isFavorite;
             }
             else
@@ -137,14 +141,8 @@ namespace crackhub.Controllers
             }
 
             // Lấy danh sách game liên quan
-            var relatedGames = await _context.RelatedGames
-                .Where(rg => rg.GameId == id)
-                .Include(rg => rg.RelatedTo)
-                .Select(rg => rg.RelatedTo)
-                .Take(4)
-                .ToListAsync();
-
-            ViewBag.RelatedGames = relatedGames;
+            var relatedGames = await _relatedGameRepository.GetRelatedGamesByGameIdAsync(id);
+            ViewBag.RelatedGames = relatedGames.Take(4).ToList();
 
             return View(game);
         }
@@ -152,9 +150,7 @@ namespace crackhub.Controllers
         // GET: /Game/Download/5
         public async Task<IActionResult> Download(int id)
         {
-            var game = await _context.Games
-                .Include(g => g.Category)
-                .FirstOrDefaultAsync(g => g.Id == id);
+            var game = await _gameRepository.GetByIdAsync(id);
 
             if (game == null)
             {
@@ -163,22 +159,17 @@ namespace crackhub.Controllers
 
             // Tăng số lượt download
             game.Downloads = (int.TryParse(game.Downloads, out int downloads) ? downloads + 1 : 1).ToString();
-            await _context.SaveChangesAsync();
+            await _gameRepository.UpdateAsync(game);
 
             // Lấy các link tải
-            var gameLinks = await _context.GameLinks
-                .Where(gl => gl.GameId == id && gl.IsActive)
-                .ToListAsync();
+            var gameLinks = await _gameLinkRepository.GetLinksByGameAsync(id);
 
             // Initialize an empty collection for crack links
-            IList<CrackInfo> crackLinks = new List<CrackInfo>();
-            
-            try
+            IEnumerable<CrackInfo> crackLinks = new List<CrackInfo>();
+              try
             {
                 // Try to get crack links
-                crackLinks = await _context.CrackInfo
-                    .Where(c => c.GameId == id)
-                    .ToListAsync();
+                crackLinks = await _crackInfoRepository.GetCrackInfosByGameAsync(id);
             }
             catch (Exception)
             {
@@ -208,12 +199,10 @@ namespace crackhub.Controllers
             {
                 UserId = userId,
                 GameId = gameId,
-                DownloadDate = DateTime.Now,
-                IP = HttpContext.Connection.RemoteIpAddress?.ToString()
+                DownloadDate = DateTime.Now
             };
 
-            _context.DownloadHistory.Add(downloadHistory);
-            await _context.SaveChangesAsync();
+            await _downloadHistoryRepository.CreateAsync(downloadHistory);
 
             return Json(new { success = true });
         }
@@ -226,29 +215,24 @@ namespace crackhub.Controllers
                 return RedirectToAction("Index");
             }
 
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(c => c.Slug == categorySlug);
+            var category = await _categoryRepository.GetBySlugAsync(categorySlug);
 
             if (category == null)
             {
                 return NotFound();
             }
 
-            // Get total games in this category
-            var totalGames = await _context.Games
-                .Where(g => g.CategoryId == category.CategoryId)
-                .CountAsync();
-
+            // Get games for this category
+            var allGames = await _gameRepository.GetGamesByCategoryAsync(category.CategoryId);
+            var totalGames = allGames.Count();
             var totalPages = (int)Math.Ceiling((double)totalGames / PageSize);
 
             // Get games for current page
-            var games = await _context.Games
-                .Where(g => g.CategoryId == category.CategoryId)
-                .Include(g => g.Category)
+            var games = allGames
                 .OrderByDescending(g => g.Id)
                 .Skip((page - 1) * PageSize)
                 .Take(PageSize)
-                .ToListAsync();
+                .ToList();
 
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = totalPages;
@@ -256,15 +240,11 @@ namespace crackhub.Controllers
             ViewBag.TotalGameCount = totalGames;
 
             // Calculate statistics for the category
-            ViewBag.TopRatedGame = await _context.Games
-                .Where(g => g.CategoryId == category.CategoryId)
-                .OrderByDescending(g => g.AverageRating)
-                .FirstOrDefaultAsync();
+            var topRatedGame = allGames.OrderByDescending(g => g.AverageRating).FirstOrDefault();
+            var mostDownloaded = allGames.OrderByDescending(g => int.TryParse(g.Downloads, out int downloads) ? downloads : 0).FirstOrDefault();
 
-            ViewBag.MostDownloaded = await _context.Games
-                .Where(g => g.CategoryId == category.CategoryId)
-                .OrderByDescending(g => g.Downloads)
-                .FirstOrDefaultAsync();
+            ViewBag.TopRatedGame = topRatedGame;
+            ViewBag.MostDownloaded = mostDownloaded;
 
             return View(games);
         }
@@ -272,35 +252,29 @@ namespace crackhub.Controllers
         // GET: /Game/Category/5
         public async Task<IActionResult> Category(int id, int page = 1)
         {
-            var category = await _context.Categories.FindAsync(id);
+            var category = await _categoryRepository.GetByIdAsync(id);
 
             if (category == null)
             {
                 return NotFound();
             }
 
-            var totalGames = await _context.Games
-                .Where(g => g.CategoryId == id)
-                .CountAsync();
-
+            var allGames = await _gameRepository.GetGamesByCategoryAsync(id);
+            var totalGames = allGames.Count();
             var totalPages = (int)Math.Ceiling((double)totalGames / PageSize);
 
-            var games = await _context.Games
-                .Where(g => g.CategoryId == id)
-                .Include(g => g.Category)
+            var games = allGames
                 .OrderByDescending(g => g.Id)
                 .Skip((page - 1) * PageSize)
                 .Take(PageSize)
-                .ToListAsync();
+                .ToList();
 
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = totalPages;
             ViewBag.Category = category;
 
             return View(games);
-        }
-
-        // GET: /Game/Search
+        }        // GET: /Game/Search
         public async Task<IActionResult> Search(string query, int page = 1)
         {
             if (string.IsNullOrEmpty(query))
@@ -308,23 +282,17 @@ namespace crackhub.Controllers
                 return RedirectToAction("Index");
             }
 
-            var totalGames = await _context.Games
-                .Where(g => g.Title.Contains(query) || 
-                            g.ShortDescription.Contains(query) || 
-                            g.FullDescription.Contains(query))
-                .CountAsync();
-
+            // Get total count efficiently
+            var totalGames = await _gameRepository.GetSearchResultsCountAsync(query);
             var totalPages = (int)Math.Ceiling((double)totalGames / PageSize);
 
-            var games = await _context.Games
-                .Where(g => g.Title.Contains(query) || 
-                            g.ShortDescription.Contains(query) || 
-                            g.FullDescription.Contains(query))
-                .Include(g => g.Category)
+            // Get paginated results
+            var allGames = await _gameRepository.SearchGamesAsync(query);
+            var games = allGames
                 .OrderByDescending(g => g.Id)
                 .Skip((page - 1) * PageSize)
                 .Take(PageSize)
-                .ToListAsync();
+                .ToList();
 
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = totalPages;
@@ -358,25 +326,11 @@ namespace crackhub.Controllers
                 Content = content,
                 Rating = rating,
                 DatePosted = DateTime.Now
-            };
-
-            _context.Reviews.Add(review);
+            };            await _reviewRepository.CreateAsync(review);
             
-            // Cập nhật đánh giá trung bình của game
-            var game = await _context.Games.FindAsync(gameId);
-            if (game != null)
-            {
-                var allRatings = await _context.Reviews
-                    .Where(r => r.GameId == gameId)
-                    .Select(r => r.Rating)
-                    .ToListAsync();
-
-                allRatings.Add(rating);
-                game.AverageRating = allRatings.Average();
-                _context.Update(game);
-            }
-
-            await _context.SaveChangesAsync();
+            // Update the game's average rating using repository method
+            var newAverageRating = await _reviewRepository.GetAverageRatingByGameAsync(gameId);
+            await _gameRepository.UpdateRatingAsync(gameId, newAverageRating);
 
             return Json(new { success = true, message = "Đánh giá của bạn đã được gửi thành công!" });
         }
@@ -394,21 +348,20 @@ namespace crackhub.Controllers
             }
 
             // Check if the game exists
-            var game = await _context.Games.FindAsync(gameId);
+            var game = await _gameRepository.GetByIdAsync(gameId);
             if (game == null)
             {
                 return Json(new { success = false, message = "Không tìm thấy game!" });
             }
 
-            var existingFavorite = await _context.FavoriteGames
-                .FirstOrDefaultAsync(fg => fg.GameId == gameId && fg.UserId == userId);
+            var existingFavorite = await _favoriteGameRepository.GetFavoriteByUserAndGameAsync(userId, gameId);
 
             bool isFavorite;
 
             if (existingFavorite != null)
             {
                 // Đã yêu thích, xóa khỏi danh sách
-                _context.FavoriteGames.Remove(existingFavorite);
+                await _favoriteGameRepository.DeleteAsync(userId, gameId);
                 isFavorite = false;
             }
             else
@@ -420,11 +373,9 @@ namespace crackhub.Controllers
                     GameId = gameId,
                     DateAdded = DateTime.Now
                 };
-                _context.FavoriteGames.Add(favoriteGame);
+                await _favoriteGameRepository.CreateAsync(favoriteGame);
                 isFavorite = true;
             }
-
-            await _context.SaveChangesAsync();
 
             return Json(new
             {
@@ -445,22 +396,20 @@ namespace crackhub.Controllers
                 return Json(new { success = false, message = "Bạn cần đăng nhập để thực hiện thao tác này!" });
             }
             
-            var favorite = await _context.FavoriteGames
-                .FirstOrDefaultAsync(fg => fg.GameId == id && fg.UserId == userId);
+            var favorite = await _favoriteGameRepository.GetFavoriteByUserAndGameAsync(userId, id);
 
             if (favorite == null)
             {
                 return Json(new { success = false, message = "Không tìm thấy game trong danh sách yêu thích!" });
             }
 
-            _context.FavoriteGames.Remove(favorite);
-            await _context.SaveChangesAsync();
+            await _favoriteGameRepository.DeleteAsync(userId, id);
 
             return Json(new { success = true, message = "Đã xóa game khỏi danh sách yêu thích!" });
         }
 
         // Helper method to get current user ID
-        private string GetUserId()
+        private string? GetUserId()
         {
             // Try to get from session first
             var userId = HttpContext.Session.GetString("UserId");
@@ -486,64 +435,49 @@ namespace crackhub.Controllers
             if (string.IsNullOrEmpty(id))
             {
                 return RedirectToAction("Index");
-            }
-
-            // Tìm tag theo slug hoặc theo id
-            Tag tag;
+            }            // Tìm tag theo id hoặc theo tên
+            Tag? tag = null;
             if (int.TryParse(id, out int tagId))
             {
-                tag = await _context.Tags.FindAsync(tagId);
+                tag = await _tagRepository.GetByIdAsync(tagId);
             }
             else
             {
-                tag = await _context.Tags.FirstOrDefaultAsync(t => t.Slug == id);
+                tag = await _tagRepository.GetByNameAsync(id);
             }
 
             if (tag == null)
             {
                 return NotFound();
-            }
-
-            // Lấy tất cả game có tag này
-            var gamesQuery = _context.Games
-                .Include(g => g.Category)
-                .Include(g => g.GameTags)
-                .Where(g => g.GameTags.Any(gt => gt.TagId == tag.Id));
+            }            // Lấy tất cả game có tag này
+            var allGames = await _gameRepository.GetGamesByTagAsync(tag.Id);
 
             // Áp dụng sắp xếp
             switch (sort.ToLower())
             {
                 case "popular":
-                    gamesQuery = gamesQuery.OrderByDescending(g => g.Downloads);
+                    allGames = allGames.OrderByDescending(g => int.TryParse(g.Downloads, out int downloads) ? downloads : 0);
                     break;
                 case "rating":
-                    gamesQuery = gamesQuery.OrderByDescending(g => g.AverageRating);
+                    allGames = allGames.OrderByDescending(g => g.AverageRating);
                     break;
                 default: // newest
-                    gamesQuery = gamesQuery.OrderByDescending(g => g.Id);
+                    allGames = allGames.OrderByDescending(g => g.Id);
                     break;
             }
 
-            // Đếm tổng số game có tag này
-            var totalGames = await gamesQuery.CountAsync();
+            // Get total count efficiently and calculate pagination
+            var totalGames = await _gameRepository.GetGamesCountByTagAsync(tag.Id);
             var totalPages = (int)Math.Ceiling((double)totalGames / PageSize);
 
             // Lấy game cho trang hiện tại
-            var games = await gamesQuery
+            var games = allGames
                 .Skip((page - 1) * PageSize)
                 .Take(PageSize)
-                .ToListAsync();
+                .ToList();
 
             // Lấy tất cả các tag để hiển thị filter
-            var allTags = await _context.Tags
-                .OrderBy(t => t.Name)
-                .ToListAsync();
-                
-            // Đếm số lượng game cho mỗi tag
-            var tagGameCounts = await _context.GameTags
-                .GroupBy(gt => gt.TagId)
-                .Select(g => new { TagId = g.Key, Count = g.Count() })
-                .ToDictionaryAsync(g => g.TagId, g => g.Count);
+            var allTags = await _tagRepository.GetAllAsync();
 
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = totalPages;
@@ -552,17 +486,13 @@ namespace crackhub.Controllers
             ViewBag.CurrentSort = sort;
             ViewBag.TotalGameCount = totalGames;
             ViewBag.TagIds = new List<int> { tag.Id };
-            ViewBag.TagGameCounts = tagGameCounts;
 
             // Get user's favorite games for favorites button
             var userId = GetUserId();
             if (!string.IsNullOrEmpty(userId))
             {
-                var favoriteGameIds = await _context.FavoriteGames
-                    .Where(fg => fg.UserId == userId)
-                    .Select(fg => fg.GameId)
-                    .ToListAsync();
-                
+                var favoriteGames = await _favoriteGameRepository.GetFavoritesByUserAsync(userId);
+                var favoriteGameIds = favoriteGames.Select(fg => fg.GameId).ToList();
                 ViewBag.FavoriteGameIds = favoriteGameIds;
             }
 
@@ -578,57 +508,48 @@ namespace crackhub.Controllers
             }
 
             // Lấy thông tin của các tag đã chọn
-            var selectedTags = await _context.Tags
-                .Where(t => tags.Contains(t.Id))
-                .ToListAsync();
+            var selectedTags = new List<Tag>();
+            foreach (var tagId in tags)
+            {
+                var tag = await _tagRepository.GetByIdAsync(tagId);
+                if (tag != null)
+                {
+                    selectedTags.Add(tag);
+                }
+            }
 
             if (!selectedTags.Any())
             {
                 return RedirectToAction("Index");
-            }
-
-            // Lấy tất cả game có chứa TẤT CẢ các tag đã chọn
-            var gamesQuery = _context.Games
-                .Include(g => g.Category)
-                .Include(g => g.GameTags)
-                .Where(g => tags.All(tagId => 
-                    g.GameTags.Any(gt => gt.TagId == tagId)
-                ));
-
+            }            // Lấy tất cả game có chứa TẤT CẢ các tag đã chọn sử dụng repository method hiệu quả
+            var allGamesWithTags = await _gameRepository.GetGamesByMultipleTagsAsync(tags);
+            
             // Áp dụng sắp xếp
             switch (sort.ToLower())
             {
                 case "popular":
-                    gamesQuery = gamesQuery.OrderByDescending(g => g.Downloads);
+                    allGamesWithTags = allGamesWithTags.OrderByDescending(g => int.TryParse(g.Downloads, out int downloads) ? downloads : 0);
                     break;
                 case "rating":
-                    gamesQuery = gamesQuery.OrderByDescending(g => g.AverageRating);
+                    allGamesWithTags = allGamesWithTags.OrderByDescending(g => g.AverageRating);
                     break;
                 default: // newest
-                    gamesQuery = gamesQuery.OrderByDescending(g => g.Id);
+                    allGamesWithTags = allGamesWithTags.OrderByDescending(g => g.Id);
                     break;
             }
 
-            // Đếm tổng số game thoả mãn điều kiện
-            var totalGames = await gamesQuery.CountAsync();
+            // Get total count efficiently
+            var totalGames = await _gameRepository.GetGamesCountByMultipleTagsAsync(tags);
             var totalPages = (int)Math.Ceiling((double)totalGames / PageSize);
 
             // Lấy game cho trang hiện tại
-            var games = await gamesQuery
+            var games = allGamesWithTags
                 .Skip((page - 1) * PageSize)
                 .Take(PageSize)
-                .ToListAsync();
+                .ToList();
 
             // Lấy tất cả các tag để hiển thị filter
-            var allTags = await _context.Tags
-                .OrderBy(t => t.Name)
-                .ToListAsync();
-                
-            // Đếm số lượng game cho mỗi tag
-            var tagGameCounts = await _context.GameTags
-                .GroupBy(gt => gt.TagId)
-                .Select(g => new { TagId = g.Key, Count = g.Count() })
-                .ToDictionaryAsync(g => g.TagId, g => g.Count);
+            var allTags = await _tagRepository.GetAllAsync();
 
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = totalPages;
@@ -637,17 +558,13 @@ namespace crackhub.Controllers
             ViewBag.CurrentSort = sort;
             ViewBag.TotalGameCount = totalGames;
             ViewBag.TagIds = tags;
-            ViewBag.TagGameCounts = tagGameCounts;
 
             // Get user's favorite games for favorites button
             var userId = GetUserId();
             if (!string.IsNullOrEmpty(userId))
             {
-                var favoriteGameIds = await _context.FavoriteGames
-                    .Where(fg => fg.UserId == userId)
-                    .Select(fg => fg.GameId)
-                    .ToListAsync();
-                
+                var favoriteGames = await _favoriteGameRepository.GetFavoritesByUserAsync(userId);
+                var favoriteGameIds = favoriteGames.Select(fg => fg.GameId).ToList();
                 ViewBag.FavoriteGameIds = favoriteGameIds;
             }
 

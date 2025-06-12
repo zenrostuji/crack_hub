@@ -176,6 +176,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\css\page-transition.css))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\css\premium-modal.css))">
+      <SourceType>Package</SourceType>
+      <SourceId>crackhub</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/crackhub</BasePath>
+      <RelativePath>css/premium-modal.css</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\css\premium-modal.css))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\css\premium.css))">
       <SourceType>Package</SourceType>
       <SourceId>crackhub</SourceId>
@@ -207,6 +223,22 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\css\profile.css))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\css\search-suggestions.css))">
+      <SourceType>Package</SourceType>
+      <SourceId>crackhub</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/crackhub</BasePath>
+      <RelativePath>css/search-suggestions.css</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\css\search-suggestions.css))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\css\site.css))">
       <SourceType>Package</SourceType>
@@ -272,22 +304,6 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\avartars\GiaoHopChanNhan.jpg))</OriginalItemSpec>
     </StaticWebAsset>
-    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\avartars\lam.jpg))">
-      <SourceType>Package</SourceType>
-      <SourceId>crackhub</SourceId>
-      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
-      <BasePath>_content/crackhub</BasePath>
-      <RelativePath>img/avartars/lam.jpg</RelativePath>
-      <AssetKind>All</AssetKind>
-      <AssetMode>All</AssetMode>
-      <AssetRole>Primary</AssetRole>
-      <RelatedAsset></RelatedAsset>
-      <AssetTraitName></AssetTraitName>
-      <AssetTraitValue></AssetTraitValue>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\avartars\lam.jpg))</OriginalItemSpec>
-    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\avartars\long master.jpg))">
       <SourceType>Package</SourceType>
       <SourceId>crackhub</SourceId>
@@ -352,6 +368,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\avartars\Rinri.jpg))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\avartars\Vy Nguyen.jpg))">
+      <SourceType>Package</SourceType>
+      <SourceId>crackhub</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/crackhub</BasePath>
+      <RelativePath>img/avartars/Vy Nguyen.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\avartars\Vy Nguyen.jpg))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\frameAvartar\Aquarius.png))">
       <SourceType>Package</SourceType>
       <SourceId>crackhub</SourceId>
@@ -415,6 +447,22 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\frameAvartar\basic_frame.png))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\frameAvartar\c17b6794-5bd8-40cf-94ef-3005e0948d29_—Pngtree—wechat business avatar frame_5920659.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>crackhub</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/crackhub</BasePath>
+      <RelativePath>img/frameAvartar/c17b6794-5bd8-40cf-94ef-3005e0948d29_—Pngtree—wechat business avatar frame_5920659.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\frameAvartar\c17b6794-5bd8-40cf-94ef-3005e0948d29_—Pngtree—wechat business avatar frame_5920659.png))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\frameAvartar\Cancer.png))">
       <SourceType>Package</SourceType>
@@ -687,6 +735,22 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\games\449a0b91-1dc2-4d2c-84b7-3194c00d3d91_fear_and_hunger.jpg))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\games\57bda579-6314-4356-ab6c-1680c679626a_7e6d53b2-1742-483c-af59-0b50ed804ea3_4cfb1575-c629-4909-b5a4-2187e44ba440_pokemon_black2.jpg))">
+      <SourceType>Package</SourceType>
+      <SourceId>crackhub</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/crackhub</BasePath>
+      <RelativePath>img/games/57bda579-6314-4356-ab6c-1680c679626a_7e6d53b2-1742-483c-af59-0b50ed804ea3_4cfb1575-c629-4909-b5a4-2187e44ba440_pokemon_black2.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\games\57bda579-6314-4356-ab6c-1680c679626a_7e6d53b2-1742-483c-af59-0b50ed804ea3_4cfb1575-c629-4909-b5a4-2187e44ba440_pokemon_black2.jpg))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\games\590378c5-7df6-4446-ab67-c166219b1dab_bloody_spell.jpg))">
       <SourceType>Package</SourceType>
@@ -1408,6 +1472,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\games\screenshots\1459ae4a-7239-4a68-8066-3fb983993222_AT-cm_339731902-preview-480x272.jpg))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\games\screenshots\154dfeef-722f-4d97-8e58-52d627fe7b27_3eb9041f-1ce5-4095-b0a1-8ad47f72bdba_images (17).jpeg))">
+      <SourceType>Package</SourceType>
+      <SourceId>crackhub</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/crackhub</BasePath>
+      <RelativePath>img/games/screenshots/154dfeef-722f-4d97-8e58-52d627fe7b27_3eb9041f-1ce5-4095-b0a1-8ad47f72bdba_images (17).jpeg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\games\screenshots\154dfeef-722f-4d97-8e58-52d627fe7b27_3eb9041f-1ce5-4095-b0a1-8ad47f72bdba_images (17).jpeg))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\games\screenshots\1ba82ed7-de35-44d0-bfb9-b54d70fd874c_f53a62950b715e9453bef83fd079f321998f4790.png))">
       <SourceType>Package</SourceType>
       <SourceId>crackhub</SourceId>
@@ -1503,6 +1583,22 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\games\screenshots\25c8234e-a1a7-47b9-aaf7-d75e7b2970f1_Needy_Streamer_Overload_screenshot.png))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\games\screenshots\25e5946e-f9a4-4b57-90dc-bff8d27cc611_631b6141-eae1-410a-86f5-67996090ce1f_tumblr_mkjgu4jP5H1qlh7rxo1_500.gif))">
+      <SourceType>Package</SourceType>
+      <SourceId>crackhub</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/crackhub</BasePath>
+      <RelativePath>img/games/screenshots/25e5946e-f9a4-4b57-90dc-bff8d27cc611_631b6141-eae1-410a-86f5-67996090ce1f_tumblr_mkjgu4jP5H1qlh7rxo1_500.gif</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\games\screenshots\25e5946e-f9a4-4b57-90dc-bff8d27cc611_631b6141-eae1-410a-86f5-67996090ce1f_tumblr_mkjgu4jP5H1qlh7rxo1_500.gif))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\games\screenshots\2af67994-b225-42e4-a099-eee64110ee1a_ss_963ca52160314a24dd5abfde61400f56fdebcff3.1920x1080.jpg))">
       <SourceType>Package</SourceType>
@@ -2096,6 +2192,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\games\screenshots\91d433d7-f50e-4e05-870b-7bf69eabd80a_images (18).jpeg))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\games\screenshots\94a53cd3-1bba-4fa7-a09e-54470172ccff_3b27295634f285d926e63ea83bcc73be.jpg))">
+      <SourceType>Package</SourceType>
+      <SourceId>crackhub</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/crackhub</BasePath>
+      <RelativePath>img/games/screenshots/94a53cd3-1bba-4fa7-a09e-54470172ccff_3b27295634f285d926e63ea83bcc73be.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\games\screenshots\94a53cd3-1bba-4fa7-a09e-54470172ccff_3b27295634f285d926e63ea83bcc73be.jpg))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\games\screenshots\96ab1257-2c71-4aa3-9c54-f9fe3bd1a9dd_images (16).jpeg))">
       <SourceType>Package</SourceType>
       <SourceId>crackhub</SourceId>
@@ -2351,6 +2463,22 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\games\screenshots\c728a957-e973-4f55-b660-465df3a9a441_hq720 (4).jpg))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\games\screenshots\c9a7f072-8839-4091-903e-7cfc51428fec_2b113734-f45f-4702-bf2d-29368fc6f039_Pokemon-2-.webp))">
+      <SourceType>Package</SourceType>
+      <SourceId>crackhub</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/crackhub</BasePath>
+      <RelativePath>img/games/screenshots/c9a7f072-8839-4091-903e-7cfc51428fec_2b113734-f45f-4702-bf2d-29368fc6f039_Pokemon-2-.webp</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\games\screenshots\c9a7f072-8839-4091-903e-7cfc51428fec_2b113734-f45f-4702-bf2d-29368fc6f039_Pokemon-2-.webp))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\games\screenshots\cdf32ca8-f9e1-496b-b5a8-b93ee315488b_images (7).jpeg))">
       <SourceType>Package</SourceType>
@@ -3023,6 +3151,22 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\no-image.jpg))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\qr\payment-qr.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>crackhub</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/crackhub</BasePath>
+      <RelativePath>img/qr/payment-qr.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\qr\payment-qr.png))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\img\screenshots\0.jpg))">
       <SourceType>Package</SourceType>
@@ -5264,6 +5408,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\js\screenshots-gallery.js))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\js\search-suggestions.js))">
+      <SourceType>Package</SourceType>
+      <SourceId>crackhub</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/crackhub</BasePath>
+      <RelativePath>js/search-suggestions.js</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\js\search-suggestions.js))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\js\site.js))">
       <SourceType>Package</SourceType>
       <SourceId>crackhub</SourceId>
@@ -6191,6 +6351,118 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\lib\jquery\LICENSE.txt))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\payment-proofs\247f812c-7786-4b98-b3b7-8a50f77097e0_20250610212429_c4af65c0777746c5b7ce14d7a8679d71.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>crackhub</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/crackhub</BasePath>
+      <RelativePath>uploads/payment-proofs/247f812c-7786-4b98-b3b7-8a50f77097e0_20250610212429_c4af65c0777746c5b7ce14d7a8679d71.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\payment-proofs\247f812c-7786-4b98-b3b7-8a50f77097e0_20250610212429_c4af65c0777746c5b7ce14d7a8679d71.png))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\payment-proofs\2ee899a9-5392-4a21-8a3a-ca41ffef998a_20250610205843_cd1d0fd435d845f38aa62bd2ce09149c.jpg))">
+      <SourceType>Package</SourceType>
+      <SourceId>crackhub</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/crackhub</BasePath>
+      <RelativePath>uploads/payment-proofs/2ee899a9-5392-4a21-8a3a-ca41ffef998a_20250610205843_cd1d0fd435d845f38aa62bd2ce09149c.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\payment-proofs\2ee899a9-5392-4a21-8a3a-ca41ffef998a_20250610205843_cd1d0fd435d845f38aa62bd2ce09149c.jpg))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\payment-proofs\2ee899a9-5392-4a21-8a3a-ca41ffef998a_20250610210031_abb67e0cf43b4aedae593a0638ddacc6.jpg))">
+      <SourceType>Package</SourceType>
+      <SourceId>crackhub</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/crackhub</BasePath>
+      <RelativePath>uploads/payment-proofs/2ee899a9-5392-4a21-8a3a-ca41ffef998a_20250610210031_abb67e0cf43b4aedae593a0638ddacc6.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\payment-proofs\2ee899a9-5392-4a21-8a3a-ca41ffef998a_20250610210031_abb67e0cf43b4aedae593a0638ddacc6.jpg))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\payment-proofs\2ee899a9-5392-4a21-8a3a-ca41ffef998a_20250611145254_ab84c68146e64fe8989ccf7af87b1701.jpg))">
+      <SourceType>Package</SourceType>
+      <SourceId>crackhub</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/crackhub</BasePath>
+      <RelativePath>uploads/payment-proofs/2ee899a9-5392-4a21-8a3a-ca41ffef998a_20250611145254_ab84c68146e64fe8989ccf7af87b1701.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\payment-proofs\2ee899a9-5392-4a21-8a3a-ca41ffef998a_20250611145254_ab84c68146e64fe8989ccf7af87b1701.jpg))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\payment-proofs\342393a6-6a13-4e9d-a907-9bf0c3b3475a_20250612095244_c7c05c93e1fb4ea08685b6018b6842d7.jpg))">
+      <SourceType>Package</SourceType>
+      <SourceId>crackhub</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/crackhub</BasePath>
+      <RelativePath>uploads/payment-proofs/342393a6-6a13-4e9d-a907-9bf0c3b3475a_20250612095244_c7c05c93e1fb4ea08685b6018b6842d7.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\payment-proofs\342393a6-6a13-4e9d-a907-9bf0c3b3475a_20250612095244_c7c05c93e1fb4ea08685b6018b6842d7.jpg))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\payment-proofs\d5406e98-4f7f-40b3-9b9b-b31a501418e7_20250610210402_899ee89c431e4103a1a0b24bc69900b9.jpg))">
+      <SourceType>Package</SourceType>
+      <SourceId>crackhub</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/crackhub</BasePath>
+      <RelativePath>uploads/payment-proofs/d5406e98-4f7f-40b3-9b9b-b31a501418e7_20250610210402_899ee89c431e4103a1a0b24bc69900b9.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\payment-proofs\d5406e98-4f7f-40b3-9b9b-b31a501418e7_20250610210402_899ee89c431e4103a1a0b24bc69900b9.jpg))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\payment-proofs\d5406e98-4f7f-40b3-9b9b-b31a501418e7_20250611160704_756dd9dba4f645db9ccabe7d5cf6b969.jpg))">
+      <SourceType>Package</SourceType>
+      <SourceId>crackhub</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/crackhub</BasePath>
+      <RelativePath>uploads/payment-proofs/d5406e98-4f7f-40b3-9b9b-b31a501418e7_20250611160704_756dd9dba4f645db9ccabe7d5cf6b969.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\uploads\payment-proofs\d5406e98-4f7f-40b3-9b9b-b31a501418e7_20250611160704_756dd9dba4f645db9ccabe7d5cf6b969.jpg))</OriginalItemSpec>
     </StaticWebAsset>
   </ItemGroup>
 </Project>

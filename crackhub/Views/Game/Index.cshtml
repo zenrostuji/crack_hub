@@ -42,13 +42,14 @@
                 
                 <!-- Search Box -->
                 <form asp-controller="Game" asp-action="Search" method="get" class="animate__animated animate__fadeIn animate__delay-2s">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control form-control-lg rounded-pill" placeholder="Tìm kiếm game..." name="query" value="@searchQuery">
+                    <div class="input-group mb-3 search-container">
+                        <input type="text" class="form-control form-control-lg rounded-pill" placeholder="Tìm kiếm game..." name="query" value="@searchQuery" autocomplete="off">
                         <div class="input-group-append">
                             <button class="btn btn-primary rounded-pill ms-2" type="submit">
                                 <i class="fa fa-search me-2"></i> Tìm kiếm
                             </button>
                         </div>
+                        <div class="search-suggestions" id="gameIndexSearchSuggestions"></div>
                     </div>
                 </form>
                 

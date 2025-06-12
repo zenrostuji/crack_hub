@@ -30,6 +30,8 @@ namespace crackhub.Models.Data
         public DbSet<RelatedGame> RelatedGames { get; set; }
         public DbSet<AvatarFrame> AvatarFrames { get; set; }
         public DbSet<UserAvatarFrame> UserAvatarFrames { get; set; }
+        public DbSet<Premium> Premiums { get; set; }
+        public DbSet<PremiumRegister> PremiumRegisters { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -140,6 +142,23 @@ namespace crackhub.Models.Data
                 .HasOne(uaf => uaf.AvatarFrame)
                 .WithMany(af => af.UserAvatarFrames)
                 .HasForeignKey(uaf => uaf.FrameId);
+
+            // Cấu hình cho Premium và PremiumRegister
+            modelBuilder.Entity<Premium>()
+                .ToTable("Premiums");
+
+            modelBuilder.Entity<PremiumRegister>()
+                .ToTable("PremiumRegisters")
+                .HasOne(pr => pr.User)
+                .WithMany()
+                .HasForeignKey(pr => pr.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PremiumRegister>()
+                .HasOne(pr => pr.Premium)
+                .WithMany(p => p.PremiumRegisters)
+                .HasForeignKey(pr => pr.PackageId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
         }

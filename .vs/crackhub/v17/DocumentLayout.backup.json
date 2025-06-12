@@ -3,16 +3,44 @@
   "WorkspaceRootPath": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|d:\\a_cong_viec\\code\\web_game\\crack_hub-co_repositories\\crackhub\\migrations\\20250610105406_addgoogleidtouser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|solutionrelative:crackhub\\migrations\\20250610105406_addgoogleidtouser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|d:\\a_cong_viec\\code\\web_game\\crack_hub-co_repositories\\crackhub\\crackhub.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|solutionrelative:crackhub\\crackhub.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|d:\\a_cong_viec\\code\\web_game\\crack_hub-co_repositories\\crackhub\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|solutionrelative:crackhub\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|d:\\a_cong_viec\\code\\web_game\\crack_hub-co_repositories\\crackhub\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|solutionrelative:crackhub\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|d:\\a_cong_viec\\code\\web_game\\crack_hub-co_repositories\\crackhub\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|solutionrelative:crackhub\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Migrations\\20250612022651_PremiumRegister.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:crackhub\\Migrations\\20250612022651_PremiumRegister.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|d:\\a_cong_viec\\code\\web_game\\crack_hub-co_repositories\\crackhub\\views\\admin\\premiumrequestdetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|solutionrelative:crackhub\\views\\admin\\premiumrequestdetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|d:\\a_cong_viec\\code\\web_game\\crack_hub-co_repositories\\crackhub\\views\\admin\\premiumrequests.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|solutionrelative:crackhub\\views\\admin\\premiumrequests.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|d:\\a_cong_viec\\code\\web_game\\crack_hub-co_repositories\\crackhub\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|solutionrelative:crackhub\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|d:\\a_cong_viec\\code\\web_game\\crack_hub-co_repositories\\crackhub\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|solutionrelative:crackhub\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|d:\\a_cong_viec\\code\\web_game\\crack_hub-co_repositories\\crackhub\\views\\home\\payment.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|solutionrelative:crackhub\\views\\home\\payment.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|d:\\a_cong_viec\\code\\web_game\\crack_hub-co_repositories\\crackhub\\crackhub.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|solutionrelative:crackhub\\crackhub.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|d:\\a_cong_viec\\code\\web_game\\crack_hub-co_repositories\\crackhub\\wwwroot\\css\\profile.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
@@ -35,18 +63,6 @@
       "RelativeMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|solutionrelative:crackhub\\views\\home\\gamerating.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|d:\\a_cong_viec\\code\\web_game\\crack_hub-co_repositories\\crackhub\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|solutionrelative:crackhub\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|d:\\a_cong_viec\\code\\web_game\\crack_hub-co_repositories\\crackhub\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|solutionrelative:crackhub\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|d:\\a_cong_viec\\code\\web_game\\crack_hub-co_repositories\\crackhub\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|solutionrelative:crackhub\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|d:\\a_cong_viec\\code\\web_game\\crack_hub-co_repositories\\crackhub\\controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|solutionrelative:crackhub\\controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -67,8 +83,12 @@
       "RelativeMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|solutionrelative:crackhub\\views\\admin\\creategame.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|d:\\a_cong_viec\\code\\web_game\\crack_hub-co_repositories\\crackhub\\migrations\\20250605065705_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|solutionrelative:crackhub\\migrations\\20250605065705_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|d:\\a_cong_viec\\code\\web_game\\crack_hub-co_repositories\\crackhub\\migrations\\20250612024616_addpremiumtables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|solutionrelative:crackhub\\migrations\\20250612024616_addpremiumtables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|d:\\a_cong_viec\\code\\web_game\\crack_hub-co_repositories\\crackhub\\migrations\\20250612023201_inital.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC95FB51-C6D0-468D-B5AB-2F5B07EED2CD}|crackhub\\crackhub.csproj|solutionrelative:crackhub\\migrations\\20250612023201_inital.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -78,24 +98,47 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "20250610105406_AddGoogleIdToUser.cs",
-              "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Migrations\\20250610105406_AddGoogleIdToUser.cs",
-              "RelativeDocumentMoniker": "crackhub\\Migrations\\20250610105406_AddGoogleIdToUser.cs",
-              "ToolTip": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Migrations\\20250610105406_AddGoogleIdToUser.cs",
-              "RelativeToolTip": "crackhub\\Migrations\\20250610105406_AddGoogleIdToUser.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 21,
+              "Title": "20250612023201_inital.cs",
+              "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Migrations\\20250612023201_inital.cs",
+              "RelativeDocumentMoniker": "crackhub\\Migrations\\20250612023201_inital.cs",
+              "ToolTip": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Migrations\\20250612023201_inital.cs",
+              "RelativeToolTip": "crackhub\\Migrations\\20250612023201_inital.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T10:54:06.648Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-12T02:32:01.201Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
+              "Title": "20250612022651_PremiumRegister.cs",
+              "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Migrations\\20250612022651_PremiumRegister.cs",
+              "RelativeDocumentMoniker": "crackhub\\Migrations\\20250612022651_PremiumRegister.cs",
+              "ToolTip": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Migrations\\20250612022651_PremiumRegister.cs",
+              "RelativeToolTip": "crackhub\\Migrations\\20250612022651_PremiumRegister.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-12T02:26:51.94Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PremiumRequests.cshtml",
+              "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Views\\Admin\\PremiumRequests.cshtml",
+              "RelativeDocumentMoniker": "crackhub\\Views\\Admin\\PremiumRequests.cshtml",
+              "ToolTip": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Views\\Admin\\PremiumRequests.cshtml",
+              "RelativeToolTip": "crackhub\\Views\\Admin\\PremiumRequests.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-10T12:17:05.012Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "crackhub.csproj",
               "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\crackhub.csproj",
               "RelativeDocumentMoniker": "crackhub\\crackhub.csproj",
@@ -107,7 +150,57 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\appsettings.json",
+              "RelativeDocumentMoniker": "crackhub\\appsettings.json",
+              "ToolTip": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\appsettings.json",
+              "RelativeToolTip": "crackhub\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAABbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-05T00:13:31.229Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "crackhub\\Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "crackhub\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAB4BAAAAAAAAAAApwCoBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-09T01:49:57.356Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "crackhub\\Controllers\\AccountController.cs",
+              "ToolTip": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "crackhub\\Controllers\\AccountController.cs",
+              "ViewState": "AgIAAGcAAAAAAAAAAAAAAHAAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-12T03:06:38.201Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "20250612024616_AddPremiumTables.cs",
+              "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Migrations\\20250612024616_AddPremiumTables.cs",
+              "RelativeDocumentMoniker": "crackhub\\Migrations\\20250612024616_AddPremiumTables.cs",
+              "ToolTip": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Migrations\\20250612024616_AddPremiumTables.cs",
+              "RelativeToolTip": "crackhub\\Migrations\\20250612024616_AddPremiumTables.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-12T02:46:16.56Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "Profile.cshtml",
               "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Views\\Account\\Profile.cshtml",
               "RelativeDocumentMoniker": "crackhub\\Views\\Account\\Profile.cshtml",
@@ -119,19 +212,55 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "crackhub\\Views\\Home\\Index.cshtml",
-              "ToolTip": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "crackhub\\Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAAMYAAAAAAAAAAIBJwNAAAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-09T01:49:57.356Z"
+              "DocumentIndex": 7,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "crackhub\\Controllers\\AdminController.cs",
+              "ToolTip": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "crackhub\\Controllers\\AdminController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAmwCUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-29T17:23:16.198Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "crackhub\\Controllers\\HomeController.cs",
+              "ToolTip": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "crackhub\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBIAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-09T01:51:30.323Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PremiumRequestDetails.cshtml",
+              "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Views\\Admin\\PremiumRequestDetails.cshtml",
+              "RelativeDocumentMoniker": "crackhub\\Views\\Admin\\PremiumRequestDetails.cshtml",
+              "ToolTip": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Views\\Admin\\PremiumRequestDetails.cshtml",
+              "RelativeToolTip": "crackhub\\Views\\Admin\\PremiumRequestDetails.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGIAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-10T12:16:32.187Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Payment.cshtml",
+              "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Views\\Home\\Payment.cshtml",
+              "RelativeDocumentMoniker": "crackhub\\Views\\Home\\Payment.cshtml",
+              "ToolTip": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Views\\Home\\Payment.cshtml",
+              "RelativeToolTip": "crackhub\\Views\\Home\\Payment.cshtml",
+              "ViewState": "AgIAAIQAAAAAAAAAAAAAAI4AAABKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-10T12:15:55.353Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
               "Title": "GameRating.css",
               "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\css\\GameRating.css",
               "RelativeDocumentMoniker": "crackhub\\wwwroot\\css\\GameRating.css",
@@ -143,7 +272,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 12,
               "Title": "GameRating.js",
               "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\js\\GameRating.js",
               "RelativeDocumentMoniker": "crackhub\\wwwroot\\js\\GameRating.js",
@@ -155,7 +284,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 14,
               "Title": "GameRating.cshtml",
               "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Views\\Home\\GameRating.cshtml",
               "RelativeDocumentMoniker": "crackhub\\Views\\Home\\GameRating.cshtml",
@@ -167,19 +296,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\appsettings.json",
-              "RelativeDocumentMoniker": "crackhub\\appsettings.json",
-              "ToolTip": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\appsettings.json",
-              "RelativeToolTip": "crackhub\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAABbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-06-05T00:13:31.229Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 10,
               "Title": "profile.css",
               "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\css\\profile.css",
               "RelativeDocumentMoniker": "crackhub\\wwwroot\\css\\profile.css",
@@ -192,30 +309,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 16,
-              "Title": "20250605065705_Initial.cs",
-              "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Migrations\\20250605065705_Initial.cs",
-              "RelativeDocumentMoniker": "crackhub\\Migrations\\20250605065705_Initial.cs",
-              "ToolTip": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Migrations\\20250605065705_Initial.cs",
-              "RelativeToolTip": "crackhub\\Migrations\\20250605065705_Initial.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T06:57:05.773Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "crackhub\\Controllers\\HomeController.cs",
-              "ToolTip": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "crackhub\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAYwDQAAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-09T01:51:30.323Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
               "Title": "Premium.cshtml",
               "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Views\\Home\\Premium.cshtml",
               "RelativeDocumentMoniker": "crackhub\\Views\\Home\\Premium.cshtml",
@@ -227,7 +320,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 17,
               "Title": "_ModeratorLayout.cshtml",
               "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Views\\Shared\\_ModeratorLayout.cshtml",
               "RelativeDocumentMoniker": "crackhub\\Views\\Shared\\_ModeratorLayout.cshtml",
@@ -239,7 +332,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 18,
               "Title": "readme.md",
               "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\readme.md",
               "RelativeDocumentMoniker": "crackhub\\readme.md",
@@ -251,19 +344,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "AdminController.cs",
-              "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Controllers\\AdminController.cs",
-              "RelativeDocumentMoniker": "crackhub\\Controllers\\AdminController.cs",
-              "ToolTip": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Controllers\\AdminController.cs",
-              "RelativeToolTip": "crackhub\\Controllers\\AdminController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAH4AAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-29T17:23:16.198Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 15,
               "Title": "GameController.cs",
               "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Controllers\\GameController.cs",
               "RelativeDocumentMoniker": "crackhub\\Controllers\\GameController.cs",
@@ -275,7 +356,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 19,
               "Title": "CreateGame.cshtml",
               "DocumentMoniker": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\Views\\Admin\\CreateGame.cshtml",
               "RelativeDocumentMoniker": "crackhub\\Views\\Admin\\CreateGame.cshtml",

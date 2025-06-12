@@ -99,6 +99,19 @@ namespace crackhub.Controllers
                 HttpContext.Session.SetString("AvatarUrl", user.AvatarUrl);
             }
 
+            // Check if premium is expiring within 3 days
+            if (user.PremiumExpiryDate.HasValue && user.PremiumExpiryDate.Value > DateTime.Now)
+            {
+                var daysUntilExpiry = (user.PremiumExpiryDate.Value - DateTime.Now).Days;
+                if (daysUntilExpiry <= 3)
+                {
+                    HttpContext.Session.SetString("PremiumExpiryWarning", "true");
+                    HttpContext.Session.SetString("PremiumExpiryDate", user.PremiumExpiryDate.Value.ToString("dd/MM/yyyy"));
+                    HttpContext.Session.SetString("DaysUntilExpiry", daysUntilExpiry.ToString());
+                }
+            }
+           
+
             // If return URL is specified and is local, redirect there
             if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
             {
@@ -236,6 +249,18 @@ namespace crackhub.Controllers
                 {
                     HttpContext.Session.SetString("AvatarUrl", existingUser.AvatarUrl);
                 }
+
+                // Check if premium is expiring within 3 days for existing users
+                if (existingUser.PremiumExpiryDate.HasValue && existingUser.PremiumExpiryDate.Value > DateTime.Now)
+                {
+                    var daysUntilExpiry = (existingUser.PremiumExpiryDate.Value - DateTime.Now).Days;
+                    if (daysUntilExpiry <= 3)
+                    {
+                        HttpContext.Session.SetString("PremiumExpiryWarning", "true");
+                        HttpContext.Session.SetString("PremiumExpiryDate", existingUser.PremiumExpiryDate.Value.ToString("dd/MM/yyyy"));
+                        HttpContext.Session.SetString("DaysUntilExpiry", daysUntilExpiry.ToString());
+                    }
+                }
             }
             else
             {
@@ -325,6 +350,13 @@ namespace crackhub.Controllers
                 if (!canChangeDisplayName)
                 {
                     ModelState.AddModelError("DisplayName", "Chỉ tài khoản Admin, Moderator hoặc Premium mới được thay đổi tên hiển thị");
+                    
+                    // Load avatar frame data for view
+                    var avatarFrames = await _avatarFrameRepository.GetAllAsync();
+                    ViewBag.AllAvatarFrames = avatarFrames;
+                    var equippedFrame = await _userAvatarFrameRepository.GetActiveFrameByUserAsync(user.Id);
+                    ViewBag.EquippedFrame = equippedFrame?.AvatarFrame;
+                    
                     // Load user activity history for the profile view
                     await LoadUserActivityHistory(user.Id);
                     return View("Profile", user);
@@ -334,6 +366,13 @@ namespace crackhub.Controllers
                 if (await _userRepository.GetByDisplayNameAsync(displayName) != null)
                 {
                     ModelState.AddModelError("DisplayName", "Tên hiển thị này đã tồn tại");
+                    
+                    // Load avatar frame data for view
+                    var avatarFrames2 = await _avatarFrameRepository.GetAllAsync();
+                    ViewBag.AllAvatarFrames = avatarFrames2;
+                    var equippedFrame2 = await _userAvatarFrameRepository.GetActiveFrameByUserAsync(user.Id);
+                    ViewBag.EquippedFrame = equippedFrame2?.AvatarFrame;
+                    
                     // Load user activity history for the profile view
                     await LoadUserActivityHistory(user.Id);
                     return View("Profile", user);
@@ -393,6 +432,13 @@ namespace crackhub.Controllers
                 if (string.IsNullOrEmpty(currentPassword) || user.PasswordHash != HashPassword(currentPassword))
                 {
                     ModelState.AddModelError("CurrentPassword", "Mật khẩu hiện tại không chính xác");
+                    
+                    // Load avatar frame data for view
+                    var avatarFrames3 = await _avatarFrameRepository.GetAllAsync();
+                    ViewBag.AllAvatarFrames = avatarFrames3;
+                    var equippedFrame3 = await _userAvatarFrameRepository.GetActiveFrameByUserAsync(user.Id);
+                    ViewBag.EquippedFrame = equippedFrame3?.AvatarFrame;
+                    
                     await LoadUserActivityHistory(user.Id);
                     return View("Profile", user);
                 }
@@ -401,6 +447,13 @@ namespace crackhub.Controllers
                 if (newPassword != confirmPassword)
                 {
                     ModelState.AddModelError("ConfirmPassword", "Mật khẩu xác nhận không khớp");
+                    
+                    // Load avatar frame data for view
+                    var avatarFrames4 = await _avatarFrameRepository.GetAllAsync();
+                    ViewBag.AllAvatarFrames = avatarFrames4;
+                    var equippedFrame4 = await _userAvatarFrameRepository.GetActiveFrameByUserAsync(user.Id);
+                    ViewBag.EquippedFrame = equippedFrame4?.AvatarFrame;
+                    
                     await LoadUserActivityHistory(user.Id);
                     return View("Profile", user);
                 }
@@ -412,6 +465,14 @@ namespace crackhub.Controllers
             await _userRepository.UpdateAsync(user);
 
             ViewBag.SuccessMessage = "Thông tin tài khoản đã được cập nhật thành công";
+            
+            // Load all avatar frame data again
+            var allFrames = await _avatarFrameRepository.GetAllAsync();
+            ViewBag.AllAvatarFrames = allFrames;
+            
+            // Get user's equipped frame
+            var currentEquippedFrame = await _userAvatarFrameRepository.GetActiveFrameByUserAsync(user.Id);
+            ViewBag.EquippedFrame = currentEquippedFrame?.AvatarFrame;
             
             // Load user activity history for the profile view
             await LoadUserActivityHistory(user.Id);
@@ -603,6 +664,17 @@ namespace crackhub.Controllers
             {
                 return Json(new { success = false, message = "Có lỗi xảy ra: " + ex.Message });
             }
+        }
+
+        [HttpPost]
+        public IActionResult ClearPremiumWarning()
+        {
+            // Clear premium warning flags from session
+            HttpContext.Session.Remove("PremiumExpiryWarning");
+            HttpContext.Session.Remove("PremiumExpiryDate");
+            HttpContext.Session.Remove("DaysUntilExpiry");
+            
+            return Json(new { success = true });
         }
 
         private string HashPassword(string password)

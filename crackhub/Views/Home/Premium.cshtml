@@ -55,21 +55,29 @@
             @foreach (var plan in ViewBag.Plans)
             {
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="pricing-card @(plan.Popular ? "popular" : "")">
-                        <h3 class="pricing-name">@plan.Name</h3>
+                    <div class="pricing-card @(plan.Id == 2 ? "popular" : "")">
+                        <h3 class="pricing-name">@plan.DurationInMonths</h3>
                         <div class="pricing-price">
                             <span class="currency">₫</span>@plan.Price.ToString("#,##0")
-                            <span class="period">/@plan.Name.ToLower()</span>
+                            <span class="period">/@plan.DurationInMonths.ToLower()</span>
                         </div>
                         <ul class="pricing-features">
-                            @foreach (var feature in plan.Features)
+                            <li>Không giới hạn lượt download</li>
+                            <li>Tốc độ download nhanh hơn</li>
+                            <li>Thay đổi tên hiển thị</li>
+                            @if (plan.Id >= 2)
                             {
-                                <li>@feature</li>
+                                <li>Ưu tiên hỗ trợ kỹ thuật</li>
+                                <li>Không hiển thị quảng cáo</li>
+                            }
+                            @if (plan.Id == 3)
+                            {
+                                <li>Truy cập sớm game mới</li>
                             }
                         </ul>
                         <form method="post" action="@Url.Action("UpgradePremium")">
-                            <input type="hidden" name="durationMonths" value="@plan.Duration" />
-                            <button type="submit" class="pricing-button pricing-button-@plan.Color">
+                            <input type="hidden" name="packageId" value="@plan.Id" />
+                            <button type="submit" class="pricing-button pricing-button-@(plan.Id == 1 ? "primary" : plan.Id == 2 ? "success" : "danger")">
                                 @if (ViewBag.IsPremium)
                                 {
                                     <span>Gia hạn ngay</span>

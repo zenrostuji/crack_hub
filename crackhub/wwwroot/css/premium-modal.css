@@ -1,0 +1,197 @@
+/* Premium Modal Styles */
+.premium-modal-content {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+.premium-modal-content::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="rgba(121, 80, 242, 0.05)" width="50" height="50" x="0" y="0"/><rect fill="rgba(121, 80, 242, 0.05)" width="50" height="50" x="50" y="50"/></svg>');
+    z-index: 0;
+}
+
+.premium-modal-header {
+    background: rgba(255, 215, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 1rem 1rem 0 0;
+    position: relative;
+    z-index: 1;
+}
+
+.premium-modal-body {
+    position: relative;
+    z-index: 1;
+    padding: 2rem;
+}
+
+.premium-modal-footer {
+    background: rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0 0 1rem 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.premium-modal-footer .pricing-button {
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    animation: pulseGlow 2s infinite;
+    box-shadow: 0 0 20px rgba(93, 78, 199, 0.5);
+    transform: scale(1.05);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-right: 25%;
+}
+
+.premium-modal-footer .pricing-button:hover {
+    animation: none;
+    transform: scale(1.1) translateY(-3px);
+    box-shadow: 0 10px 30px rgba(93, 78, 199, 0.7);
+}
+
+.premium-modal-footer .pricing-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.premium-modal-footer .pricing-button:hover::before {
+    left: 100%;
+}
+
+.days-left-highlight {
+    font-size: 1.5rem !important;
+    color: #ff4757 !important;
+    text-shadow: 0 0 10px rgba(255, 71, 87, 0.7);
+    animation: urgentBlink 1.5s infinite;
+    font-weight: 900 !important;
+    background: linear-gradient(45deg, #ff4757, #ff6b7a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+    border: 2px solid rgba(255, 71, 87, 0.3);
+    background-color: rgba(255, 71, 87, 0.1);
+}
+
+.expiry-date-highlight {
+    color: #ffd700 !important;
+    font-size: 1.3rem !important;
+    font-weight: 700 !important;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+    animation: goldShimmer 2s infinite;
+}
+
+.critical-warning {
+    animation: criticalAlert 1s infinite !important;
+    background-color: rgba(255, 71, 87, 0.2) !important;
+}
+
+.urgent-modal {
+    animation: modalShake 0.5s ease-in-out !important;
+    border: 2px solid #ff4757 !important;
+}
+
+.modal-entrance {
+    animation: modalEntrance 0.8s ease-out;
+}
+
+/* Animations */
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 20px rgba(93, 78, 199, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(93, 78, 199, 0.8);
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(93, 78, 199, 0.5);
+    }
+}
+
+@keyframes urgentBlink {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes goldShimmer {
+    0% {
+        text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+    }
+    50% {
+        text-shadow: 0 0 15px rgba(255, 215, 0, 0.9);
+    }
+    100% {
+        text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+    }
+}
+
+@keyframes criticalAlert {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(255, 71, 87, 0.5);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 40px rgba(255, 71, 87, 1);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(255, 71, 87, 0.5);
+    }
+}
+
+@keyframes modalShake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes modalEntrance {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(-50px);
+    }
+    50% {
+        transform: scale(1.05) translateY(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}

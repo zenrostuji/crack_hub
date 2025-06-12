@@ -33,6 +33,8 @@ builder.Services.AddScoped<ISearchHistoryRepository, EFSearchHistoryRepository>(
 builder.Services.AddScoped<IRoleRepository, EFRoleRepository>();
 builder.Services.AddScoped<IAvatarFrameRepository, EFAvatarFrameRepository>();
 builder.Services.AddScoped<IUserAvatarFrameRepository, EFUserAvatarFrameRepository>();
+builder.Services.AddScoped<IPremiumRepository, EFPremiumRepository>();
+builder.Services.AddScoped<IPremiumRegisterRepository, EFPremiumRegisterRepository>();
 
 // Add HttpContextAccessor
 builder.Services.AddHttpContextAccessor();

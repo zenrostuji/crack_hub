@@ -13,13 +13,14 @@
                 
                 <!-- Search Box -->
                 <form asp-controller="Game" asp-action="Search" method="get" class="animate__animated animate__fadeIn animate__delay-2s">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control form-control-lg rounded-pill" placeholder="Tìm kiếm game..." name="query">
+                    <div class="input-group mb-3 search-container">
+                        <input type="text" class="form-control form-control-lg rounded-pill" placeholder="Tìm kiếm game..." name="query" autocomplete="off">
                         <div class="input-group-append">
                             <button class="btn btn-primary rounded-pill ms-2" type="submit">
                                 <i class="fa fa-search me-2"></i> Tìm kiếm
                             </button>
                         </div>
+                        <div class="search-suggestions" id="heroSearchSuggestions"></div>
                     </div>
                 </form>
                 
@@ -206,9 +207,121 @@
     </div>
 </div>
 
-<a asp-controller="Home" asp-action="GameRating" class="btn btn-primary ms-2" type="submit">
-    <i class="fa fa-search me-2"></i> Go game :3
-</a>
+<!-- Game Banner Section -->
+<div class="container-fluid game-banner-section py-5 mt-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); position: relative; overflow: hidden;">
+    <!-- Background decorative elements -->
+    <div class="banner-decoration">
+        <div class="floating-element element-1" style="position: absolute; top: 20%; left: 10%; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+        <div class="floating-element element-2" style="position: absolute; top: 60%; right: 15%; width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+        <div class="floating-element element-3" style="position: absolute; bottom: 30%; left: 20%; width: 50px; height: 50px; background: rgba(255,255,255,0.08); border-radius: 50%;"></div>
+    </div>
+    
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-8 col-md-7">
+                <div class="banner-content text-white">
+                    <h2 class="banner-title mb-3" style="font-size: 2.5rem; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+                        🎮 Trải Nghiệm Game Hành Động
+                    </h2>
+                    <p class="banner-subtitle mb-4" style="font-size: 1.2rem; opacity: 0.95; line-height: 1.6;">
+                        Tham gia cuộc chiến sinh tồn đầy thử thách! Kiểm tra khả năng phản xạ và kỹ năng chiến đấu của bạn trong game bắn súng đầy kịch tính.
+                    </p>
+                    <div class="banner-features mb-4">
+                        <div class="row">
+                            <div class="col-sm-4 col-6 mb-2">
+                                <div class="feature-item d-flex align-items-center">
+                                    <i class="fas fa-crosshairs me-2" style="color: #FFD700; font-size: 1.1rem;"></i>
+                                    <span style="font-size: 0.95rem;">Gameplay thử thách</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-6 mb-2">
+                                <div class="feature-item d-flex align-items-center">
+                                    <i class="fas fa-trophy me-2" style="color: #FFD700; font-size: 1.1rem;"></i>
+                                    <span style="font-size: 0.95rem;">Hệ thống điểm số</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-12 mb-2">
+                                <div class="feature-item d-flex align-items-center">
+                                    <i class="fas fa-gamepad me-2" style="color: #FFD700; font-size: 1.1rem;"></i>
+                                    <span style="font-size: 0.95rem;">Điều khiển mượt mà</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-5 text-center">
+                <div class="banner-action">
+                    <a asp-controller="Home" asp-action="GameRating" class="btn-game-banner" style="
+                        display: inline-block;
+                        padding: 15px 40px;
+                        background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+                        color: white;
+                        text-decoration: none;
+                        border-radius: 50px;
+                        font-size: 1.3rem;
+                        font-weight: 600;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+                        transition: all 0.3s ease;
+                        position: relative;
+                        overflow: hidden;
+                        border: none;
+                    ">
+                        <span style="position: relative; z-index: 2;">
+                            <i class="fas fa-rocket me-2"></i>
+                            Chơi Ngay!
+                        </span>
+                        <div style="
+                            position: absolute;
+                            top: 0;
+                            left: -100%;
+                            width: 100%;
+                            height: 100%;
+                            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+                            transition: left 0.5s;
+                        " class="btn-shine"></div>
+                    </a>
+                    <div class="mt-3">
+                        <small style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">
+                            <i class="fas fa-users me-1"></i>
+                            Hàng nghìn người chơi đang trực tuyến
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.btn-game-banner:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 35px rgba(255, 107, 107, 0.6) !important;
+    text-decoration: none !important;
+    color: white !important;
+}
+
+.btn-game-banner:hover .btn-shine {
+    left: 100%;
+}
+
+.game-banner-section {
+    position: relative;
+}
+
+.game-banner-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.3;
+}
+</style>
 
 <!-- Categories Section -->
 <!--div class="container mt-5 mb-5">

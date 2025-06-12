@@ -1,0 +1,234 @@
+@model List<crackhub.Models.Data.UserAvatarFrame>
+
+@{
+    ViewData["Title"] = "Thống kê khung Avatar";
+     Layout = "_AdminLayout";
+    var avatarFrame = ViewBag.AvatarFrame as crackhub.Models.Data.AvatarFrame;
+    var totalUsers = ViewBag.TotalUsers as int? ?? 0;
+    var activeUsers = ViewBag.ActiveUsers as int? ?? 0;
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-chart-bar"></i>
+                        Thống kê khung Avatar: @(avatarFrame?.FrameName ?? "N/A")
+                    </h3>
+                    <div class="card-tools">
+                        <a asp-action="AvatarFrames" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Quay lại
+                        </a>                        <a asp-action="EditAvatarFrame" asp-route-id="@(avatarFrame?.Id ?? 0)" class="btn btn-primary">
+                            <i class="fas fa-edit"></i> Chỉnh sửa
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card-body">                    <!-- Frame Info -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="avatar-frame-preview" style="width: 120px; height: 120px;">
+                                <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #e9ecef, #dee2e6); border-radius: 50%; margin: 10px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-user text-muted" style="font-size: 2rem;"></i>
+                                </div>
+                                <img src="@(avatarFrame?.FrameUrl ?? "/img/frameAvartar/default.png")" style="position: absolute; top: 0; left: 0; width: 120px; height: 120px;" alt="Frame Preview" />
+                            </div>
+                        </div>
+                        <div class="col-md-9">                            <dl class="row">
+                                <dt class="col-sm-3">ID:</dt>
+                                <dd class="col-sm-3">@(avatarFrame?.Id ?? 0)</dd>
+                                <dt class="col-sm-3">Tên khung:</dt>
+                                <dd class="col-sm-3">@(avatarFrame?.FrameName ?? "N/A")</dd>                                <dt class="col-sm-3">Độ hiếm:</dt>
+                                <dd class="col-sm-3">
+                                    <span class="badge @GetRarityBadgeClass(avatarFrame?.RarityLevel ?? 1)">
+                                        @GetRarityText(avatarFrame?.RarityLevel ?? 1)
+                                    </span>
+                                </dd>
+                                <dt class="col-sm-3">Premium:</dt>
+                                <dd class="col-sm-3">
+                                    @if (avatarFrame?.IsPremium == true)
+                                    {
+                                        <span class="badge badge-warning">Premium</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-success">Miễn phí</span>
+                                    }
+                                </dd>
+                                <dt class="col-sm-3">Trạng thái:</dt>
+                                <dd class="col-sm-3">
+                                    @if (avatarFrame?.IsActive == true)
+                                    {
+                                        <span class="badge badge-success">Hoạt động</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-danger">Vô hiệu</span>
+                                    }
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <!-- Statistics Cards -->
+                    <div class="row mb-4">
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3>@totalUsers</h3>
+                                    <p>Tổng người dùng sở hữu</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    <h3>@activeUsers</h3>
+                                    <p>Đang sử dụng</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-user-check"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3>@(totalUsers > 0 ? Math.Round((double)activeUsers / totalUsers * 100, 1) : 0)%</h3>
+                                    <p>Tỷ lệ sử dụng</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-percentage"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box bg-danger">
+                                <div class="inner">
+                                    <h3>@(totalUsers - activeUsers)</h3>
+                                    <p>Sở hữu nhưng không dùng</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-user-times"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Users List -->
+                    @if (Model.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Người dùng</th>
+                                        <th>Email</th>
+                                        <th>Trạng thái sử dụng</th>
+                                        <th>Ngày sở hữu</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var userFrame in Model.OrderByDescending(uf => uf.IsEquipped).ThenByDescending(uf => uf.ObtainedDate))
+                                    {
+                                        <tr class="@(userFrame.IsEquipped ? "table-success" : "")">
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar-container me-2" style="width: 40px; height: 40px; position: relative;">
+                                                        @if (!string.IsNullOrEmpty(userFrame.User.AvatarUrl))
+                                                        {
+                                                            <img src="@userFrame.User.AvatarUrl" class="rounded-circle" style="width: 40px; height: 40px;" alt="Avatar" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                                                <i class="fas fa-user text-white"></i>
+                                                            </div>
+                                                        }                                                        @if (userFrame.IsEquipped)
+                                                        {
+                                                            <img src="@(avatarFrame?.FrameUrl ?? "/img/frameAvartar/default.png")" style="position: absolute; top: 0; left: 0; width: 40px; height: 40px;" alt="Frame" />
+                                                        }
+                                                    </div>
+                                                    <div>
+                                                        <strong>@userFrame.User.DisplayName</strong>
+                                                        <br>
+                                                        <small class="text-muted">ID: @userFrame.User.Id</small>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>@(userFrame.User.Email ?? "Không có email")</td>
+                                            <td>
+                                                @if (userFrame.IsEquipped)
+                                                {
+                                                    <span class="badge badge-success">
+                                                        <i class="fas fa-check"></i> Đang sử dụng
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge badge-secondary">
+                                                        <i class="fas fa-times"></i> Không sử dụng
+                                                    </span>
+                                                }
+                                            </td>
+                                            <td>@userFrame.ObtainedDate.ToString("dd/MM/yyyy HH:mm")</td>
+                                            <td>
+                                                <a asp-controller="Admin" asp-action="UserDetails" asp-route-id="@userFrame.User.Id" class="btn btn-sm btn-info" title="Xem chi tiết người dùng">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-4">
+                            <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">Chưa có người dùng nào sở hữu khung avatar này.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    private string GetRarityBadgeClass(int rarityLevel)
+    {
+        return rarityLevel switch
+        {
+            1 => "badge-secondary", // Common
+            2 => "badge-success",   // Uncommon
+            3 => "badge-primary",   // Rare
+            4 => "badge-warning",   // Epic
+            5 => "badge-danger",    // Legendary
+            _ => "badge-light"
+        };
+    }
+
+    private string GetRarityText(int rarityLevel)
+    {
+        return rarityLevel switch
+        {
+            1 => "Thường",
+            2 => "Khó tìm",
+            3 => "Hiếm",
+            4 => "Sử thi",
+            5 => "Huyền thoại",
+            _ => "Không xác định"
+        };
+    }
+}

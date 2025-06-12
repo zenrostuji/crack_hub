@@ -1,0 +1,144 @@
+@model crackhub.Models.Data.AvatarFrame
+
+@{
+    ViewData["Title"] = "Xóa khung Avatar";
+     Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-trash"></i>
+                        Xóa khung Avatar
+                    </h3>
+                    <div class="card-tools">
+                        <a asp-action="AvatarFrames" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Quay lại
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <h5><i class="fas fa-exclamation-triangle"></i> Cảnh báo!</h5>
+                        Bạn có chắc chắn muốn xóa khung avatar này? Hành động này không thể hoàn tác.
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">                            <div class="form-group">
+                                <label class="control-label">Ảnh khung:</label>
+                                <div class="avatar-frame-preview" style="width: 120px; height: 120px;">
+                                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #e9ecef, #dee2e6); border-radius: 50%; margin: 10px; display: flex; align-items: center; justify-content: center;">
+                                        <i class="fas fa-user text-muted" style="font-size: 2rem;"></i>
+                                    </div>
+                                    <img src="@Model.FrameUrl" style="position: absolute; top: 0; left: 0; width: 120px; height: 120px;" alt="Frame Preview" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <dl class="row">
+                                <dt class="col-sm-4">ID:</dt>
+                                <dd class="col-sm-8">@Model.Id</dd>
+
+                                <dt class="col-sm-4">Tên khung:</dt>
+                                <dd class="col-sm-8">@Model.FrameName</dd>
+
+                                <dt class="col-sm-4">Mô tả:</dt>
+                                <dd class="col-sm-8">@(Model.Description ?? "Không có mô tả")</dd>                                <dt class="col-sm-4">Độ hiếm:</dt>
+                                <dd class="col-sm-8">
+                                    <span class="badge @GetRarityBadgeClass(Model.RarityLevel)">
+                                        @GetRarityText(Model.RarityLevel)
+                                    </span>
+                                </dd>
+
+                                <dt class="col-sm-4">Premium:</dt>
+                                <dd class="col-sm-8">
+                                    @if (Model.IsPremium)
+                                    {
+                                        <span class="badge badge-warning">Premium</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-success">Miễn phí</span>
+                                    }
+                                </dd>
+
+                                <dt class="col-sm-4">Mặc định:</dt>
+                                <dd class="col-sm-8">
+                                    @if (Model.IsDefault)
+                                    {
+                                        <span class="badge badge-info">Mặc định</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-light">Thường</span>
+                                    }
+                                </dd>
+
+                                <dt class="col-sm-4">Trạng thái:</dt>
+                                <dd class="col-sm-8">
+                                    @if (Model.IsActive)
+                                    {
+                                        <span class="badge badge-success">Hoạt động</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-danger">Vô hiệu</span>
+                                    }
+                                </dd>
+
+                                <dt class="col-sm-4">Ngày tạo:</dt>
+                                <dd class="col-sm-8">@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <form asp-action="DeleteAvatarFrame" method="post">
+                        @Html.AntiForgeryToken()
+                        <input asp-for="Id" type="hidden" />
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa khung avatar này?')">
+                            <i class="fas fa-trash"></i> Xóa khung Avatar
+                        </button>
+                        <a asp-action="AvatarFrames" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> Hủy
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    private string GetRarityBadgeClass(int rarityLevel)
+    {
+        return rarityLevel switch
+        {
+            1 => "badge-secondary", // Common
+            2 => "badge-success",   // Uncommon
+            3 => "badge-primary",   // Rare
+            4 => "badge-warning",   // Epic
+            5 => "badge-danger",    // Legendary
+            _ => "badge-light"
+        };
+    }
+
+    private string GetRarityText(int rarityLevel)
+    {
+        return rarityLevel switch
+        {
+            1 => "Thường",
+            2 => "Khó tìm",
+            3 => "Hiếm",
+            4 => "Sử thi",
+            5 => "Huyền thoại",
+            _ => "Không xác định"
+        };
+    }
+}

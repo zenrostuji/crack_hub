@@ -70,9 +70,9 @@ namespace crackhub.Repositories
         {
             return await _context.Categories
                 .Include(c => c.Games)
-                .Where(c => c.Games.Any())
-                .ToListAsync();
-        }        public async Task UpdateGameCountAsync(int categoryId)
+                .ToListAsync();    
+        }
+        public async Task UpdateGameCountAsync(int categoryId)
         {
             var category = await _context.Categories.FirstOrDefaultAsync(c => c.CategoryId == categoryId);
             if (category != null)

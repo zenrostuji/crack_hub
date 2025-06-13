@@ -15,8 +15,13 @@
         <!-- Sidebar -->
         <div class="admin-sidebar">
             <div class="admin-sidebar-header">
-                <img src="~/img/logo.png" alt="CrackHub" class="admin-logo" />
-                <h5 class="admin-title">Admin Panel</h5>
+                <a href="@Url.Action("Index", "Home")" class="site-logo " >
+                    <img src="~/img/logo.png" alt="CrackHub" class="admin-logo" />  
+                </a>
+                <a href="@Url.Action("Index", "Home")" class="site-logo " style="text-decoration: none;" >
+                    <h5 class="admin-title">Admin Panel</h5>
+                </a>
+                
             </div>
             <div class="admin-sidebar-content">
                 <nav class="admin-nav">
@@ -77,6 +82,30 @@
                             </li> *@
                         </ul>
                     </div>
+                   
+                    <div class="admin-nav-section">
+                        <h6 class="admin-nav-title">PREMIUM</h6>
+                        <ul class="admin-nav-list">
+                            <li class="admin-nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "PremiumRequests" ? "active" : "")">
+                                <a href="@Url.Action("PremiumRequests", "Admin")" class="admin-nav-link">
+                                    <i class="fas fa-crown admin-nav-icon"></i>
+                                    <span>Yêu cầu Premium</span>
+                                    @await Component.InvokeAsync("PendingPremiumRequests")
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                     <div class="admin-nav-section">
+                        <h6 class="admin-nav-title">KHUNG AVATAR</h6>
+                        <ul class="admin-nav-list">
+                            <li class="admin-nav-item @(ViewContext.RouteData.Values["action"].ToString() == "AvatarFrames" || ViewContext.RouteData.Values["action"].ToString() == "CreateAvatarFrame" || ViewContext.RouteData.Values["action"].ToString() == "EditAvatarFrame" || ViewContext.RouteData.Values["action"].ToString() == "DeleteAvatarFrame" || ViewContext.RouteData.Values["action"].ToString() == "AvatarFrameStats" ? "active" : "")">
+                                <a href="@Url.Action("AvatarFrames", "Admin")" class="admin-nav-link">
+                                    <i class="fas fa-paint-brush admin-nav-icon"></i>
+                                    <span>Quản lý khung Avatar</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="admin-nav-section">
                         <h6 class="admin-nav-title">THIẾT LẬP</h6>
                         <ul class="admin-nav-list">
@@ -103,7 +132,7 @@
             <!-- Topbar -->
             <div class="admin-topbar">
                 <div class="admin-topbar-left">
-                    <button type="button" id="sidebarToggle" class="admin-sidebar-toggle">
+                    <button type="button" id="sidebarToggle" class="admin-sidebar-toggle" aria-label="Toggle Sidebar">
                         <i class="fas fa-bars"></i>
                     </button>
                     <h4 class="admin-page-title">@ViewData["Title"]</h4>

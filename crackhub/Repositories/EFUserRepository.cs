@@ -16,6 +16,10 @@ namespace crackhub.Repositories
         {
             return await _context.Users
                 .Include(u => u.Role)
+                .Include(u => u.Reviews)
+                .Include(u => u.FavoriteGames)
+                .Include(u => u.DownloadHistory)
+                .Include(u => u.SearchHistory)
                 .Include(u => u.UserAvatarFrames)
                 .ThenInclude(uaf => uaf.AvatarFrame)
                 .ToListAsync();

@@ -1,0 +1,273 @@
+@{
+    ViewData["Title"] = "Thanh toán Premium";
+    var user = ViewBag.User as crackhub.Models.Data.User;
+    var plan = ViewBag.Plan as crackhub.Models.Data.Premium;
+    var isPremium = ViewBag.IsPremium;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/premium.css" />
+    <style>
+        .payment-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            padding: 3rem 0;
+        }
+        
+        .payment-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .qr-code-container {
+            text-align: center;
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .qr-code {
+            max-width: 250px;
+            height: auto;
+            margin: 0 auto;
+        }
+        
+        .payment-info {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .upload-area {
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .upload-area:hover {
+            border-color: rgba(255, 215, 0, 0.5);
+            background: rgba(255, 215, 0, 0.05);
+        }
+        
+        .upload-area.dragover {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+        
+        .file-preview {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 0.5rem;
+            display: none;
+        }
+        
+        .plan-summary {
+            background: linear-gradient(135deg, #5d4ec7, #7e57c2);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .price-highlight {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffd700;
+        }
+    </style>
+}
+
+<div class="payment-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-6">
+                <!-- Header -->
+                <div class="text-center mb-4">
+                    <h1 class="premium-title">Thanh toán Premium</h1>
+                    <p class="text-muted">Hoàn tất thanh toán để kích hoạt gói Premium của bạn</p>
+                </div>                <!-- Plan Summary -->
+                <div class="plan-summary text-center">
+                    <h3>Gói @plan?.DurationInMonths</h3>
+                    <div class="price-highlight">@plan?.Price.ToString("#,##0")₫</div>
+                    <p class="mb-0">
+                        @if (isPremium)
+                        {
+                            <span>Gia hạn Premium @plan?.DurationInMonths</span>
+                        }
+                        else
+                        {
+                            <span>Đăng ký Premium @plan?.DurationInMonths</span>
+                        }
+                    </p>
+                </div>
+
+                <!-- Payment Form -->
+                <form id="paymentForm" method="post" action="@Url.Action("SubmitPayment", "Home")" enctype="multipart/form-data">
+                    <input type="hidden" name="packageId" value="@plan?.Id" />
+
+                    <!-- QR Code Payment -->
+                    <div class="payment-card">
+                        <h4><i class="fas fa-qrcode me-2"></i>Quét mã QR để thanh toán</h4>
+                          <div class="qr-code-container">
+                            <img src="~/img/qr/payment-qr.png" alt="QR Code thanh toán" class="qr-code" />
+                            <p class="text-dark mt-2 mb-0"><strong>Quét mã QR với ứng dụng ngân hàng</strong></p>
+                        </div>
+
+                        <div class="payment-info">
+                            <h5><i class="fas fa-info-circle me-2"></i>Thông tin chuyển khoản</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Ngân hàng:</strong> Vietcombank</p>
+                                    <p><strong>Số tài khoản:</strong> 1234567890</p>
+                                </div>                                <div class="col-md-6">
+                                    <p><strong>Chủ tài khoản:</strong> CRACKHUB PREMIUM</p>
+                                    <p><strong>Số tiền:</strong> <span class="text-warning">@plan?.Price.ToString("#,##0")₫</span></p>
+                                </div>
+                            </div>
+                            <p><strong>Nội dung:</strong> PREMIUM @user?.Id @plan?.DurationInMonths</p>
+                        </div>
+                    </div>
+
+                    <!-- Upload Payment Proof -->
+                    <div class="payment-card">
+                        <h4><i class="fas fa-cloud-upload-alt me-2"></i>Tải lên minh chứng thanh toán</h4>
+                        <p class="text-muted">Tải lên ảnh chụp màn hình giao dịch thành công hoặc biên lai thanh toán</p>
+                        
+                        <div class="upload-area" onclick="document.getElementById('paymentProof').click()">
+                            <i class="fas fa-cloud-upload-alt fa-3x mb-3 text-muted"></i>
+                            <h5>Nhấn để chọn file hoặc kéo thả file vào đây</h5>
+                            <p class="text-muted">Chấp nhận: JPG, PNG, JPEG (Tối đa 5MB)</p>
+                            <input type="file" id="paymentProof" name="paymentProof" accept="image/*" style="display: none" required />
+                        </div>
+                        
+                        <div class="file-preview" id="filePreview">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-file-image fa-2x text-success me-3"></i>
+                                <div>
+                                    <div class="file-name font-weight-bold"></div>
+                                    <div class="file-size text-muted"></div>
+                                </div>
+                                <button type="button" class="btn btn-outline-danger btn-sm ms-auto" onclick="removeFile()">
+                                    <i class="fas fa-times"></i> Xóa
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Notes -->
+                    <div class="payment-card">
+                        <h4><i class="fas fa-comment me-2"></i>Ghi chú (tùy chọn)</h4>
+                        <textarea name="userNotes" class="form-control" rows="3" placeholder="Thêm ghi chú về giao dịch của bạn..."></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-lg px-5" style="background: linear-gradient(135deg, #5d4ec7, #7e57c2); color: white; border: none; border-radius: 2rem;">
+                            <i class="fas fa-paper-plane me-2"></i>Gửi yêu cầu thanh toán
+                        </button>
+                        <p class="text-muted mt-3">
+                            <i class="fas fa-shield-alt me-1"></i>
+                            Yêu cầu của bạn sẽ được xem xét và xử lý trong vòng 24 giờ
+                        </p>
+                    </div>
+                </form>
+
+                <!-- Back to Premium -->
+                <div class="text-center mt-4">
+                    <a href="@Url.Action("Premium", "Home")" class="btn btn-outline-light">
+                        <i class="fas fa-arrow-left me-2"></i>Quay lại trang Premium
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // File upload handling
+        const fileInput = document.getElementById('paymentProof');
+        const uploadArea = document.querySelector('.upload-area');
+        const filePreview = document.getElementById('filePreview');
+
+        fileInput.addEventListener('change', handleFileSelect);
+        
+        // Drag and drop functionality
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                fileInput.files = files;
+                handleFileSelect();
+            }
+        });
+
+        function handleFileSelect() {
+            const file = fileInput.files[0];
+            if (file) {
+                // Validate file type
+                if (!file.type.startsWith('image/')) {
+                    alert('Vui lòng chọn file hình ảnh (JPG, PNG, JPEG)');
+                    return;
+                }
+                
+                // Validate file size (5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('File quá lớn. Vui lòng chọn file nhỏ hơn 5MB');
+                    return;
+                }
+
+                // Show preview
+                filePreview.querySelector('.file-name').textContent = file.name;
+                filePreview.querySelector('.file-size').textContent = formatFileSize(file.size);
+                filePreview.style.display = 'block';
+                uploadArea.style.display = 'none';
+            }
+        }
+
+        function removeFile() {
+            fileInput.value = '';
+            filePreview.style.display = 'none';
+            uploadArea.style.display = 'block';
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Form submission
+        document.getElementById('paymentForm').addEventListener('submit', function(e) {
+            if (!fileInput.files[0]) {
+                e.preventDefault();
+                alert('Vui lòng tải lên minh chứng thanh toán');
+                return false;
+            }
+        });
+    </script>
+}

@@ -31,6 +31,10 @@ namespace crackhub.Controllers
         private readonly ISearchHistoryRepository _searchHistoryRepository;
         private readonly ILocalizationInfoRepository _localizationInfoRepository;
         private readonly IRelatedGameRepository _relatedGameRepository;
+        private readonly IPremiumRepository _premiumRepository;
+        private readonly IPremiumRegisterRepository _premiumRegisterRepository;
+        private readonly IAvatarFrameRepository _avatarFrameRepository;
+        private readonly IUserAvatarFrameRepository _userAvatarFrameRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly int PageSize = 10; // Number of items per page
 
@@ -52,6 +56,10 @@ namespace crackhub.Controllers
             ISearchHistoryRepository searchHistoryRepository,
             ILocalizationInfoRepository localizationInfoRepository,
             IRelatedGameRepository relatedGameRepository,
+            IPremiumRepository premiumRepository,
+            IPremiumRegisterRepository premiumRegisterRepository,
+            IAvatarFrameRepository avatarFrameRepository,
+            IUserAvatarFrameRepository userAvatarFrameRepository,
             IWebHostEnvironment webHostEnvironment)
         {
             _gameRepository = gameRepository;
@@ -71,6 +79,10 @@ namespace crackhub.Controllers
             _searchHistoryRepository = searchHistoryRepository;
             _localizationInfoRepository = localizationInfoRepository;
             _relatedGameRepository = relatedGameRepository;
+            _premiumRepository = premiumRepository;
+            _premiumRegisterRepository = premiumRegisterRepository;
+            _avatarFrameRepository = avatarFrameRepository;
+            _userAvatarFrameRepository = userAvatarFrameRepository;
             _webHostEnvironment = webHostEnvironment;
         }
 
@@ -281,7 +293,7 @@ namespace crackhub.Controllers
             }
 
             var game = await _gameRepository.GetByIdAsync(id.Value);
-            
+
             if (game == null)
             {
                 return NotFound();
@@ -343,11 +355,11 @@ namespace crackhub.Controllers
                         }
 
                         // Delete old image if exists
-                        if (!string.IsNullOrEmpty(existingCoverImageUrl) && 
-                            !existingCoverImageUrl.Contains("no-image.jpg") && 
+                        if (!string.IsNullOrEmpty(existingCoverImageUrl) &&
+                            !existingCoverImageUrl.Contains("no-image.jpg") &&
                             existingCoverImageUrl.Contains("games"))
                         {
-                            var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", 
+                            var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot",
                                 existingCoverImageUrl.TrimStart('/').Replace('/', '\\'));
                             if (System.IO.File.Exists(oldFilePath))
                             {
@@ -363,10 +375,10 @@ namespace crackhub.Controllers
                         // Keep existing cover image - this is important for when no new image is uploaded
                         game.CoverImageUrl = existingCoverImageUrl;
                     }
-                    
+
                     // Cập nhật từng thuộc tính thay vì sử dụng SetValues
                     existingGame.Title = game.Title;
-                    existingGame.Developer = game.Developer; 
+                    existingGame.Developer = game.Developer;
                     existingGame.Publisher = game.Publisher;
                     existingGame.ReleaseDate = game.ReleaseDate;
                     existingGame.CategoryId = game.CategoryId;
@@ -378,9 +390,9 @@ namespace crackhub.Controllers
                     existingGame.Downloads = game.Downloads;
                     existingGame.DownloadUrl = game.DownloadUrl;
                     existingGame.CoverImageUrl = game.CoverImageUrl; // Dùng CoverImageUrl đã xử lý ở trên
-                    
+
                     await _gameRepository.UpdateAsync(existingGame);
-                    
+
                     // Update tags
                     // Remove all existing tags for the game
                     await _gameTagRepository.RemoveAllTagsFromGameAsync(game.Id);
@@ -401,7 +413,7 @@ namespace crackhub.Controllers
 
                     // Thêm thông báo thành công
                     TempData["SuccessMessage"] = "Game đã được cập nhật thành công!";
-                    
+
                     return RedirectToAction(nameof(Games));
                 }
                 catch (Exception ex) when (!(ex is ArgumentException))
@@ -422,10 +434,10 @@ namespace crackhub.Controllers
             ViewBag.Categories = (await _categoryRepository.GetAllAsync()).ToList();
             ViewBag.Tags = (await _tagRepository.GetAllAsync()).ToList();
             ViewBag.SelectedTagIds = tagIds;
-            
+
             // Hiển thị thông báo lỗi
             TempData["ErrorMessage"] = "Có lỗi xảy ra khi lưu thông tin game!";
-            
+
             return View(game);
         }
 
@@ -456,7 +468,7 @@ namespace crackhub.Controllers
         // POST: Delete a game
         [HttpPost, ActionName("DeleteGame")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteGameConfirmed(int ? id)
+        public async Task<IActionResult> DeleteGameConfirmed(int? id)
         {
             // Check if user is admin
             if (!IsAdmin())
@@ -475,7 +487,7 @@ namespace crackhub.Controllers
                 // Delete cover image if exists
                 if (!string.IsNullOrEmpty(game.CoverImageUrl))
                 {
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", 
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot",
                         game.CoverImageUrl.TrimStart('/').Replace('/', '\\'));
                     if (System.IO.File.Exists(filePath))
                     {
@@ -535,7 +547,7 @@ namespace crackhub.Controllers
 
             return RedirectToAction(nameof(Games));
         }
-        
+
 
         // GET: Manage game screenshots
         public async Task<IActionResult> ManageScreenshots(int? id)
@@ -552,7 +564,7 @@ namespace crackhub.Controllers
             }
 
             var game = await _gameRepository.GetByIdAsync(id.Value);
-                
+
             if (game == null)
             {
                 return NotFound();
@@ -639,7 +651,7 @@ namespace crackhub.Controllers
             // Delete image file if exists
             if (!string.IsNullOrEmpty(screenshot.ImageUrl))
             {
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", 
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot",
                     screenshot.ImageUrl.TrimStart('/').Replace('/', '\\'));
                 if (System.IO.File.Exists(filePath))
                 {
@@ -667,7 +679,7 @@ namespace crackhub.Controllers
             }
 
             var game = await _gameRepository.GetByIdAsync(id.Value);
-                
+
             if (game == null)
             {
                 return NotFound();
@@ -699,7 +711,7 @@ namespace crackhub.Controllers
 
             var game = await _gameRepository.GetByIdAsync(gameLink.GameId);
             var gameLinks = await _gameLinkRepository.GetLinksByGameAsync(gameLink.GameId);
-                
+
             ViewBag.Game = game;
             return View(nameof(ManageLinks), gameLinks.ToList());
         }
@@ -733,7 +745,7 @@ namespace crackhub.Controllers
         #region User Management
 
         // List all users with pagination
-        public async Task<IActionResult> Users(int page = 1, string searchTerm = "", string sortOrder = "newest")
+        public async Task<IActionResult> Users(int page = 1, string searchTerm = "", string sortOrder = "newest", string premiumFilter = "all", string roleFilter = "all", string reviewFilter = "all")
         {
             // Check if user is admin
             if (!IsAdmin())
@@ -752,6 +764,48 @@ namespace crackhub.Controllers
                                                   u.FirstName.Contains(searchTerm) ||
                                                   u.LastName.Contains(searchTerm)).ToList();
                 ViewBag.SearchTerm = searchTerm;
+            }
+
+            // Apply premium filter
+            if (premiumFilter != "all")
+            {
+                if (premiumFilter == "premium")
+                {
+                    allUsers = allUsers.Where(u => u.PremiumExpiryDate.HasValue && u.PremiumExpiryDate > DateTime.Now).ToList();
+                }
+                else if (premiumFilter == "free")
+                {
+                    allUsers = allUsers.Where(u => !u.PremiumExpiryDate.HasValue || u.PremiumExpiryDate <= DateTime.Now).ToList();
+                }
+            }
+
+            // Apply role filter
+            if (roleFilter != "all")
+            {
+                if (int.TryParse(roleFilter, out int roleId))
+                {
+                    allUsers = allUsers.Where(u => u.RoleId == roleId).ToList();
+                }
+            }
+
+            // Apply review filter
+            if (reviewFilter != "all")
+            {
+                switch (reviewFilter)
+                {
+                    case "no_reviews":
+                        allUsers = allUsers.Where(u => u.Reviews.Count == 0).ToList();
+                        break;
+                    case "1_5":
+                        allUsers = allUsers.Where(u => u.Reviews.Count >= 1 && u.Reviews.Count <= 5).ToList();
+                        break;
+                    case "6_10":
+                        allUsers = allUsers.Where(u => u.Reviews.Count >= 6 && u.Reviews.Count <= 10).ToList();
+                        break;
+                    case "11_plus":
+                        allUsers = allUsers.Where(u => u.Reviews.Count >= 11).ToList();
+                        break;
+                }
             }
 
             // Apply sorting
@@ -784,6 +838,9 @@ namespace crackhub.Controllers
             ViewBag.NameSortParam = sortOrder == "name" ? "name_desc" : "name";
             ViewBag.EmailSortParam = sortOrder == "email" ? "email_desc" : "email";
             ViewBag.RoleSortParam = sortOrder == "role" ? "role_desc" : "role";
+            ViewBag.PremiumFilter = premiumFilter;
+            ViewBag.RoleFilter = roleFilter;
+            ViewBag.ReviewFilter = reviewFilter;
 
             // Count total users for pagination
             var totalUsers = allUsers.Count();
@@ -933,7 +990,7 @@ namespace crackhub.Controllers
 
                 // Check username uniqueness if changed
                 var existingUserByDisplayName = await _userRepository.GetByDisplayNameAsync(user.DisplayName);
-                if (existingUser.DisplayName != user.DisplayName && 
+                if (existingUser.DisplayName != user.DisplayName &&
                     existingUserByDisplayName != null && existingUserByDisplayName.Id != user.Id)
                 {
                     ModelState.AddModelError("DisplayName", "Username already exists");
@@ -942,7 +999,7 @@ namespace crackhub.Controllers
                 }
 
                 // Check email uniqueness if changed
-                if (!string.IsNullOrEmpty(user.Email) && existingUser.Email != user.Email && 
+                if (!string.IsNullOrEmpty(user.Email) && existingUser.Email != user.Email &&
                     await _userRepository.EmailExistsAsync(user.Email))
                 {
                     ModelState.AddModelError("Email", "Email already exists");
@@ -1002,7 +1059,7 @@ namespace crackhub.Controllers
 
                 // Save changes to database
                 await _userRepository.UpdateAsync(existingUser);
-                
+
                 TempData["SuccessMessage"] = "Thông tin người dùng đã được cập nhật thành công!";
                 return RedirectToAction(nameof(Users));
             }
@@ -1046,7 +1103,7 @@ namespace crackhub.Controllers
             }
 
             var user = await _userRepository.GetByIdAsync(id);
-                
+
             if (user == null)
             {
                 return NotFound();
@@ -1066,7 +1123,7 @@ namespace crackhub.Controllers
             // Xóa avatar nếu có
             if (!string.IsNullOrEmpty(user.AvatarUrl))
             {
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", 
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot",
                     user.AvatarUrl.TrimStart('/').Replace('/', '\\'));
                 if (System.IO.File.Exists(filePath))
                 {
@@ -1124,7 +1181,7 @@ namespace crackhub.Controllers
             }
 
             var user = await _userRepository.GetByIdAsync(id);
-                
+
             if (user == null)
             {
                 return NotFound();
@@ -1305,9 +1362,9 @@ namespace crackhub.Controllers
             TempData["ErrorMessage"] = "Có lỗi xảy ra, vui lòng kiểm tra lại dữ liệu nhập vào!";
             var game = await _gameRepository.GetByIdAsync(crackInfo.GameId);
             ViewBag.Game = game ?? new object();
-            
+
             var crackInfos = await _crackInfoRepository.GetCrackInfosByGameAsync(crackInfo.GameId);
-                
+
             return View(nameof(ManageCrackInfos), crackInfos);
         }
 
@@ -1435,7 +1492,7 @@ namespace crackhub.Controllers
 
             // Get all crack infos for this game
             var allCrackInfos = await _crackInfoRepository.GetCrackInfosByGameAsync(crackInfo.GameId);
-            
+
             // Unmark all other crack infos for this game
             var otherCracks = allCrackInfos.Where(ci => ci.Id != id && ci.IsRecommended).ToList();
 
@@ -1673,7 +1730,7 @@ namespace crackhub.Controllers
                 }
 
                 await _categoryRepository.CreateAsync(category);
-                
+
                 TempData["SuccessMessage"] = "Thể loại đã được tạo thành công!";
                 return RedirectToAction(nameof(Categories));
             }
@@ -1742,7 +1799,7 @@ namespace crackhub.Controllers
                     }
 
                     await _categoryRepository.UpdateAsync(category);
-                    
+
                     TempData["SuccessMessage"] = "Thể loại đã được cập nhật thành công!";
                 }
                 catch (DbUpdateConcurrencyException)
@@ -1847,7 +1904,7 @@ namespace crackhub.Controllers
             // Apply search if provided
             if (!string.IsNullOrEmpty(searchTerm))
             {
-                allTags = allTags.Where(t => t.Name.Contains(searchTerm) || 
+                allTags = allTags.Where(t => t.Name.Contains(searchTerm) ||
                                            (t.Slug != null && t.Slug.Contains(searchTerm))).ToList();
                 ViewBag.SearchTerm = searchTerm;
             }
@@ -1942,7 +1999,7 @@ namespace crackhub.Controllers
                 }
 
                 await _tagRepository.CreateAsync(tag);
-                
+
                 TempData["SuccessMessage"] = "Tag đã được tạo thành công!";
                 return RedirectToAction(nameof(Tags));
             }
@@ -1995,7 +2052,7 @@ namespace crackhub.Controllers
 
                     // Get all tags to check for duplicates
                     var allTags = await _tagRepository.GetAllAsync();
-                    
+
                     // Check if name already exists for other tags
                     var existingNameTag = allTags.FirstOrDefault(t => t.Name == tag.Name && t.Id != tag.Id);
 
@@ -2021,7 +2078,7 @@ namespace crackhub.Controllers
                     }
 
                     await _tagRepository.UpdateAsync(tag);
-                    
+
                     TempData["SuccessMessage"] = "Tag đã được cập nhật thành công!";
                 }
                 catch (DbUpdateConcurrencyException)
@@ -2103,16 +2160,535 @@ namespace crackhub.Controllers
 
         #endregion
 
+        #region Premium Management
+
+        // List all premium payment requests
+        public async Task<IActionResult> PremiumRequests(int page = 1, string status = "")
+        {
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            IEnumerable<PremiumRegister> requests;
+
+            if (!string.IsNullOrEmpty(status) && int.TryParse(status, out var statusInt))
+            {
+                requests = await _premiumRegisterRepository.GetByStatusAsync(statusInt);
+            }
+            else
+            {
+                requests = await _premiumRegisterRepository.GetAllAsync();
+            }
+
+            // Apply pagination
+            var totalItems = requests.Count();
+            var pagedRequests = requests
+                .OrderByDescending(r => r.RegisterDate)
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize)
+                .ToList();
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalItems / PageSize);
+            ViewBag.StatusFilter = status;
+
+            return View(pagedRequests);
+        }
+
+        // View premium request details
+        public async Task<IActionResult> PremiumRequestDetails(int id)
+        {
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var request = await _premiumRegisterRepository.GetByIdAsync(id);
+            if (request == null)
+            {
+                return NotFound();
+            }
+
+            return View(request);
+        }
+
+        // Process premium request (approve/reject)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ProcessPremiumRequest(int id, string action, string adminNotes = "")
+        {
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var request = await _premiumRegisterRepository.GetByIdAsync(id);
+            if (request == null)
+            {
+                return NotFound();
+            }
+
+            if (request.Status != 2) // Not pending
+            {
+                TempData["ErrorMessage"] = "Chỉ có thể xử lý yêu cầu đang chờ duyệt!";
+                return RedirectToAction("PremiumRequestDetails", new { id });
+            }
+
+            var currentUserId = HttpContext.Session.GetString("UserId");
+
+            if (action == "Approved")
+            {
+                request.Status = 1; // Approved
+                request.ApprovalDate = DateTime.Now;
+                request.AdminComment = adminNotes;
+
+                // Update user premium status
+                var user = await _userRepository.GetByIdAsync(request.UserId);
+                if (user != null && request.Premium != null)
+                {
+                    // Parse duration from DurationInMonths string (e.g., "1 Tháng" -> 1)
+                    var durationText = request.Premium.DurationInMonths?.ToLower() ?? "";
+                    int months = 1; // default
+
+                    if (durationText.Contains("6"))
+                        months = 6;
+                    else if (durationText.Contains("12") || durationText.Contains("năm"))
+                        months = 12;
+
+                    if (user.PremiumExpiryDate.HasValue && user.PremiumExpiryDate.Value > DateTime.Now)
+                    {
+                        user.PremiumExpiryDate = user.PremiumExpiryDate.Value.AddMonths(months);
+                    }
+                    else
+                    {
+                        user.PremiumExpiryDate = DateTime.Now.AddMonths(months);
+                    }
+
+                    await _userRepository.UpdateAsync(user);
+                }
+
+                await _premiumRegisterRepository.UpdateAsync(request);
+                TempData["SuccessMessage"] = $"Đã duyệt yêu cầu thành công! Tài khoản người dùng đã được nâng cấp Premium.";
+            }
+            else if (action == "Rejected")
+            {
+                request.Status = 3; // Rejected
+                request.ApprovalDate = DateTime.Now;
+                request.AdminComment = adminNotes;
+
+                await _premiumRegisterRepository.UpdateAsync(request);
+                TempData["SuccessMessage"] = "Đã từ chối yêu cầu.";
+            }
+
+            return RedirectToAction("PremiumRequestDetails", new { id });
+        }
+
+        #endregion
+
+        #region Avatar Frame Management
+
+        // List all avatar frames with pagination
+        public async Task<IActionResult> AvatarFrames(int page = 1, string searchTerm = "", string sortOrder = "newest", string premiumFilter = "all", string statusFilter = "all")
+        {
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var allFrames = (await _avatarFrameRepository.GetAllAsync()).ToList();
+
+            // Apply search if provided
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                allFrames = allFrames.Where(f => f.FrameName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                                               (f.Description?.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ?? false)).ToList();
+                ViewBag.SearchTerm = searchTerm;
+            }
+
+            // Apply premium filter
+            if (premiumFilter != "all")
+            {
+                if (premiumFilter == "premium")
+                {
+                    allFrames = allFrames.Where(f => f.IsPremium).ToList();
+                }
+                else if (premiumFilter == "free")
+                {
+                    allFrames = allFrames.Where(f => !f.IsPremium).ToList();
+                }
+            }
+
+            // Apply status filter
+            if (statusFilter != "all")
+            {
+                if (statusFilter == "active")
+                {
+                    allFrames = allFrames.Where(f => f.IsActive).ToList();
+                }
+                else if (statusFilter == "inactive")
+                {
+                    allFrames = allFrames.Where(f => !f.IsActive).ToList();
+                }
+                else if (statusFilter == "default")
+                {
+                    allFrames = allFrames.Where(f => f.IsDefault).ToList();
+                }
+            }
+
+            // Apply sorting
+            switch (sortOrder)
+            {
+                case "name":
+                    allFrames = allFrames.OrderBy(f => f.FrameName).ToList();
+                    break;
+                case "name_desc":
+                    allFrames = allFrames.OrderByDescending(f => f.FrameName).ToList();
+                    break;
+                case "rarity":
+                    allFrames = allFrames.OrderBy(f => f.RarityLevel).ToList();
+                    break;
+                case "rarity_desc":
+                    allFrames = allFrames.OrderByDescending(f => f.RarityLevel).ToList();
+                    break;
+                case "oldest":
+                    allFrames = allFrames.OrderBy(f => f.CreatedAt).ToList();
+                    break;
+                default: // newest
+                    allFrames = allFrames.OrderByDescending(f => f.CreatedAt).ToList();
+                    break;
+            }
+
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.PremiumFilter = premiumFilter;
+            ViewBag.StatusFilter = statusFilter;
+
+            // Count total frames for pagination
+            var totalFrames = allFrames.Count;
+            var totalPages = (int)Math.Ceiling((double)totalFrames / PageSize);
+
+            // Get frames for current page
+            var frames = allFrames
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize)
+                .ToList();
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+
+            return View(frames);
+        }
+
+        // GET: Show create avatar frame form
+        public IActionResult CreateAvatarFrame()
+        {
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            return View();
+        }
+
+        // POST: Create a new avatar frame
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAvatarFrame(AvatarFrame avatarFrame, IFormFile frameImage)
+        {
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            // Remove unnecessary fields from ModelState validation
+            ModelState.Remove("FrameUrl");
+            ModelState.Remove("frameImage");
+            ModelState.Remove("UserAvatarFrames");
+
+            if (ModelState.IsValid)
+            {
+                // Handle frame image upload
+                if (frameImage != null && frameImage.Length > 0)
+                {
+                    var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "frameAvartar");
+                    if (!Directory.Exists(uploadsFolder))
+                    {
+                        Directory.CreateDirectory(uploadsFolder);
+                    }
+
+                    // Create unique filename
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(frameImage.FileName);
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    // Save the file
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await frameImage.CopyToAsync(fileStream);
+                    }
+
+                    // Set frame URL
+                    avatarFrame.FrameUrl = "/img/frameAvartar/" + uniqueFileName;
+                }
+                else
+                {
+                    ModelState.AddModelError("FrameImage", "Vui lòng chọn file ảnh cho khung avatar.");
+                    return View(avatarFrame);
+                }
+
+                // Set creation date
+                avatarFrame.CreatedAt = DateTime.Now;
+
+                // Save the avatar frame
+                await _avatarFrameRepository.CreateAsync(avatarFrame);
+
+                TempData["SuccessMessage"] = "Khung avatar đã được tạo thành công!";
+                return RedirectToAction(nameof(AvatarFrames));
+            }
+
+            return View(avatarFrame);
+        }
+
+        // GET: Show edit avatar frame form
+        public async Task<IActionResult> EditAvatarFrame(int? id)
+        {
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var avatarFrame = await _avatarFrameRepository.GetByIdAsync(id.Value);
+
+            if (avatarFrame == null)
+            {
+                return NotFound();
+            }
+
+            return View(avatarFrame);
+        }
+
+        // POST: Update an avatar frame
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditAvatarFrame(AvatarFrame avatarFrame, IFormFile frameImage)
+        {
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            // Remove unnecessary fields from ModelState validation
+            ModelState.Remove("FrameUrl");
+            ModelState.Remove("frameImage");
+            ModelState.Remove("UserAvatarFrames");
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Get the existing frame
+                    var existingFrame = await _avatarFrameRepository.GetByIdAsync(avatarFrame.Id);
+                    if (existingFrame == null)
+                    {
+                        return NotFound();
+                    }
+
+                    string existingFrameUrl = existingFrame.FrameUrl;
+
+                    // Handle frame image upload if provided
+                    if (frameImage != null && frameImage.Length > 0)
+                    {
+                        var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "frameAvartar");
+                        if (!Directory.Exists(uploadsFolder))
+                        {
+                            Directory.CreateDirectory(uploadsFolder);
+                        }
+
+                        // Create unique filename
+                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(frameImage.FileName);
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                        // Save the file
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await frameImage.CopyToAsync(fileStream);
+                        }
+
+                        // Delete old image if exists
+                        if (!string.IsNullOrEmpty(existingFrameUrl))
+                        {
+                            var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot",
+                                existingFrameUrl.TrimStart('/').Replace('/', '\\'));
+                            if (System.IO.File.Exists(oldFilePath))
+                            {
+                                System.IO.File.Delete(oldFilePath);
+                            }
+                        }
+
+                        // Set new frame URL
+                        avatarFrame.FrameUrl = "/img/frameAvartar/" + uniqueFileName;
+                    }
+                    else
+                    {
+                        // Keep existing frame URL
+                        avatarFrame.FrameUrl = existingFrameUrl;
+                    }
+
+                    // Update properties
+                    existingFrame.FrameName = avatarFrame.FrameName;
+                    existingFrame.FrameUrl = avatarFrame.FrameUrl;
+                    existingFrame.Description = avatarFrame.Description;
+                    existingFrame.RarityLevel = avatarFrame.RarityLevel;
+                    existingFrame.IsDefault = avatarFrame.IsDefault;
+                    existingFrame.IsPremium = avatarFrame.IsPremium;
+                    existingFrame.IsActive = avatarFrame.IsActive;
+
+                    await _avatarFrameRepository.UpdateAsync(existingFrame);
+
+                    TempData["SuccessMessage"] = "Khung avatar đã được cập nhật thành công!";
+                    return RedirectToAction(nameof(AvatarFrames));
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", $"Lỗi: {ex.Message}");
+                }
+            }
+
+            return View(avatarFrame);
+        }
+
+        // GET: Confirm delete avatar frame
+        public async Task<IActionResult> DeleteAvatarFrame(int? id)
+        {
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var avatarFrame = await _avatarFrameRepository.GetByIdAsync(id.Value);
+
+            if (avatarFrame == null)
+            {
+                return NotFound();
+            }
+
+            return View(avatarFrame);
+        }
+
+        // POST: Delete an avatar frame
+        [HttpPost, ActionName("DeleteAvatarFrame")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteAvatarFrameConfirmed(int id)
+        {
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var avatarFrame = await _avatarFrameRepository.GetByIdAsync(id);
+            if (avatarFrame != null)
+            {
+                // Check if frame is being used by users
+                var usersUsingFrame = await _userAvatarFrameRepository.GetAllAsync();
+                var frameUsers = usersUsingFrame.Where(uaf => uaf.FrameId == id).ToList();
+
+                if (frameUsers.Any())
+                {
+                    TempData["ErrorMessage"] = $"Không thể xóa khung avatar này vì có {frameUsers.Count} người dùng đang sử dụng.";
+                    return RedirectToAction(nameof(AvatarFrames));
+                }
+
+                // Delete frame image if exists
+                if (!string.IsNullOrEmpty(avatarFrame.FrameUrl))
+                {
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot",
+                        avatarFrame.FrameUrl.TrimStart('/').Replace('/', '\\'));
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+                }
+
+                await _avatarFrameRepository.DeleteAsync(id);
+                TempData["SuccessMessage"] = "Khung avatar đã được xóa thành công!";
+            }
+
+            return RedirectToAction(nameof(AvatarFrames));
+        }
+
+        // POST: Toggle frame status (active/inactive)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ToggleFrameStatus(int id)
+        {
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var avatarFrame = await _avatarFrameRepository.GetByIdAsync(id);
+            if (avatarFrame != null)
+            {
+                avatarFrame.IsActive = !avatarFrame.IsActive;
+                await _avatarFrameRepository.UpdateAsync(avatarFrame);
+
+                TempData["SuccessMessage"] = $"Trạng thái khung avatar đã được {(avatarFrame.IsActive ? "kích hoạt" : "vô hiệu hóa")}!";
+            }
+
+            return RedirectToAction(nameof(AvatarFrames));
+        }
+
+        // View frame usage statistics
+        public async Task<IActionResult> AvatarFrameStats(int? id)
+        {
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var avatarFrame = await _avatarFrameRepository.GetByIdAsync(id.Value);
+            if (avatarFrame == null)
+            {
+                return NotFound();
+            }
+
+            // Get users using this frame
+            var allUserFrames = await _userAvatarFrameRepository.GetAllAsync();
+            var frameUsers = allUserFrames.Where(uaf => uaf.FrameId == id.Value).ToList();
+
+            ViewBag.AvatarFrame = avatarFrame;
+            ViewBag.TotalUsers = frameUsers.Count;
+            ViewBag.ActiveUsers = frameUsers.Count(uaf => uaf.IsEquipped);
+
+            return View(frameUsers);
+        }
+
+        #endregion
+
         #region Helper Methods
-        
+
         // Check if current user is admin
         private bool IsAdmin()
         {
             var userRoleString = HttpContext.Session.GetString("UserRole");
-            
+
             if (string.IsNullOrEmpty(userRoleString) || !int.TryParse(userRoleString, out int userRole))
                 return false;
-                
+
             return userRole == 3; // Admin role ID is 3
         }
 
@@ -2125,7 +2701,7 @@ namespace crackhub.Controllers
         {
             return await _userRepository.ExistsAsync(id);
         }
-        
+
         private string HashPassword(string password)
         {
             using (System.Security.Cryptography.SHA256 sha256 = System.Security.Cryptography.SHA256.Create())
@@ -2142,17 +2718,17 @@ namespace crackhub.Controllers
                 return builder.ToString();
             }
         }
-        
+
         private async Task<bool> CrackInfoExists(int id)
         {
             return await _crackInfoRepository.ExistsAsync(id);
         }
-        
+
         private async Task<bool> FeatureExists(int id)
         {
             return await _featureRepository.ExistsAsync(id);
         }
-        
+
         #endregion
     }
 }

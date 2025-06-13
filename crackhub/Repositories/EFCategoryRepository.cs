@@ -70,7 +70,7 @@ namespace crackhub.Repositories
         {
             return await _context.Categories
                 .Include(c => c.Games)
-                .ToListAsync();
+                .ToListAsync();    
         }
         public async Task UpdateGameCountAsync(int categoryId)
         {

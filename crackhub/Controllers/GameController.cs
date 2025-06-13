@@ -301,6 +301,44 @@ namespace crackhub.Controllers
             return View("Index", games);
         }
 
+        // API: /Game/SearchSuggestions
+        [HttpGet]
+        public async Task<JsonResult> SearchSuggestions(string query)
+        {
+            if (string.IsNullOrEmpty(query) || query.Length < 2)
+            {
+                return Json(new List<object>());
+            }
+
+            try
+            {
+                // Lấy tất cả game và filter theo query
+                var allGames = await _gameRepository.GetAllAsync();
+                
+                var suggestions = allGames
+                    .Where(g => g.Title.ToLower().Contains(query.ToLower()) ||
+                               (g.Developer != null && g.Developer.ToLower().Contains(query.ToLower())) ||
+                               (g.Publisher != null && g.Publisher.ToLower().Contains(query.ToLower())))
+                    .Select(g => new {
+                        id = g.Id,
+                        title = g.Title,
+                        category = g.Category?.CategoryName ?? "Uncategorized",
+                        coverImage = g.CoverImageUrl,
+                        developer = g.Developer,
+                        publisher = g.Publisher
+                    })
+                    .Take(8) // Giới hạn 8 gợi ý
+                    .ToList();
+
+                return Json(suggestions);
+            }
+            catch (Exception)
+            {
+                // Log error và trả về empty list
+                return Json(new List<object>());
+            }
+        }
+
         // POST: /Game/AddReview
         [HttpPost]
         public async Task<IActionResult> AddReview(int gameId, string title, string content, int rating)

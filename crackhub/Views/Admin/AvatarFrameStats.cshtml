@@ -1,0 +1,301 @@
+@model List<crackhub.Models.Data.UserAvatarFrame>
+
+@{
+    ViewData["Title"] = "Thống kê khung Avatar";
+     Layout = "_AdminLayout";
+    var avatarFrame = ViewBag.AvatarFrame as crackhub.Models.Data.AvatarFrame;
+    var totalUsers = ViewBag.TotalUsers as int? ?? 0;
+    var activeUsers = ViewBag.ActiveUsers as int? ?? 0;
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-chart-bar"></i>
+                        Thống kê khung Avatar: @(avatarFrame?.FrameName ?? "N/A")
+                    </h3>                    <div class="card-tools">
+                        <a asp-action="AvatarFrames" class="btn btn-secondary btn-sm me-2">
+                            <i class="fas fa-arrow-left"></i> Quay lại
+                        </a>
+                        <a asp-action="EditAvatarFrame" asp-route-id="@(avatarFrame?.Id ?? 0)" class="btn btn-primary btn-sm">
+                            <i class="fas fa-edit"></i> Chỉnh sửa
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card-body">                    <!-- Frame Info -->
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="card shadow-sm h-100">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title mb-3">
+                                        <i class="fas fa-image me-2"></i>Preview Khung Avatar
+                                    </h5>
+                                    <div class="avatar-frame-preview mx-auto" style="width: 150px; height: 150px; position: relative;">
+                                        <div style="width: 130px; height: 130px; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 50%; margin: 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                            <i class="fas fa-user text-muted" style="font-size: 3rem;"></i>
+                                        </div>
+                                        <img src="@(avatarFrame?.FrameUrl ?? "/img/frameAvartar/default.png")" 
+                                             style="position: absolute; top: 0; left: 0; width: 150px; height: 150px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));" 
+                                             alt="Frame Preview" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card shadow-sm h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title mb-3">
+                                        <i class="fas fa-info-circle me-2"></i>Thông tin khung Avatar
+                                    </h5>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <dl class="row mb-0">
+                                                <dt class="col-sm-5 text-muted">ID:</dt>
+                                                <dd class="col-sm-7 fw-bold">@(avatarFrame?.Id ?? 0)</dd>
+                                                <dt class="col-sm-5 text-muted">Tên khung:</dt>
+                                                <dd class="col-sm-7 fw-bold">@(avatarFrame?.FrameName ?? "N/A")</dd>
+                                                <dt class="col-sm-5 text-muted">Độ hiếm:</dt>
+                                                <dd class="col-sm-7">
+                                                    <span class="badge @GetRarityBadgeClass(avatarFrame?.RarityLevel ?? 1) fs-6">
+                                                        @GetRarityText(avatarFrame?.RarityLevel ?? 1)
+                                                    </span>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <dl class="row mb-0">
+                                                <dt class="col-sm-5 text-muted">Premium:</dt>
+                                                <dd class="col-sm-7">
+                                                    @if (avatarFrame?.IsPremium == true)
+                                                    {
+                                                        <span class="badge bg-warning text-dark fs-6">
+                                                            <i class="fas fa-crown me-1"></i>Premium
+                                                        </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge bg-success fs-6">
+                                                            <i class="fas fa-gift me-1"></i>Miễn phí
+                                                        </span>
+                                                    }
+                                                </dd>
+                                                <dt class="col-sm-5 text-muted">Trạng thái:</dt>
+                                                <dd class="col-sm-7">
+                                                    @if (avatarFrame?.IsActive == true)
+                                                    {
+                                                        <span class="badge bg-success fs-6">
+                                                            <i class="fas fa-check-circle me-1"></i>Hoạt động
+                                                        </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge bg-danger fs-6">
+                                                            <i class="fas fa-times-circle me-1"></i>Vô hiệu
+                                                        </span>
+                                                    }
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    <!-- Statistics Cards -->
+                    <div class="row mb-4">
+                        <div class="col-lg-3 col-6 mb-3">
+                            <div class="card text-white bg-info shadow-sm h-100">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h3 class="mb-0 fw-bold">@totalUsers</h3>
+                                            <p class="mb-0 opacity-75">Tổng người dùng sở hữu</p>
+                                        </div>
+                                        <div class="opacity-75">
+                                            <i class="fas fa-users fa-2x"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-6 mb-3">
+                            <div class="card text-white bg-success shadow-sm h-100">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h3 class="mb-0 fw-bold">@activeUsers</h3>
+                                            <p class="mb-0 opacity-75">Đang sử dụng</p>
+                                        </div>
+                                        <div class="opacity-75">
+                                            <i class="fas fa-user-check fa-2x"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-6 mb-3">
+                            <div class="card text-white bg-warning shadow-sm h-100">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h3 class="mb-0 fw-bold text-dark">@(totalUsers > 0 ? Math.Round((double)activeUsers / totalUsers * 100, 1) : 0)%</h3>
+                                            <p class="mb-0 text-dark opacity-75">Tỷ lệ sử dụng</p>
+                                        </div>
+                                        <div class="text-dark opacity-75">
+                                            <i class="fas fa-percentage fa-2x"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-6 mb-3">
+                            <div class="card text-white bg-danger shadow-sm h-100">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h3 class="mb-0 fw-bold">@(totalUsers - activeUsers)</h3>
+                                            <p class="mb-0 opacity-75">Sở hữu nhưng không dùng</p>
+                                        </div>
+                                        <div class="opacity-75">
+                                            <i class="fas fa-user-times fa-2x"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    <!-- Users List -->
+                    @if (Model.Any())
+                    {
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-users me-2"></i>Danh sách người dùng sở hữu khung Avatar
+                                </h5>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th class="ps-3">Người dùng</th>
+                                                <th>Email</th>
+                                                <th>Trạng thái sử dụng</th>
+                                                <th>Ngày sở hữu</th>
+                                                <th class="text-center">Thao tác</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var userFrame in Model.OrderByDescending(uf => uf.IsEquipped).ThenByDescending(uf => uf.ObtainedDate))
+                                            {
+                                                <tr class="@(userFrame.IsEquipped ? "table-success bg-opacity-25" : "")">
+                                                    <td class="ps-3">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="avatar-container me-3" style="width: 50px; height: 50px; position: relative;">
+                                                                @if (!string.IsNullOrEmpty(userFrame.User.AvatarUrl))
+                                                                {
+                                                                    <img src="@userFrame.User.AvatarUrl" class="rounded-circle shadow-sm" style="width: 50px; height: 50px; object-fit: cover;" alt="Avatar" />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center shadow-sm" style="width: 50px; height: 50px;">
+                                                                        <i class="fas fa-user text-white"></i>
+                                                                    </div>
+                                                                }
+                                                                @if (userFrame.IsEquipped)
+                                                                {
+                                                                    <img src="@(avatarFrame?.FrameUrl ?? "/img/frameAvartar/default.png")" 
+                                                                         style="position: absolute; top: 0; left: 0; width: 50px; height: 50px; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.3));" 
+                                                                         alt="Frame" />
+                                                                }
+                                                            </div>
+                                                            <div>
+                                                                <div class="fw-bold text-dark">@userFrame.User.DisplayName</div>
+                                                                <small class="text-muted">ID: @userFrame.User.Id</small>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <span class="text-muted">@(userFrame.User.Email ?? "Không có email")</span>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        @if (userFrame.IsEquipped)
+                                                        {
+                                                            <span class="badge bg-success fs-6">
+                                                                <i class="fas fa-check me-1"></i> Đang sử dụng
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="badge bg-secondary fs-6">
+                                                                <i class="fas fa-times me-1"></i> Không sử dụng
+                                                            </span>
+                                                        }
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <span class="text-muted">@userFrame.ObtainedDate.ToString("dd/MM/yyyy HH:mm")</span>
+                                                    </td>
+                                                    <td class="align-middle text-center">
+                                                        <a asp-controller="Admin" asp-action="UserDetails" asp-route-id="@userFrame.User.Id" 
+                                                           class="btn btn-outline-info btn-sm" title="Xem chi tiết người dùng">
+                                                            <i class="fas fa-eye me-1"></i>Xem chi tiết
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card shadow-sm">
+                            <div class="card-body text-center py-5">
+                                <div class="text-muted">
+                                    <i class="fas fa-inbox fa-4x mb-3 opacity-50"></i>
+                                    <h5>Chưa có dữ liệu</h5>
+                                    <p class="mb-0">Chưa có người dùng nào sở hữu khung avatar này.</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    private string GetRarityBadgeClass(int rarityLevel)
+    {
+        return rarityLevel switch
+        {
+            1 => "bg-secondary", // Common
+            2 => "bg-success",   // Uncommon
+            3 => "bg-primary",   // Rare
+            4 => "bg-warning text-dark",   // Epic
+            5 => "bg-danger",    // Legendary
+            _ => "bg-light text-dark"
+        };
+    }
+
+    private string GetRarityText(int rarityLevel)
+    {
+        return rarityLevel switch
+        {
+            1 => "Thường",
+            2 => "Khó tìm",
+            3 => "Hiếm",
+            4 => "Sử thi",
+            5 => "Huyền thoại",
+            _ => "Không xác định"
+        };
+    }
+}

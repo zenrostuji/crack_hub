@@ -22,15 +22,24 @@
 @if (isAuthenticated)
 {
     <li class="nav-item">
-        <a class="nav-link" href="@Url.Action("Favorites", "Account")">
+        <a class="nav-link" href="@Url.Action("Favorites", "Account")" style="margin-top: 5px;">
             <i class="fas fa-heart me-1"></i> Yêu thích
         </a>
     </li>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="@avatarUrl" class="rounded-circle me-1" style="width: 24px; height: 24px; object-fit: cover;" alt="@userName"> @userName
+            <div class="d-inline-flex align-items-center position-relative">
+                <img src="@avatarUrl" class="rounded-circle" style="width: 32px; height: 32px; object-fit: cover;" alt="@userName">
+                @await Component.InvokeAsync("NavbarAvatarFrame")
+            </div>
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li>
+                <h6 class="dropdown-header">
+                    <i class="fas fa-user me-1"></i> @userName
+                </h6>
+            </li>
+            <li><hr class="dropdown-divider"></li>
             <li>
                 <a class="dropdown-item" href="@Url.Action("Profile", "Account")">
                     <i class="fas fa-user me-1"></i> Tài khoản

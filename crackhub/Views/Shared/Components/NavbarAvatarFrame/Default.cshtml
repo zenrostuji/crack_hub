@@ -1,0 +1,6 @@
+@model string
+
+@if (!string.IsNullOrEmpty(Model))
+{
+    <img src="@Model" class="navbar-avatar-frame" style="position: absolute; top: -10px; left: -8px; width: 48px; height: 48px; object-fit: contain; pointer-events: none; z-index: 2; border-radius: 50%;" alt="Avatar Frame" />
+}

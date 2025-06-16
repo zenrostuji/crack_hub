@@ -30,6 +30,9 @@ namespace crackhub.Models.Data
         public DbSet<RelatedGame> RelatedGames { get; set; }
         public DbSet<AvatarFrame> AvatarFrames { get; set; }
         public DbSet<UserAvatarFrame> UserAvatarFrames { get; set; }
+        public DbSet<Premium> Premiums { get; set; }
+        public DbSet<PremiumRegister> PremiumRegisters { get; set; }
+        public DbSet<GameScore> GameScores { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -140,6 +143,39 @@ namespace crackhub.Models.Data
                 .HasOne(uaf => uaf.AvatarFrame)
                 .WithMany(af => af.UserAvatarFrames)
                 .HasForeignKey(uaf => uaf.FrameId);
+
+            // Cấu hình cho Premium và PremiumRegister
+            modelBuilder.Entity<Premium>()
+                .ToTable("Premiums");
+
+            modelBuilder.Entity<PremiumRegister>()
+                .ToTable("PremiumRegisters")
+                .HasOne(pr => pr.User)
+                .WithMany()
+                .HasForeignKey(pr => pr.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PremiumRegister>()
+                .HasOne(pr => pr.Premium)
+                .WithMany(p => p.PremiumRegisters)
+                .HasForeignKey(pr => pr.PackageId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Cấu hình cho GameScore
+            modelBuilder.Entity<GameScore>()
+                .HasOne(gs => gs.User)
+                .WithMany()
+                .HasForeignKey(gs => gs.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Index cho tối ưu hóa query
+            modelBuilder.Entity<GameScore>()
+                .HasIndex(gs => new { gs.GameName, gs.Score })
+                .HasDatabaseName("IX_GameScore_GameName_Score");
+
+            modelBuilder.Entity<GameScore>()
+                .HasIndex(gs => gs.UserId)
+                .HasDatabaseName("IX_GameScore_UserId");
 
             base.OnModelCreating(modelBuilder);
         }

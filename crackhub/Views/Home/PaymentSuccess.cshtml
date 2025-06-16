@@ -1,0 +1,145 @@
+@model crackhub.Models.Data.PremiumRegister
+@{
+    ViewData["Title"] = "Thanh toán thành công";
+    
+    // Check if model is null and redirect if needed
+    if (Model == null)
+    {
+        ViewData["Title"] = "Lỗi";
+    }
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/premium.css" />
+    <style>
+        .success-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            padding: 3rem 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .success-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .success-icon {
+            font-size: 4rem;
+            color: #28a745;
+            margin-bottom: 2rem;
+            animation: pulse 2s infinite;
+        }
+        
+        
+        
+        .request-info {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            margin: 1rem 0;
+        }
+        
+        .status-pending {
+            background: linear-gradient(135deg, #ffc107, #fd7e14);
+            color: #000;
+        }
+    </style>
+}
+
+<div class="success-container">
+    <div class="container">
+        <div class="success-card">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            
+            @if (Model != null)
+            {
+                <h1>Yêu cầu đã được gửi thành công!</h1>
+                <p class="lead">Cảm ơn bạn đã gửi yêu cầu thanh toán Premium. Chúng tôi sẽ xem xét và xử lý trong thời gian sớm nhất.</p>
+                
+                <div class="status-badge status-pending">
+                    <i class="fas fa-clock me-2"></i>Đang chờ xử lý
+                </div>
+                  <div class="request-info">
+                    <h5><i class="fas fa-info-circle me-2"></i>Thông tin yêu cầu</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Mã yêu cầu:</strong> #@Model.Id</p>
+                            <p><strong>Gói Premium:</strong> @(Model.Premium?.DurationInMonths ?? "Chưa xác định")</p>
+                            <p><strong>Mã gói:</strong> @Model.PackageId</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Số tiền:</strong> @(Model.Premium?.Price.ToString("#,##0") ?? "Chưa xác định")₫</p>
+                            <p><strong>Ngày gửi:</strong> @Model.RegisterDate.ToString("dd/MM/yyyy HH:mm")</p>
+                            <p><strong>Trạng thái:</strong> 
+                                @switch(Model.Status)
+                                {
+                                    case 1:
+                                        <span class="text-success">Đã duyệt</span>
+                                        break;
+                                    case 2:
+                                        <span class="text-warning">Đang chờ xử lý</span>
+                                        break;
+                                    case 3:
+                                        <span class="text-danger">Từ chối</span>
+                                        break;
+                                    default:
+                                        <span class="text-muted">Không xác định</span>
+                                        break;
+                                }
+                            </p>
+                        </div>
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.UserComment))
+                    {
+                        <p><strong>Ghi chú:</strong> @Model.UserComment</p>
+                    }
+                </div>
+                
+                <div class="alert alert-info">
+                    <i class="fas fa-lightbulb me-2"></i>
+                    <strong>Lưu ý:</strong> Chúng tôi sẽ xem xét yêu cầu của bạn trong vòng 24 giờ. 
+                    Bạn sẽ nhận được thông báo qua email khi yêu cầu được xử lý.
+                </div>
+            }
+            else
+            {
+                <h1>Có lỗi xảy ra!</h1>
+                <p class="lead">Không thể tìm thấy thông tin yêu cầu thanh toán.</p>
+                
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Lỗi:</strong> Thông tin yêu cầu không tồn tại hoặc đã bị xóa.
+                </div>
+            }
+            
+            <div class="mt-4">
+                <a href="@Url.Action("PaymentHistory", "Home")" class="btn btn-outline-light me-3">
+                    <i class="fas fa-history me-2"></i>Xem lịch sử thanh toán
+                </a>
+                <a href="@Url.Action("Premium", "Home")" class="btn btn-primary">
+                    <i class="fas fa-crown me-2"></i>Về trang Premium
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -18,5 +18,6 @@ namespace crackhub.Repositories
         Task<IEnumerable<DownloadHistory>> GetRecentDownloadsAsync(int count);
         Task<int> GetTotalDownloadsCountAsync();
         Task<IEnumerable<DownloadHistory>> GetDownloadsByDateRangeAsync(DateTime startDate, DateTime endDate);
+        Task<int> GetUserDownloadsCountTodayAsync(string userId);
     }
 }

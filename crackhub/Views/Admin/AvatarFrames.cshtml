@@ -1,0 +1,261 @@
+@model List<crackhub.Models.Data.AvatarFrame>
+
+@{
+    ViewData["Title"] = "Quản lý khung Avatar";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-paint-brush"></i>
+                        Quản lý khung Avatar
+                    </h3>
+                    <div class="card-tools">
+                        <a asp-action="CreateAvatarFrame" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Thêm khung mới
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <!-- Search and Filter Form -->
+                    <form method="get" class="mb-3">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input type="text" name="searchTerm" value="@ViewBag.SearchTerm" class="form-control" placeholder="Tìm kiếm khung avatar...">
+                            </div>
+                            <div class="col-md-2">
+                                <select name="sortOrder" class="form-control">
+                                    <option value="newest" selected="@(ViewBag.CurrentSort == "newest")">Mới nhất</option>
+                                    <option value="oldest" selected="@(ViewBag.CurrentSort == "oldest")">Cũ nhất</option>
+                                    <option value="name" selected="@(ViewBag.CurrentSort == "name")">Tên A-Z</option>
+                                    <option value="name_desc" selected="@(ViewBag.CurrentSort == "name_desc")">Tên Z-A</option>
+                                    <option value="rarity" selected="@(ViewBag.CurrentSort == "rarity")">Độ hiếm tăng</option>
+                                    <option value="rarity_desc" selected="@(ViewBag.CurrentSort == "rarity_desc")">Độ hiếm giảm</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <select name="premiumFilter" class="form-control">
+                                    <option value="all" selected="@(ViewBag.PremiumFilter == "all")">Tất cả</option>
+                                    <option value="premium" selected="@(ViewBag.PremiumFilter == "premium")">Premium</option>
+                                    <option value="free" selected="@(ViewBag.PremiumFilter == "free")">Miễn phí</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <select name="statusFilter" class="form-control">
+                                    <option value="all" selected="@(ViewBag.StatusFilter == "all")">Tất cả trạng thái</option>
+                                    <option value="active" selected="@(ViewBag.StatusFilter == "active")">Hoạt động</option>
+                                    <option value="inactive" selected="@(ViewBag.StatusFilter == "inactive")">Vô hiệu</option>
+                                    <option value="default" selected="@(ViewBag.StatusFilter == "default")">Mặc định</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-info">
+                                    <i class="fas fa-search"></i> Tìm kiếm
+                                </button>
+                                <a asp-action="AvatarFrames" class="btn btn-secondary">
+                                    <i class="fas fa-redo"></i> Reset
+                                </a>
+                            </div>
+                        </div>
+                        <input type="hidden" name="page" value="@ViewBag.CurrentPage">
+                    </form>
+
+                    <!-- Alert Messages -->
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            @TempData["SuccessMessage"]
+                        </div>
+                    }
+
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            @TempData["ErrorMessage"]
+                        </div>
+                    }
+
+                    <!-- Avatar Frames Table -->
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>                                <tr>
+                                    <th>ID</th>
+                                    <th>Ảnh khung</th>
+                                    <th>Tên khung</th>
+                                    <th>Mô tả</th>
+                                    <th>Độ hiếm</th>
+                                    <th>Premium</th>
+                                    <th>Mặc định</th>
+                                    <th>Trạng thái</th>
+                                    <th>Ngày tạo</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var frame in Model)
+                                {
+                                    <tr>
+                                        <td style="color: #000; font-weight: bold;">@frame.Id</td>                                        <td>
+                                            <div class="avatar-frame-preview" style="width: 60px; height: 60px;">
+                                                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #e9ecef, #dee2e6); border-radius: 50%; margin: 5px; display: flex; align-items: center; justify-content: center;">
+                                                    <i class="fas fa-user text-muted"></i>
+                                                </div>
+                                                <img src="@frame.FrameUrl" style="position: absolute; top: 0; left: 0; width: 60px; height: 60px;" alt="Frame Preview" />
+                                            </div>
+                                        </td>                                        <td><strong style="color: #000;">@frame.FrameName</strong></td>
+                                        <td style="color: #000;">@(frame.Description ?? "Không có mô tả")</td>                                        <td>
+                                            <span class="badge @GetRarityBadgeClass(frame.RarityLevel)">
+                                                @GetRarityText(frame.RarityLevel)
+                                            </span>
+                                        </td>
+                                        <td>
+                                            @if (frame.IsPremium)
+                                            {
+                                                <span class="badge badge-warning premium-badge">Premium</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-success">Miễn phí</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (frame.IsDefault)
+                                            {
+                                                <span class="badge badge-info">Mặc định</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-light">Thường</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (frame.IsActive)
+                                            {
+                                                <span class="badge badge-success">Hoạt động</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-danger">Vô hiệu</span>
+                                            }
+                                        </td>
+                                        <td style="color: #000;">@frame.CreatedAt.ToString("dd/MM/yyyy")</td>                                        <td>
+                                            <div class="action-buttons btn-group">
+                                                <a asp-action="EditAvatarFrame" asp-route-id="@frame.Id" class="btn btn-sm btn-primary" title="Chỉnh sửa">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a asp-action="AvatarFrameStats" asp-route-id="@frame.Id" class="btn btn-sm btn-info" title="Thống kê">
+                                                    <i class="fas fa-chart-bar"></i>
+                                                </a>
+                                                <form asp-action="ToggleFrameStatus" asp-route-id="@frame.Id" method="post" style="display: inline;">
+                                                    @Html.AntiForgeryToken()
+                                                    <button type="submit" class="btn btn-sm @(frame.IsActive ? "btn-warning" : "btn-success")" 
+                                                            title="@(frame.IsActive ? "Vô hiệu hóa" : "Kích hoạt")"
+                                                            onclick="return confirm('@(frame.IsActive ? "Vô hiệu hóa" : "Kích hoạt") khung avatar này?')">
+                                                        <i class="fas @(frame.IsActive ? "fa-eye-slash" : "fa-eye")"></i>
+                                                    </button>
+                                                </form>
+                                                <a asp-action="DeleteAvatarFrame" asp-route-id="@frame.Id" class="btn btn-sm btn-danger" title="Xóa">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @if (!Model.Any())
+                    {
+                        <div class="text-center py-4">
+                            <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">Không có khung avatar nào.</p>
+                            <a asp-action="CreateAvatarFrame" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Thêm khung đầu tiên
+                            </a>
+                        </div>
+                    }
+
+                    <!-- Pagination -->
+                    @if (ViewBag.TotalPages > 1)
+                    {
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                @if (ViewBag.CurrentPage > 1)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" asp-action="AvatarFrames" 
+                                           asp-route-page="@(ViewBag.CurrentPage - 1)"
+                                           asp-route-searchTerm="@ViewBag.SearchTerm"
+                                           asp-route-sortOrder="@ViewBag.CurrentSort"
+                                           asp-route-premiumFilter="@ViewBag.PremiumFilter"
+                                           asp-route-statusFilter="@ViewBag.StatusFilter">Trước</a>
+                                    </li>
+                                }
+
+                                @for (int i = Math.Max(1, ViewBag.CurrentPage - 2); i <= Math.Min(ViewBag.TotalPages, ViewBag.CurrentPage + 2); i++)
+                                {
+                                    <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                                        <a class="page-link" asp-action="AvatarFrames" 
+                                           asp-route-page="@i"
+                                           asp-route-searchTerm="@ViewBag.SearchTerm"
+                                           asp-route-sortOrder="@ViewBag.CurrentSort"
+                                           asp-route-premiumFilter="@ViewBag.PremiumFilter"
+                                           asp-route-statusFilter="@ViewBag.StatusFilter">@i</a>
+                                    </li>
+                                }
+
+                                @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" asp-action="AvatarFrames" 
+                                           asp-route-page="@(ViewBag.CurrentPage + 1)"
+                                           asp-route-searchTerm="@ViewBag.SearchTerm"
+                                           asp-route-sortOrder="@ViewBag.CurrentSort"
+                                           asp-route-premiumFilter="@ViewBag.PremiumFilter"
+                                           asp-route-statusFilter="@ViewBag.StatusFilter">Sau</a>
+                                    </li>
+                                }
+                            </ul>
+                        </nav>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    private string GetRarityBadgeClass(int rarityLevel)
+    {
+        return rarityLevel switch
+        {
+            1 => "rarity-common", // Common
+            2 => "rarity-uncommon",   // Uncommon
+            3 => "rarity-rare",   // Rare
+            4 => "rarity-epic",   // Epic
+            5 => "rarity-legendary",    // Legendary
+            _ => "badge-light"
+        };
+    }
+
+    private string GetRarityText(int rarityLevel)
+    {
+        return rarityLevel switch
+        {
+            1 => "Thường",
+            2 => "Khó tìm",
+            3 => "Hiếm",
+            4 => "Sử thi",
+            5 => "Huyền thoại",
+            _ => "Không xác định"
+        };
+    }
+}

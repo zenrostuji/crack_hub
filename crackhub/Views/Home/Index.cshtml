@@ -13,13 +13,14 @@
                 
                 <!-- Search Box -->
                 <form asp-controller="Game" asp-action="Search" method="get" class="animate__animated animate__fadeIn animate__delay-2s">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control form-control-lg rounded-pill" placeholder="Tìm kiếm game..." name="query">
+                    <div class="input-group mb-3 search-container">
+                        <input type="text" class="form-control form-control-lg rounded-pill" placeholder="Tìm kiếm game..." name="query" autocomplete="off">
                         <div class="input-group-append">
                             <button class="btn btn-primary rounded-pill ms-2" type="submit">
                                 <i class="fa fa-search me-2"></i> Tìm kiếm
                             </button>
                         </div>
+                        <div class="search-suggestions" id="heroSearchSuggestions"></div>
                     </div>
                 </form>
                 
@@ -54,6 +55,75 @@
     </div>
 </div>
 
+<!-- Download Warning Banner -->
+@if (TempData["WelcomeMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show mx-3 mb-0" role="alert" style="border-radius: 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <strong>@TempData["WelcomeMessage"]</strong>
+                </div>
+                <div class="col-md-4 text-md-end mt-2 mt-md-0">
+                    <a href="@Url.Action("Premium", "Home")" class="btn btn-warning btn-sm">
+                        <i class="fas fa-crown me-1"></i>Tìm hiểu Premium
+                    </a>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+else if (ViewBag.ShowDownloadWarning == true)
+{
+    <div class="alert alert-warning alert-dismissible fade show mx-3 mb-0" role="alert" style="border-radius: 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Cảnh báo giới hạn download!</strong> 
+                    Bạn đã tải @ViewBag.DownloadsToday/@ViewBag.DownloadLimit game hôm nay. 
+                    @if (ViewBag.RemainingDownloads > 0)
+                    {
+                        <span>Còn lại @ViewBag.RemainingDownloads lượt.</span>
+                    }
+                    else
+                    {
+                        <span>Đã hết lượt tải hôm nay.</span>
+                    }
+                </div>
+                <div class="col-md-4 text-md-end mt-2 mt-md-0">
+                    <a href="@Url.Action("Premium", "Home")" class="btn btn-warning btn-sm">
+                        <i class="fas fa-crown me-1"></i>Nâng cấp Premium
+                    </a>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+else if (ViewBag.HasPremium == false && ViewBag.DownloadsToday != null)
+{
+    <div class="alert alert-info alert-dismissible fade show mx-3 mb-0" role="alert" style="border-radius: 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Thông tin:</strong> 
+                    Tài khoản thường được phép tải 3 game/ngày. Bạn đã tải @ViewBag.DownloadsToday/@ViewBag.DownloadLimit game hôm nay.
+                </div>
+                <div class="col-md-4 text-md-end mt-2 mt-md-0">
+                    <a href="@Url.Action("Premium", "Home")" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-crown me-1"></i>Tải không giới hạn
+                    </a>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
 <!-- Latest Games Section -->
 <div class="container mt-5">
     <h2 class="section-title mb-4">Game Mới Nhất</h2>
@@ -75,7 +145,7 @@
                         <div class="card-overlay">
                             <div class="overlay-buttons">
                                 <a href="@Url.Action("Download", "Game", new { id = game.Id })" 
-                                   class="btn btn-success btn-sm"><i class="fas fa-download me-1"></i> Tải xuống</a>
+                                   class="btn btn-success btn-sm download-link" data-game-id="@game.Id"><i class="fas fa-download me-1"></i> Tải xuống</a>
                                 <a href="@Url.Action("Details", "Game", new { id = game.Id })" 
                                    class="btn btn-primary btn-sm mt-2"><i class="fas fa-info-circle me-1"></i> Chi tiết</a>
                             </div>
@@ -125,7 +195,7 @@
                             <div class="card-overlay">
                                 <div class="overlay-buttons">
                                     <a href="@Url.Action("Download", "Game", new { id = game.Id })" 
-                                       class="btn btn-success btn-sm"><i class="fas fa-download me-1"></i> Tải xuống</a>
+                                       class="btn btn-success btn-sm download-link" data-game-id="@game.Id"><i class="fas fa-download me-1"></i> Tải xuống</a>
                                     <a href="@Url.Action("Details", "Game", new { id = game.Id })" 
                                        class="btn btn-primary btn-sm mt-2"><i class="fas fa-info-circle me-1"></i> Chi tiết</a>
                                 </div>
@@ -175,7 +245,7 @@
                         <div class="card-overlay">
                             <div class="overlay-buttons">
                                 <a href="@Url.Action("Download", "Game", new { id = game.Id })" 
-                                   class="btn btn-success btn-sm"><i class="fas fa-download me-1"></i> Tải xuống</a>
+                                   class="btn btn-success btn-sm download-link" data-game-id="@game.Id"><i class="fas fa-download me-1"></i> Tải xuống</a>
                                 <a href="@Url.Action("Details", "Game", new { id = game.Id })" 
                                    class="btn btn-primary btn-sm mt-2"><i class="fas fa-info-circle me-1"></i> Chi tiết</a>
                             </div>
@@ -206,9 +276,121 @@
     </div>
 </div>
 
-<a asp-controller="Home" asp-action="GameRating" class="btn btn-primary ms-2" type="submit">
-    <i class="fa fa-search me-2"></i> Go game :3
-</a>
+<!-- Game Banner Section -->
+<div class="container-fluid game-banner-section py-5 mt-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); position: relative; overflow: hidden;">
+    <!-- Background decorative elements -->
+    <div class="banner-decoration">
+        <div class="floating-element element-1" style="position: absolute; top: 20%; left: 10%; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+        <div class="floating-element element-2" style="position: absolute; top: 60%; right: 15%; width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+        <div class="floating-element element-3" style="position: absolute; bottom: 30%; left: 20%; width: 50px; height: 50px; background: rgba(255,255,255,0.08); border-radius: 50%;"></div>
+    </div>
+    
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-8 col-md-7">
+                <div class="banner-content text-white">
+                    <h2 class="banner-title mb-3" style="font-size: 2.5rem; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+                        � Bảng Xếp Hạng Game Chiến Trường
+                    </h2>
+                    <p class="banner-subtitle mb-4" style="font-size: 1.2rem; opacity: 0.95; line-height: 1.6;">
+                        Khám phá top những chiến binh xuất sắc nhất! Xem thứ hạng của bạn và thử thách bản thân để lên đỉnh bảng xếp hạng.
+                    </p>
+                    <div class="banner-features mb-4">
+                        <div class="row">
+                            <div class="col-sm-4 col-6 mb-2">
+                                <div class="feature-item d-flex align-items-center">
+                                    <i class="fas fa-medal me-2" style="color: #FFD700; font-size: 1.1rem;"></i>
+                                    <span style="font-size: 0.95rem;">Top 50 cao thủ</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-6 mb-2">
+                                <div class="feature-item d-flex align-items-center">
+                                    <i class="fas fa-chart-line me-2" style="color: #FFD700; font-size: 1.1rem;"></i>
+                                    <span style="font-size: 0.95rem;">Thống kê chi tiết</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-12 mb-2">
+                                <div class="feature-item d-flex align-items-center">
+                                    <i class="fas fa-crown me-2" style="color: #FFD700; font-size: 1.1rem;"></i>
+                                    <span style="font-size: 0.95rem;">Cập nhật realtime</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-5 text-center">
+                <div class="banner-action">
+                    <a asp-controller="Home" asp-action="GameLeaderboard" class="btn-game-banner" style="
+                        display: inline-block;
+                        padding: 15px 40px;
+                        background: linear-gradient(45deg, #ffd700, #ffed4a);
+                        color: #333;
+                        text-decoration: none;
+                        border-radius: 50px;
+                        font-size: 1.3rem;
+                        font-weight: 600;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+                        transition: all 0.3s ease;
+                        position: relative;
+                        overflow: hidden;
+                        border: none;
+                    ">
+                        <span style="position: relative; z-index: 2;">
+                            <i class="fas fa-trophy me-2"></i>
+                            Xem Bảng Xếp Hạng
+                        </span>
+                        <div style="
+                            position: absolute;
+                            top: 0;
+                            left: -100%;
+                            width: 100%;
+                            height: 100%;
+                            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+                            transition: left 0.5s;
+                        " class="btn-shine"></div>
+                    </a>
+                    <div class="mt-3">
+                        <small style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">
+                            <i class="fas fa-chart-line me-1"></i>
+                            Xem thành tích và thi đua với bạn bè
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.btn-game-banner:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 35px rgba(255, 215, 0, 0.6) !important;
+    text-decoration: none !important;
+    color: #333 !important;
+}
+
+.btn-game-banner:hover .btn-shine {
+    left: 100%;
+}
+
+.game-banner-section {
+    position: relative;
+}
+
+.game-banner-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.3;
+}
+</style>
 
 <!-- Categories Section -->
 <!--div class="container mt-5 mb-5">

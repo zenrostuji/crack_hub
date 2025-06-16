@@ -18,5 +18,6 @@ namespace crackhub.Repositories
         Task<User?> AuthenticateAsync(string displayName, string passwordHash);
         Task<int> GetTotalUsersCountAsync();
         Task<IEnumerable<User>> GetRecentUsersAsync(int count);
+        Task<IEnumerable<User>> GetUsersWithPremiumExpiringBetweenAsync(DateTime startDate, DateTime endDate);
     }
 }

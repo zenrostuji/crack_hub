@@ -1,0 +1,214 @@
+@model IEnumerable<crackhub.Models.Data.GameScore>
+
+@{
+    ViewData["Title"] = "Bảng Xếp Hạng - " + ViewBag.GameName;
+    var currentUserId = ViewBag.CurrentUserId as string;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/GameLeaderboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="leaderboard-container">        <!-- Header Section -->
+        <div class="header-section">
+            <div class="back-nav">
+                <a href="@Url.Action("Index", "Home")" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    Quay lại Trang chủ
+                </a>
+            </div>
+            <div class="header-content">
+                <h1 class="page-title">
+                    <i class="fas fa-trophy"></i>
+                    BẢNG XẾP HẠNG
+                </h1>
+                <h2 class="game-name">@ViewBag.GameName</h2>
+                <p class="subtitle">Top 50 người chơi xuất sắc nhất</p>
+                
+                <!-- Play Game Button -->
+                <div class="play-game-section mt-4">
+                    <a href="@Url.Action("GameRating", "Home")" class="btn-play-game">
+                        <i class="fas fa-gamepad me-2"></i>
+                        <span>Chơi Game Ngay</span>
+                        <i class="fas fa-arrow-right ms-2"></i>
+                    </a>
+                    <p class="play-description mt-2">Thử thách bản thân và leo lên đỉnh bảng xếp hạng!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-number" id="totalPlayers">@Model.Count()</div>
+                    <div class="stat-label">Người chơi</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-number" id="highestScore">@(Model.Any() ? Model.Max(s => s.Score).ToString("N0") : "0")</div>
+                    <div class="stat-label">Điểm cao nhất</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-number" id="longestSurvival">@(Model.Any() ? Model.Max(s => s.SurvivalTime) + "s" : "0s")</div>
+                    <div class="stat-label">Thời gian sống lâu nhất</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-crosshairs"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-number" id="mostKills">@(Model.Any() ? Model.Max(s => s.EnemiesKilled).ToString() : "0")</div>
+                    <div class="stat-label">Diệt kẻ thù nhiều nhất</div>
+                </div>
+            </div>
+        </div>        <!-- Your Rank Section -->
+        <div class="your-rank-section" id="yourRankSection" style="display: none;">
+            <h3><i class="fas fa-user"></i> Thứ hạng của bạn</h3>
+            <div class="your-rank-card">
+                <div class="rank-badge">
+                    <span id="yourRank">#-</span>
+                </div>
+                <div class="player-info">
+                    <div class="player-name">Bạn</div>
+                    <div class="player-stats">
+                        <span class="score">Điểm: <span id="yourScore">0</span></span>
+                        <span class="level">Cấp: <span id="yourLevel">0</span></span>
+                        <span class="survival">Thời gian: <span id="yourSurvival">0s</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- No Score Encouragement -->
+        <div class="no-score-section" id="noScoreSection" style="display: none;">
+            <div class="encouragement-card">
+                <div class="encouragement-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <div class="encouragement-content">
+                    <h3>Bạn chưa có điểm số!</h3>
+                    <p>Hãy bắt đầu chơi game để ghi tên mình vào bảng xếp hạng này!</p>
+                    <a href="@Url.Action("GameRating", "Home")" class="btn-encourage">
+                        <i class="fas fa-play me-2"></i>
+                        Bắt Đầu Ngay
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leaderboard Table -->
+        <div class="leaderboard-section">
+            <div class="leaderboard-header">
+                <h3><i class="fas fa-list-ol"></i> Bảng xếp hạng</h3>
+                <div class="refresh-btn" onclick="refreshLeaderboard()">
+                    <i class="fas fa-sync-alt"></i>
+                    Làm mới
+                </div>
+            </div>
+
+            <div class="leaderboard-table">
+                <div class="table-header">
+                    <div class="col-rank">Hạng</div>
+                    <div class="col-player">Người chơi</div>
+                    <div class="col-score">Điểm</div>
+                    <div class="col-level">Cấp</div>
+                    <div class="col-kills">Diệt kẻ thù</div>
+                    <div class="col-survival">Thời gian</div>
+                    <div class="col-date">Ngày</div>
+                </div>
+
+                <div class="table-body" id="leaderboardBody">
+                    @if (Model.Any())
+                    {
+                        @foreach (var (score, index) in Model.Select((s, i) => (s, i)))
+                        {
+                            var rank = index + 1;
+                            var isCurrentUser = score.UserId == currentUserId;
+                            var rankClass = rank <= 3 ? $"rank-{rank}" : "";
+                            var userClass = isCurrentUser ? "current-user" : "";
+
+                            <div class="table-row @rankClass @userClass">
+                                <div class="col-rank">
+                                    @if (rank == 1)
+                                    {
+                                        <i class="fas fa-crown gold"></i>
+                                    }
+                                    else if (rank == 2)
+                                    {
+                                        <i class="fas fa-medal silver"></i>
+                                    }
+                                    else if (rank == 3)
+                                    {
+                                        <i class="fas fa-medal bronze"></i>
+                                    }
+                                    else
+                                    {
+                                        <span class="rank-number">#@rank</span>
+                                    }
+                                </div>
+                                <div class="col-player">
+                                    <div class="player-name">
+                                        @(score.User?.DisplayName ?? "Unknown")
+                                        @if (isCurrentUser)
+                                        {
+                                            <span class="you-badge">Bạn</span>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-score">
+                                    <span class="score-value">@score.Score.ToString("N0")</span>
+                                </div>
+                                <div class="col-level">@score.Level</div>
+                                <div class="col-kills">@score.EnemiesKilled</div>
+                                <div class="col-survival">@score.SurvivalTime s</div>
+                                <div class="col-date">@score.UpdatedAt.ToString("dd/MM/yyyy")</div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="no-scores">
+                            <i class="fas fa-trophy"></i>
+                            <p>Chưa có điểm số nào được ghi nhận</p>
+                            <p>Hãy là người đầu tiên!</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-section">
+            <p>Điểm số được cập nhật tự động khi bạn đạt kỷ lục mới</p>
+            <div class="social-share">
+                <span>Chia sẻ:</span>
+                <a href="#" onclick="shareScore()" class="share-btn">
+                    <i class="fas fa-share-alt"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/GameLeaderboard.js"></script>
+</body>
+</html>

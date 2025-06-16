@@ -134,10 +134,28 @@ namespace crackhub.Controllers
             {
                 var isFavorite = await _favoriteGameRepository.IsFavoriteAsync(userId, id);
                 ViewBag.IsFavorite = isFavorite;
+                
+                // Check user premium status and download limits
+                var user = await _userRepository.GetByIdAsync(userId);
+                if (user != null)
+                {
+                    bool hasPremium = user.PremiumExpiryDate.HasValue && user.PremiumExpiryDate.Value > DateTime.Now;
+                    ViewBag.HasPremium = hasPremium;
+                    
+                    if (!hasPremium)
+                    {
+                        var downloadsToday = await _downloadHistoryRepository.GetUserDownloadsCountTodayAsync(userId);
+                        const int DAILY_DOWNLOAD_LIMIT = 3;
+                        ViewBag.DownloadsToday = downloadsToday;
+                        ViewBag.DownloadLimit = DAILY_DOWNLOAD_LIMIT;
+                        ViewBag.RemainingDownloads = Math.Max(0, DAILY_DOWNLOAD_LIMIT - downloadsToday);
+                    }
+                }
             }
             else
             {
                 ViewBag.IsFavorite = false;
+                ViewBag.HasPremium = false;
             }
 
             // Lấy danh sách game liên quan
@@ -155,6 +173,31 @@ namespace crackhub.Controllers
             if (game == null)
             {
                 return NotFound();
+            }
+
+            // Check if user is logged in
+            var userId = HttpContext.Session.GetString("UserId");
+            if (!string.IsNullOrEmpty(userId))
+            {
+                // Get user details to check premium status
+                var user = await _userRepository.GetByIdAsync(userId);
+                if (user != null)
+                {
+                    // Check if user has premium
+                    bool hasPremium = user.PremiumExpiryDate.HasValue && user.PremiumExpiryDate.Value > DateTime.Now;
+                    
+                    // If user doesn't have premium, check daily download limit
+                    if (!hasPremium)
+                    {
+                        var downloadsToday = await _downloadHistoryRepository.GetUserDownloadsCountTodayAsync(userId);
+                        const int DAILY_DOWNLOAD_LIMIT = 3;
+                        
+                        if (downloadsToday >= DAILY_DOWNLOAD_LIMIT)
+                        {
+                            return RedirectToAction("DownloadLimit");
+                        }
+                    }
+                }
             }
 
             // Tăng số lượt download
@@ -194,17 +237,116 @@ namespace crackhub.Controllers
                 return Json(new { success = true });
             }
 
+            // Get user details to check premium status
+            var user = await _userRepository.GetByIdAsync(userId);
+            if (user != null)
+            {
+                // Check if user has premium
+                bool hasPremium = user.PremiumExpiryDate.HasValue && user.PremiumExpiryDate.Value > DateTime.Now;
+                
+                // If user doesn't have premium, check daily download limit
+                if (!hasPremium)
+                {
+                    var downloadsToday = await _downloadHistoryRepository.GetUserDownloadsCountTodayAsync(userId);
+                    const int DAILY_DOWNLOAD_LIMIT = 3;
+                    
+                    if (downloadsToday >= DAILY_DOWNLOAD_LIMIT)
+                    {
+                        return Json(new { 
+                            success = false, 
+                            message = $"Bạn đã đạt giới hạn {DAILY_DOWNLOAD_LIMIT} lượt tải trong ngày. Nâng cấp Premium để tải không giới hạn!" 
+                        });
+                    }
+                }
+            }
+
+            // Get user's IP address
+            var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+            if (string.IsNullOrEmpty(ipAddress) || ipAddress == "::1")
+            {
+                ipAddress = "127.0.0.1"; // Localhost fallback
+            }
+
             // Record download history for logged in users
             var downloadHistory = new DownloadHistory
             {
                 UserId = userId,
                 GameId = gameId,
-                DownloadDate = DateTime.Now
+                DownloadDate = DateTime.Now,
+                IP = ipAddress
             };
 
             await _downloadHistoryRepository.CreateAsync(downloadHistory);
 
             return Json(new { success = true });
+        }
+
+        // GET: /Game/DownloadLimit
+        public IActionResult DownloadLimit()
+        {
+            return View();
+        }
+
+        // GET: /Game/DownloadHistory
+        public async Task<IActionResult> DownloadHistory(int page = 1, string searchTerm = "", string sortOrder = "newest")
+        {
+            // Check if user is logged in
+            var userId = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userId))
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            const int PageSize = 12;
+
+            // Get user's download history
+            var allDownloads = await _downloadHistoryRepository.GetDownloadsByUserAsync(userId);
+
+            // Apply search if provided
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                allDownloads = allDownloads.Where(d => d.Game != null && 
+                    (d.Game.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                     (d.Game.Developer?.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                     (d.Game.Category?.CategoryName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ?? false))
+                ).ToList();
+                ViewBag.SearchTerm = searchTerm;
+            }
+
+            // Apply sorting
+            switch (sortOrder)
+            {
+                case "oldest":
+                    allDownloads = allDownloads.OrderBy(d => d.DownloadDate).ToList();
+                    break;
+                case "title":
+                    allDownloads = allDownloads.OrderBy(d => d.Game?.Title ?? "").ToList();
+                    break;
+                case "title_desc":
+                    allDownloads = allDownloads.OrderByDescending(d => d.Game?.Title ?? "").ToList();
+                    break;
+                default: // newest
+                    allDownloads = allDownloads.OrderByDescending(d => d.DownloadDate).ToList();
+                    break;
+            }
+
+            ViewBag.CurrentSort = sortOrder;
+
+            // Count total downloads for pagination
+            var totalDownloads = allDownloads.Count();
+            var totalPages = (int)Math.Ceiling((double)totalDownloads / PageSize);
+
+            // Get downloads for current page
+            var downloads = allDownloads
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize)
+                .ToList();
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.TotalDownloads = totalDownloads;
+
+            return View(downloads);
         }
 
         // GET: /Game/ByCategory/{categorySlug}
@@ -299,6 +441,44 @@ namespace crackhub.Controllers
             ViewBag.SearchQuery = query;
 
             return View("Index", games);
+        }
+
+        // API: /Game/SearchSuggestions
+        [HttpGet]
+        public async Task<JsonResult> SearchSuggestions(string query)
+        {
+            if (string.IsNullOrEmpty(query) || query.Length < 2)
+            {
+                return Json(new List<object>());
+            }
+
+            try
+            {
+                // Lấy tất cả game và filter theo query
+                var allGames = await _gameRepository.GetAllAsync();
+                
+                var suggestions = allGames
+                    .Where(g => g.Title.ToLower().Contains(query.ToLower()) ||
+                               (g.Developer != null && g.Developer.ToLower().Contains(query.ToLower())) ||
+                               (g.Publisher != null && g.Publisher.ToLower().Contains(query.ToLower())))
+                    .Select(g => new {
+                        id = g.Id,
+                        title = g.Title,
+                        category = g.Category?.CategoryName ?? "Uncategorized",
+                        coverImage = g.CoverImageUrl,
+                        developer = g.Developer,
+                        publisher = g.Publisher
+                    })
+                    .Take(8) // Giới hạn 8 gợi ý
+                    .ToList();
+
+                return Json(suggestions);
+            }
+            catch (Exception)
+            {
+                // Log error và trả về empty list
+                return Json(new List<object>());
+            }
         }
 
         // POST: /Game/AddReview

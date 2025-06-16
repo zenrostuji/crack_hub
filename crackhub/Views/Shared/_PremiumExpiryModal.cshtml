@@ -1,0 +1,97 @@
+@{
+    var premiumExpiryWarning = Context.Session.GetString("PremiumExpiryWarning");
+    var expiryDate = Context.Session.GetString("PremiumExpiryDate");
+    var daysLeft = Context.Session.GetString("DaysUntilExpiry");
+}
+
+<link href="~/css/premium-modal.css" rel="stylesheet" />
+
+<!-- Premium Expiry Warning Modal -->
+<div class="modal fade" id="premiumExpiryModal" tabindex="-1" aria-labelledby="premiumExpiryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content premium-modal-content">
+            <div class="modal-header premium-modal-header">
+                <h5 class="modal-title premium-title" id="premiumExpiryModalLabel">
+                    <i class="fas fa-crown premium-status-icon" style="font-size: 1.5rem; margin-right: 0.5rem;"></i>Thông báo Premium sắp hết hạn
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body premium-modal-body text-center">
+                <div class="mb-4">
+                    <i class="fas fa-crown premium-status-icon" style="font-size: 4rem; display: block; margin-bottom: 1rem;"></i>
+                </div>
+                <h6 class="premium-status-title mb-3">Tài khoản Premium của bạn sắp hết hạn!</h6>
+                <div class="premium-status mb-3" style="padding: 1rem;">
+                    <p class="mb-2">Premium của bạn sẽ hết hạn vào ngày</p>
+                    <div class="premium-status-expiry expiry-date-highlight" id="expiryDateText" style="font-size: 1.1rem; margin-bottom: 0.5rem;"></div>
+                    <span class="text-danger" style="font-weight: 600;">Còn lại <strong id="daysLeftText" class="premium-status-expiry days-left-highlight"></strong> ngày</span>
+                </div>
+                <div class="benefit-item" style="margin-bottom: 1rem; padding: 1.5rem;">
+                    <div class="benefit-title" style="font-size: 1rem; margin-bottom: 0.5rem;">Gia hạn ngay để tiếp tục sử dụng các tính năng Premium:</div>
+                    <div class="pricing-features text-start">
+                        <li>Tốc độ tải xuống không giới hạn</li>
+                        <li>Không hiển thị quảng cáo</li>
+                        <li>Thay đổi tên hiển thị</li>
+                        <li>Ưu tiên hỗ trợ kỹ thuật</li>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer premium-modal-footer">
+
+                <a href="@Url.Action("Premium", "Home")" class="pricing-button pricing-button-primary">
+                    <i class="fas fa-crown me-1"></i>Gia hạn Premium
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(premiumExpiryWarning) && premiumExpiryWarning == "true")
+{
+    <script type="text/javascript">
+        // Ensure jQuery and Bootstrap are loaded before executing
+        window.addEventListener('load', function() {
+            // Double check if jQuery is available
+            if (typeof $ !== 'undefined') {
+                console.log('Showing premium expiry modal...'); // Debug log
+                
+                // Set expiry information
+                $('#expiryDateText').text('@Html.Raw(expiryDate)');
+                $('#daysLeftText').text('@Html.Raw(daysLeft)');
+                
+                // Add special effects based on days left
+                var daysLeft = parseInt('@Html.Raw(daysLeft)');
+                if (daysLeft <= 3) {
+                    $('#daysLeftText').addClass('critical-warning');
+                    $('#premiumExpiryModal .modal-content').addClass('urgent-modal');
+                }
+                
+                // Show the premium expiry modal after a short delay
+                setTimeout(function() {
+                    var modal = new bootstrap.Modal(document.getElementById('premiumExpiryModal'));
+                    modal.show();
+                    
+                    // Add entrance animation
+                    $('#premiumExpiryModal').on('shown.bs.modal', function() {
+                        $('.premium-modal-content').addClass('modal-entrance');
+                    });
+                    
+                    console.log('Premium expiry modal shown'); // Debug log
+                }, 1500); // Increased delay to ensure everything is loaded
+
+                // Clear the session flag after showing (with delay to ensure modal is shown first)
+                setTimeout(function() {
+                    $.post('@Url.Action("ClearPremiumWarning", "Account")', function(response) {
+                        console.log('Premium warning cleared from session'); // Debug log
+                    }).fail(function() {
+                        console.log('Failed to clear premium warning from session'); // Debug log
+                    });
+                }, 2000);
+            } else {
+                console.error('jQuery not loaded yet, retrying...');
+                // Retry after 500ms if jQuery is not loaded
+                setTimeout(arguments.callee, 500);
+            }
+        });
+    </script>
+}

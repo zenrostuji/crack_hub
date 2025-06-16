@@ -1,5 +1,6 @@
 using crackhub.Models.Data;
 using crackhub.Repositories;
+using crackhub.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
@@ -33,6 +34,15 @@ builder.Services.AddScoped<ISearchHistoryRepository, EFSearchHistoryRepository>(
 builder.Services.AddScoped<IRoleRepository, EFRoleRepository>();
 builder.Services.AddScoped<IAvatarFrameRepository, EFAvatarFrameRepository>();
 builder.Services.AddScoped<IUserAvatarFrameRepository, EFUserAvatarFrameRepository>();
+builder.Services.AddScoped<IPremiumRepository, EFPremiumRepository>();
+builder.Services.AddScoped<IPremiumRegisterRepository, EFPremiumRegisterRepository>();
+builder.Services.AddScoped<IGameScoreRepository, EFGameScoreRepository>();
+
+// Add Email Service (dùng MailKit thay vì SmtpClient)
+builder.Services.AddScoped<IEmailService, MailKitEmailService>();
+
+// Add Background Service for Premium Expiry Notifications
+builder.Services.AddHostedService<PremiumExpiryNotificationService>();
 
 // Add HttpContextAccessor
 builder.Services.AddHttpContextAccessor();
@@ -46,8 +56,8 @@ builder.Services.AddAuthentication(options =>
 .AddCookie()
 .AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
 {
-    options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    options.ClientId = builder.Configuration["Authentication:Google:ClientId"] ?? "";
+    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"] ?? "";
     options.CallbackPath = "/signin-google";
 });
 

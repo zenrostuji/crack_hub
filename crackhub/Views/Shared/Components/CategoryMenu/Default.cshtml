@@ -1,12 +1,15 @@
 @using crackhub.Models.Data
 @model IEnumerable<Category>
 
-@foreach (var category in Model)
-{
-    <a class="dropdown-item" href="@Url.Action("ByCategory", "Game", new { categorySlug = category.Slug })">
-        <i class="@GetCategoryIcon(category.CategoryName) fa-fw"></i> @category.CategoryName
-    </a>
-}
+<div class="category-table-grid">
+    @foreach (var category in Model)
+    {
+        <a class="category-table-item" href="@Url.Action("ByCategory", "Game", new { categorySlug = category.Slug })">
+            <i class="@GetCategoryIcon(category.CategoryName)"></i>
+            <span>@category.CategoryName</span>
+        </a>
+    }
+</div>
 
 @functions {
     public string GetCategoryIcon(string categoryName)
@@ -15,17 +18,61 @@
         return categoryName.ToLower() switch
         {
             "action" => "fas fa-running",
+            "hành động" => "fas fa-running",
             "adventure" => "fas fa-mountain",
+            "phiêu lưu" => "fas fa-mountain",
             "rpg" => "fas fa-dragon",
             "strategy" => "fas fa-chess",
+            "chiến thuật" => "fas fa-chess",
             "simulation" => "fas fa-gamepad",
+            "mô phỏng" => "fas fa-gamepad",
             "sports" => "fas fa-football-ball",
+            "thể thao" => "fas fa-football-ball",
             "racing" => "fas fa-car",
+            "đua xe" => "fas fa-car",
             "puzzle" => "fas fa-puzzle-piece",
             "shooter" => "fas fa-crosshairs",
+            "bắn súng" => "fas fa-crosshairs",
             "horror" => "fas fa-ghost",
+            "kinh dị" => "fas fa-ghost",
             "platformer" => "fas fa-layer-group",
             "fighting" => "fas fa-fist-raised",
+            "đối kháng" => "fas fa-fist-raised",
+            "nhập vai" => "fas fa-dragon",
+            "giả lập" => "fas fa-gamepad",
+            "khác" => "fas fa-gamepad",
+            "indie" => "fas fa-star",
+            "multiplayer" => "fas fa-users",
+            "point & click" => "fas fa-mouse-pointer",
+            "side scrolling" => "fas fa-arrows-alt-h",
+            "thế bài" => "fas fa-cards",
+            "việt hóa" => "fas fa-language",
+            "gog" => "fas fa-compact-disc",
+            "sắp xếp" => "fas fa-sort",
+            "mới phát hành" => "fas fa-clock",
+            "xem nhiều nhất" => "fas fa-eye",
+            "sắp phát hành" => "fas fa-calendar",
+            "bộ sưu tập" => "fas fa-folder",
+            "bóng đá" => "fas fa-futbol",
+            "bóng rổ" => "fas fa-basketball-ball",
+            "câu cá" => "fas fa-fish",
+            "golf" => "fas fa-golf-ball",
+            "đấu vật" => "fas fa-fist-raised",
+            "bóng chày" => "fas fa-baseball-ball",
+            "tennis" => "fas fa-table-tennis",
+            "bi-a" => "fas fa-circle",
+            "chặt chém" => "fas fa-sword",
+            "theo luật" => "fas fa-balance-scale",
+            "thời gian thực" => "fas fa-clock",
+            "thủ thành" => "fas fa-shield-alt",
+            "giá lập ps 1" => "fas fa-gamepad",
+            "giá lập ps 2" => "fas fa-gamepad",
+            "giá lập psp" => "fas fa-gamepad",
+            "giá lập wiiu" => "fas fa-gamepad",
+            "giá lập nintendo switch" => "fas fa-gamepad",
+            "thế giới mở" => "fas fa-globe",
+            "souls-like" => "fas fa-skull",
+            "sinh tồn" => "fas fa-heart",
             _ => "fas fa-gamepad" // Default icon
         };
     }

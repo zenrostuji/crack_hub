@@ -39,6 +39,15 @@
                                 <option value="premium" selected="@(premiumFilter == "premium")">Premium</option>
                                 <option value="free" selected="@(premiumFilter == "free")">Free</option>
                             </select>
+
+                            <!-- Review Filter -->
+                            <select name="reviewFilter" class="form-select">
+                                <option value="all" selected="@(ViewBag.ReviewFilter == "all")">Tất cả đánh giá</option>
+                                <option value="no_reviews" selected="@(ViewBag.ReviewFilter == "no_reviews")">Chưa đánh giá</option>
+                                <option value="1_5" selected="@(ViewBag.ReviewFilter == "1_5")">1-5 đánh giá</option>
+                                <option value="6_10" selected="@(ViewBag.ReviewFilter == "6_10")">6-10 đánh giá</option>
+                                <option value="11_plus" selected="@(ViewBag.ReviewFilter == "11_plus")">11+ đánh giá</option>
+                            </select>
                         </div>
                         <input type="hidden" name="sortOrder" value="@currentSort" />
                         <input type="hidden" name="page" value="1" />
@@ -126,14 +135,14 @@
                     <i class="fas fa-sort me-1"></i> Sắp xếp
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="sortDropdown">
-                    <li><a class="dropdown-item @(currentSort == "newest" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "newest", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter })">Mới nhất</a></li>
-                    <li><a class="dropdown-item @(currentSort == "oldest" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "oldest", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter })">Cũ nhất</a></li>
-                    <li><a class="dropdown-item @(currentSort == "name" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "name", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter })">Tên A-Z</a></li>
-                    <li><a class="dropdown-item @(currentSort == "name_desc" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "name_desc", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter })">Tên Z-A</a></li>
-                    <li><a class="dropdown-item @(currentSort == "email" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "email", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter })">Email A-Z</a></li>
-                    <li><a class="dropdown-item @(currentSort == "email_desc" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "email_desc", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter })">Email Z-A</a></li>
-                    <li><a class="dropdown-item @(currentSort == "role" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "role", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter })">Quyền (thấp-cao)</a></li>
-                    <li><a class="dropdown-item @(currentSort == "role_desc" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "role_desc", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter })">Quyền (cao-thấp)</a></li>
+                    <li><a class="dropdown-item @(currentSort == "newest" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "newest", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter, reviewFilter = ViewBag.ReviewFilter })">Mới nhất</a></li>
+                    <li><a class="dropdown-item @(currentSort == "oldest" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "oldest", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter, reviewFilter = ViewBag.ReviewFilter })">Cũ nhất</a></li>
+                    <li><a class="dropdown-item @(currentSort == "name" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "name", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter, reviewFilter = ViewBag.ReviewFilter })">Tên A-Z</a></li>
+                    <li><a class="dropdown-item @(currentSort == "name_desc" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "name_desc", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter, reviewFilter = ViewBag.ReviewFilter })">Tên Z-A</a></li>
+                    <li><a class="dropdown-item @(currentSort == "email" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "email", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter, reviewFilter = ViewBag.ReviewFilter })">Email A-Z</a></li>
+                    <li><a class="dropdown-item @(currentSort == "email_desc" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "email_desc", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter, reviewFilter = ViewBag.ReviewFilter })">Email Z-A</a></li>
+                    <li><a class="dropdown-item @(currentSort == "role" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "role", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter, reviewFilter = ViewBag.ReviewFilter })">Quyền (thấp-cao)</a></li>
+                    <li><a class="dropdown-item @(currentSort == "role_desc" ? "active" : "")" href="@Url.Action("Users", new { sortOrder = "role_desc", searchTerm = searchTerm, page = currentPage, premiumFilter = premiumFilter, roleFilter = roleFilter, reviewFilter = ViewBag.ReviewFilter })">Quyền (cao-thấp)</a></li>
                 </ul>
             </div>
         </div>
@@ -263,7 +272,7 @@
         <div class="admin-pagination">
             @if (currentPage > 1)
             {
-                <a href="@Url.Action("Users", new { page = currentPage - 1, sortOrder = currentSort, searchTerm = searchTerm, premiumFilter = premiumFilter, roleFilter = roleFilter })" class="admin-page-link">
+                <a href="@Url.Action("Users", new { page = currentPage - 1, sortOrder = currentSort, searchTerm = searchTerm, premiumFilter = premiumFilter, roleFilter = roleFilter, reviewFilter = ViewBag.ReviewFilter })" class="admin-page-link">
                     <i class="fas fa-chevron-left"></i>
                 </a>
             }
@@ -286,7 +295,7 @@
 
                 @if (startPage > 1)
                 {
-                    <a href="@Url.Action("Users", new { page = 1, sortOrder = currentSort, searchTerm = searchTerm, premiumFilter = premiumFilter, roleFilter = roleFilter })" class="admin-page-link">1</a>
+                    <a href="@Url.Action("Users", new { page = 1, sortOrder = currentSort, searchTerm = searchTerm, premiumFilter = premiumFilter, roleFilter = roleFilter, reviewFilter = ViewBag.ReviewFilter })" class="admin-page-link">1</a>
                     if (startPage > 2)
                     {
                         <span class="admin-page-link disabled">...</span>
@@ -295,7 +304,7 @@
 
                 @for (int i = startPage; i <= endPage; i++)
                 {
-                    <a href="@Url.Action("Users", new { page = i, sortOrder = currentSort, searchTerm = searchTerm, premiumFilter = premiumFilter, roleFilter = roleFilter })" 
+                    <a href="@Url.Action("Users", new { page = i, sortOrder = currentSort, searchTerm = searchTerm, premiumFilter = premiumFilter, roleFilter = roleFilter, reviewFilter = ViewBag.ReviewFilter })" 
                        class="admin-page-link @(i == currentPage ? "active" : "")">@i</a>
                 }
 
@@ -305,21 +314,21 @@
                     {
                         <span class="admin-page-link disabled">...</span>
                     }
-                    <a href="@Url.Action("Users", new { page = totalPages, sortOrder = currentSort, searchTerm = searchTerm, premiumFilter = premiumFilter, roleFilter = roleFilter })" class="admin-page-link">@totalPages</a>
+                    <a href="@Url.Action("Users", new { page = totalPages, sortOrder = currentSort, searchTerm = searchTerm, premiumFilter = premiumFilter, roleFilter = roleFilter, reviewFilter = ViewBag.ReviewFilter })" class="admin-page-link">@totalPages</a>
                 }
             }
             else
             {
                 @for (int i = 1; i <= totalPages; i++)
                 {
-                    <a href="@Url.Action("Users", new { page = i, sortOrder = currentSort, searchTerm = searchTerm, premiumFilter = premiumFilter, roleFilter = roleFilter })" 
+                    <a href="@Url.Action("Users", new { page = i, sortOrder = currentSort, searchTerm = searchTerm, premiumFilter = premiumFilter, roleFilter = roleFilter, reviewFilter = ViewBag.ReviewFilter })" 
                        class="admin-page-link @(i == currentPage ? "active" : "")">@i</a>
                 }
             }
 
             @if (currentPage < totalPages)
             {
-                <a href="@Url.Action("Users", new { page = currentPage + 1, sortOrder = currentSort, searchTerm = searchTerm, premiumFilter = premiumFilter, roleFilter = roleFilter })" class="admin-page-link">
+                <a href="@Url.Action("Users", new { page = currentPage + 1, sortOrder = currentSort, searchTerm = searchTerm, premiumFilter = premiumFilter, roleFilter = roleFilter, reviewFilter = ViewBag.ReviewFilter })" class="admin-page-link">
                     <i class="fas fa-chevron-right"></i>
                 </a>
             }

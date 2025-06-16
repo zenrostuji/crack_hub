@@ -327,6 +327,57 @@ namespace crackhub.Migrations
                     b.ToTable("GameLinks");
                 });
 
+            modelBuilder.Entity("crackhub.Models.Data.GameScore", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EnemiesKilled")
+                        .HasColumnType("int");
+
+                    b.Property<string>("GameName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SurvivalTime")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("IX_GameScore_UserId");
+
+                    b.HasIndex("UserId1");
+
+                    b.HasIndex("GameName", "Score")
+                        .HasDatabaseName("IX_GameScore_GameName_Score");
+
+                    b.ToTable("GameScores");
+                });
+
             modelBuilder.Entity("crackhub.Models.Data.GameTag", b =>
                 {
                     b.Property<int>("GameId")
@@ -390,6 +441,69 @@ namespace crackhub.Migrations
                     b.HasIndex("GameId");
 
                     b.ToTable("LocalizationInfos");
+                });
+
+            modelBuilder.Entity("crackhub.Models.Data.Premium", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("DurationInMonths")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Premiums", (string)null);
+                });
+
+            modelBuilder.Entity("crackhub.Models.Data.PremiumRegister", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AdminComment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ApprovalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PackageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProofImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RegisterDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserComment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PackageId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PremiumRegisters", (string)null);
                 });
 
             modelBuilder.Entity("crackhub.Models.Data.RelatedGame", b =>
@@ -766,6 +880,21 @@ namespace crackhub.Migrations
                     b.Navigation("Game");
                 });
 
+            modelBuilder.Entity("crackhub.Models.Data.GameScore", b =>
+                {
+                    b.HasOne("crackhub.Models.Data.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("crackhub.Models.Data.User", null)
+                        .WithMany("GameScores")
+                        .HasForeignKey("UserId1");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("crackhub.Models.Data.GameTag", b =>
                 {
                     b.HasOne("crackhub.Models.Data.Game", "Game")
@@ -794,6 +923,25 @@ namespace crackhub.Migrations
                         .IsRequired();
 
                     b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("crackhub.Models.Data.PremiumRegister", b =>
+                {
+                    b.HasOne("crackhub.Models.Data.Premium", "Premium")
+                        .WithMany("PremiumRegisters")
+                        .HasForeignKey("PackageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("crackhub.Models.Data.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Premium");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("crackhub.Models.Data.RelatedGame", b =>
@@ -938,6 +1086,11 @@ namespace crackhub.Migrations
                     b.Navigation("SystemRequirements");
                 });
 
+            modelBuilder.Entity("crackhub.Models.Data.Premium", b =>
+                {
+                    b.Navigation("PremiumRegisters");
+                });
+
             modelBuilder.Entity("crackhub.Models.Data.Role", b =>
                 {
                     b.Navigation("Users");
@@ -953,6 +1106,8 @@ namespace crackhub.Migrations
                     b.Navigation("DownloadHistory");
 
                     b.Navigation("FavoriteGames");
+
+                    b.Navigation("GameScores");
 
                     b.Navigation("Reviews");
 

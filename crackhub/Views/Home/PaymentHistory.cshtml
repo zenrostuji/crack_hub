@@ -1,0 +1,217 @@
+@model IEnumerable<crackhub.Models.Data.PremiumRegister>
+@{
+    ViewData["Title"] = "Lịch sử thanh toán";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/premium.css" />
+    <style>
+        .history-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            padding: 3rem 0;
+        }
+        
+        .history-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .history-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            background: #ffc107;
+            color: #000;
+        }
+        
+        .status-approved {
+            background: #28a745;
+            color: #fff;
+        }
+        
+        .status-rejected {
+            background: #dc3545;
+            color: #fff;
+        }
+        
+        .status-cancelled {
+            background: #6c757d;
+            color: #fff;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+        }
+        
+        .proof-thumbnail {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .proof-thumbnail:hover {
+            transform: scale(1.1);
+        }
+    </style>
+}
+
+<div class="history-container">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h1 class="premium-title">Lịch sử thanh toán</h1>
+            <p class="text-muted">Theo dõi tất cả các yêu cầu thanh toán Premium của bạn</p>
+        </div>        @if (Model.Any())
+        {
+            @foreach (var request in Model)
+            {
+                <div class="history-card">
+                    <div class="row align-items-center">
+                        <div class="col-md-2">
+                            <h6 class="text-muted mb-1">Mã yêu cầu</h6>
+                            <h5 class="mb-0">#@request.Id</h5>
+                        </div>
+                        
+                        <div class="col-md-2">
+                            <h6 class="text-muted mb-1">Gói Premium</h6>
+                            <p class="mb-0 fw-bold">@(request.Premium?.DurationInMonths ?? "Chưa xác định")</p>
+                            <small class="text-muted">Mã gói: @request.PackageId</small>
+                        </div>
+                        
+                        <div class="col-md-2">
+                            <h6 class="text-muted mb-1">Số tiền</h6>
+                            <h5 class="mb-0 text-warning">@(request.Premium?.Price.ToString("#,##0") ?? "0")₫</h5>
+                        </div>
+                        
+                        <div class="col-md-2">
+                            <h6 class="text-muted mb-1">Ngày gửi</h6>
+                            <p class="mb-0">@request.RegisterDate.ToString("dd/MM/yyyy")</p>
+                            <small class="text-muted">@request.RegisterDate.ToString("HH:mm")</small>
+                        </div>
+                        
+                        <div class="col-md-2">
+                            <h6 class="text-muted mb-1">Trạng thái</h6>
+                            <span class="status-badge @(request.Status == 1 ? "status-approved" : request.Status == 2 ? "status-pending" : "status-rejected")">
+                                @switch (request.Status)
+                                {
+                                    case 1:
+                                        <i class="fas fa-check me-1"></i><span>Đã duyệt</span>
+                                        break;
+                                    case 2:
+                                        <i class="fas fa-clock me-1"></i><span>Đang chờ</span>
+                                        break;
+                                    case 3:
+                                        <i class="fas fa-times me-1"></i><span>Từ chối</span>
+                                        break;
+                                    default:
+                                        <i class="fas fa-question me-1"></i><span>Không xác định</span>
+                                        break;
+                                }
+                            </span>
+                        </div>
+                        
+                        <div class="col-md-2 text-end">
+                            @if (!string.IsNullOrEmpty(request.ProofImageUrl))
+                            {
+                                <img src="~/uploads/payment-proofs/@request.ProofImageUrl" 
+                                     alt="Minh chứng thanh toán" 
+                                     class="proof-thumbnail"
+                                     data-bs-toggle="modal" 
+                                     data-bs-target="#proofModal"
+                                     onclick="showProof('@request.ProofImageUrl')" />
+                            }
+                        </div>
+                    </div>
+                    
+                    @if (request.ApprovalDate.HasValue)
+                    {
+                        <hr class="my-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <small class="text-muted">Xử lý bởi: Admin</small>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <small class="text-muted">Ngày xử lý: @request.ApprovalDate.Value.ToString("dd/MM/yyyy HH:mm")</small>
+                            </div>
+                        </div>
+                        @if (!string.IsNullOrEmpty(request.AdminComment))
+                        {
+                            <div class="mt-2">
+                                <small class="text-muted"><strong>Ghi chú từ admin:</strong> @request.AdminComment</small>
+                            </div>
+                        }
+                    }
+                    
+                    @if (!string.IsNullOrEmpty(request.UserComment))
+                    {
+                        <hr class="my-3">
+                        <div>
+                            <small class="text-muted"><strong>Ghi chú của bạn:</strong> @request.UserComment</small>
+                        </div>
+                    }
+                </div>
+            }
+        }
+        else
+        {
+            <div class="empty-state">
+                <i class="fas fa-receipt fa-4x text-muted mb-3"></i>
+                <h3>Chưa có yêu cầu thanh toán nào</h3>
+                <p class="text-muted mb-4">Bạn chưa có yêu cầu thanh toán Premium nào. Hãy nâng cấp tài khoản để trải nghiệm đầy đủ tính năng.</p>
+                <a href="@Url.Action("Premium", "Home")" class="btn btn-primary">
+                    <i class="fas fa-crown me-2"></i>Nâng cấp Premium ngay
+                </a>
+            </div>
+        }
+        
+        <div class="text-center mt-4">
+            <a href="@Url.Action("Premium", "Home")" class="btn btn-outline-light">
+                <i class="fas fa-arrow-left me-2"></i>Quay lại trang Premium
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for viewing payment proof -->
+<div class="modal fade" id="proofModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content bg-dark">
+            <div class="modal-header border-secondary">
+                <h5 class="modal-title text-white">Minh chứng thanh toán</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="proofImage" src="" alt="Minh chứng thanh toán" class="img-fluid rounded" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function showProof(filename) {
+            document.getElementById('proofImage').src = '/uploads/payment-proofs/' + filename;
+        }
+    </script>
+}

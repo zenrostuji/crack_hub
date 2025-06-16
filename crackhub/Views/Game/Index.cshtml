@@ -42,13 +42,14 @@
                 
                 <!-- Search Box -->
                 <form asp-controller="Game" asp-action="Search" method="get" class="animate__animated animate__fadeIn animate__delay-2s">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control form-control-lg rounded-pill" placeholder="Tìm kiếm game..." name="query" value="@searchQuery">
+                    <div class="input-group mb-3 search-container">
+                        <input type="text" class="form-control form-control-lg rounded-pill" placeholder="Tìm kiếm game..." name="query" value="@searchQuery" autocomplete="off">
                         <div class="input-group-append">
                             <button class="btn btn-primary rounded-pill ms-2" type="submit">
                                 <i class="fa fa-search me-2"></i> Tìm kiếm
                             </button>
                         </div>
+                        <div class="search-suggestions" id="gameIndexSearchSuggestions"></div>
                     </div>
                 </form>
                 
@@ -154,7 +155,7 @@
                             <div class="card-overlay">
                                 <div class="overlay-buttons">
                                     <a href="@Url.Action("Download", "Game", new { id = game.Id })" 
-                                       class="btn btn-success btn-sm"><i class="fas fa-download me-1"></i> Tải xuống</a>
+                                       class="btn btn-success btn-sm download-link" data-game-id="@game.Id"><i class="fas fa-download me-1"></i> Tải xuống</a>
                                     <a href="@Url.Action("Details", "Game", new { id = game.Id })" 
                                        class="btn btn-primary btn-sm mt-2"><i class="fas fa-info-circle me-1"></i> Chi tiết</a>
                                     

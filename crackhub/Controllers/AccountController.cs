@@ -75,16 +75,20 @@ namespace crackhub.Controllers
                 ViewBag.ReturnUrl = returnUrl;
                 return View();
             }
+
             // Hash the password
             string hashedPassword = HashPassword(password);
+
             // Find user by username and password using repository
             var user = await _userRepository.AuthenticateAsync(username, hashedPassword);
+
             if (user == null)
             {
                 ViewBag.ErrorMessage = "Tên đăng nhập hoặc mật khẩu không chính xác";
                 ViewBag.ReturnUrl = returnUrl;
                 return View();
             }
+
             // Store user info in session
             HttpContext.Session.SetString("UserId", user.Id.ToString());
             HttpContext.Session.SetString("UserName", user.DisplayName ?? user.FirstName + " " + user.LastName);
@@ -94,59 +98,26 @@ namespace crackhub.Controllers
             {
                 HttpContext.Session.SetString("AvatarUrl", user.AvatarUrl);
             }
-            // Kiểm tra và thêm thông báo Premium dạng popup (chỉ hiện khi còn 3 ngày hoặc ít hơn)
-            if (user.PremiumExpiryDate.HasValue)
+
+            // Check if premium is expiring within 3 days
+            if (user.PremiumExpiryDate.HasValue && user.PremiumExpiryDate.Value > DateTime.Now)
             {
-                var daysRemaining = (user.PremiumExpiryDate.Value.Date - DateTime.Now.Date).Days;
-                if (user.PremiumExpiryDate.Value > DateTime.Now)
+                var daysUntilExpiry = (user.PremiumExpiryDate.Value - DateTime.Now).Days;
+                if (daysUntilExpiry <= 3)
                 {
-                    // Chỉ hiển thị popup khi còn 3 ngày hoặc ít hơn
-                    if (daysRemaining <= 3)
-                    {
-                        string popupTitle = "";
-                        string popupMessage = "";
-                        string popupType = "";
-
-                        if (daysRemaining == 0)
-                        {
-                            popupTitle = "⚠️ Cảnh báo Premium";
-                            popupMessage = "Tài khoản Premium của bạn sẽ hết hạn hôm nay!<br><br>Vui lòng gia hạn ngay để tiếp tục sử dụng các tính năng Premium.";
-                            popupType = "danger";
-                        }
-                        else if (daysRemaining == 1)
-                        {
-                            popupTitle = "⚠️ Cảnh báo Premium";
-                            popupMessage = "Tài khoản Premium của bạn sẽ hết hạn vào ngày mai!<br><br>Vui lòng gia hạn để tiếp tục sử dụng các tính năng Premium.";
-                            popupType = "warning";
-                        }
-                        else
-                        {
-                            popupTitle = "📅 Thông báo Premium";
-                            popupMessage = $"Tài khoản Premium của bạn sẽ hết hạn trong <strong>{daysRemaining} ngày</strong><br>({user.PremiumExpiryDate.Value.ToString("dd/MM/yyyy")})<br><br>Vui lòng gia hạn để tiếp tục sử dụng.";
-                            popupType = "warning";
-                        }
-
-                        TempData["ShowPremiumPopup"] = "true";
-                        TempData["PremiumPopupTitle"] = popupTitle;
-                        TempData["PremiumPopupMessage"] = popupMessage;
-                        TempData["PremiumPopupType"] = popupType;
-                    }
-                }
-                else
-                {
-                    // Premium đã hết hạn
-                    TempData["ShowPremiumPopup"] = "true";
-                    TempData["PremiumPopupTitle"] = "❌ Premium Đã Hết Hạn";
-                    TempData["PremiumPopupMessage"] = "Tài khoản Premium của bạn đã hết hạn.<br><br>Vui lòng gia hạn ngay để tiếp tục sử dụng các tính năng Premium.";
-                    TempData["PremiumPopupType"] = "danger";
+                    HttpContext.Session.SetString("PremiumExpiryWarning", "true");
+                    HttpContext.Session.SetString("PremiumExpiryDate", user.PremiumExpiryDate.Value.ToString("dd/MM/yyyy"));
+                    HttpContext.Session.SetString("DaysUntilExpiry", daysUntilExpiry.ToString());
                 }
             }
+           
+
             // If return URL is specified and is local, redirect there
             if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
             }
-            // Default redirect to Home
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -219,6 +190,9 @@ namespace crackhub.Controllers
             HttpContext.Session.SetString("UserName", user.DisplayName);
             HttpContext.Session.SetString("UserRole", user.RoleId.ToString());
 
+            // Welcome message for new users
+            TempData["WelcomeMessage"] = "Chào mừng bạn đến với CrackHub! Tài khoản thường được phép tải 3 game mỗi ngày. Nâng cấp Premium để tải không giới hạn!";
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -278,6 +252,18 @@ namespace crackhub.Controllers
                 {
                     HttpContext.Session.SetString("AvatarUrl", existingUser.AvatarUrl);
                 }
+
+                // Check if premium is expiring within 3 days for existing users
+                if (existingUser.PremiumExpiryDate.HasValue && existingUser.PremiumExpiryDate.Value > DateTime.Now)
+                {
+                    var daysUntilExpiry = (existingUser.PremiumExpiryDate.Value - DateTime.Now).Days;
+                    if (daysUntilExpiry <= 3)
+                    {
+                        HttpContext.Session.SetString("PremiumExpiryWarning", "true");
+                        HttpContext.Session.SetString("PremiumExpiryDate", existingUser.PremiumExpiryDate.Value.ToString("dd/MM/yyyy"));
+                        HttpContext.Session.SetString("DaysUntilExpiry", daysUntilExpiry.ToString());
+                    }
+                }
             }
             else
             {
@@ -331,8 +317,21 @@ namespace crackhub.Controllers
                 return NotFound();
             }
 
-            // Get all available avatar frames
-            var allFrames = await _avatarFrameRepository.GetAllAsync();
+            // Check premium status and download limits
+            bool hasPremium = user.PremiumExpiryDate.HasValue && user.PremiumExpiryDate.Value > DateTime.Now;
+            ViewBag.HasPremium = hasPremium;
+            
+            if (!hasPremium)
+            {
+                var downloadsToday = await _downloadHistoryRepository.GetUserDownloadsCountTodayAsync(userId);
+                const int DAILY_DOWNLOAD_LIMIT = 3;
+                ViewBag.DownloadsToday = downloadsToday;
+                ViewBag.DownloadLimit = DAILY_DOWNLOAD_LIMIT;
+                ViewBag.RemainingDownloads = Math.Max(0, DAILY_DOWNLOAD_LIMIT - downloadsToday);
+            }
+
+            // Get all available avatar frames (only active ones)
+            var allFrames = await _avatarFrameRepository.GetAvailableFramesAsync();
             ViewBag.AllAvatarFrames = allFrames;
             
             // Get user's equipped frame
@@ -367,6 +366,13 @@ namespace crackhub.Controllers
                 if (!canChangeDisplayName)
                 {
                     ModelState.AddModelError("DisplayName", "Chỉ tài khoản Admin, Moderator hoặc Premium mới được thay đổi tên hiển thị");
+                    
+                    // Load avatar frame data for view
+                    var avatarFrames = await _avatarFrameRepository.GetAllAsync();
+                    ViewBag.AllAvatarFrames = avatarFrames;
+                    var equippedFrame = await _userAvatarFrameRepository.GetActiveFrameByUserAsync(user.Id);
+                    ViewBag.EquippedFrame = equippedFrame?.AvatarFrame;
+                    
                     // Load user activity history for the profile view
                     await LoadUserActivityHistory(user.Id);
                     return View("Profile", user);
@@ -376,6 +382,13 @@ namespace crackhub.Controllers
                 if (await _userRepository.GetByDisplayNameAsync(displayName) != null)
                 {
                     ModelState.AddModelError("DisplayName", "Tên hiển thị này đã tồn tại");
+                    
+                    // Load avatar frame data for view
+                    var avatarFrames2 = await _avatarFrameRepository.GetAllAsync();
+                    ViewBag.AllAvatarFrames = avatarFrames2;
+                    var equippedFrame2 = await _userAvatarFrameRepository.GetActiveFrameByUserAsync(user.Id);
+                    ViewBag.EquippedFrame = equippedFrame2?.AvatarFrame;
+                    
                     // Load user activity history for the profile view
                     await LoadUserActivityHistory(user.Id);
                     return View("Profile", user);
@@ -435,6 +448,13 @@ namespace crackhub.Controllers
                 if (string.IsNullOrEmpty(currentPassword) || user.PasswordHash != HashPassword(currentPassword))
                 {
                     ModelState.AddModelError("CurrentPassword", "Mật khẩu hiện tại không chính xác");
+                    
+                    // Load avatar frame data for view
+                    var avatarFrames3 = await _avatarFrameRepository.GetAllAsync();
+                    ViewBag.AllAvatarFrames = avatarFrames3;
+                    var equippedFrame3 = await _userAvatarFrameRepository.GetActiveFrameByUserAsync(user.Id);
+                    ViewBag.EquippedFrame = equippedFrame3?.AvatarFrame;
+                    
                     await LoadUserActivityHistory(user.Id);
                     return View("Profile", user);
                 }
@@ -443,6 +463,13 @@ namespace crackhub.Controllers
                 if (newPassword != confirmPassword)
                 {
                     ModelState.AddModelError("ConfirmPassword", "Mật khẩu xác nhận không khớp");
+                    
+                    // Load avatar frame data for view
+                    var avatarFrames4 = await _avatarFrameRepository.GetAllAsync();
+                    ViewBag.AllAvatarFrames = avatarFrames4;
+                    var equippedFrame4 = await _userAvatarFrameRepository.GetActiveFrameByUserAsync(user.Id);
+                    ViewBag.EquippedFrame = equippedFrame4?.AvatarFrame;
+                    
                     await LoadUserActivityHistory(user.Id);
                     return View("Profile", user);
                 }
@@ -454,6 +481,14 @@ namespace crackhub.Controllers
             await _userRepository.UpdateAsync(user);
 
             ViewBag.SuccessMessage = "Thông tin tài khoản đã được cập nhật thành công";
+            
+            // Load all avatar frame data again
+            var allFrames = await _avatarFrameRepository.GetAllAsync();
+            ViewBag.AllAvatarFrames = allFrames;
+            
+            // Get user's equipped frame
+            var currentEquippedFrame = await _userAvatarFrameRepository.GetActiveFrameByUserAsync(user.Id);
+            ViewBag.EquippedFrame = currentEquippedFrame?.AvatarFrame;
             
             // Load user activity history for the profile view
             await LoadUserActivityHistory(user.Id);
@@ -645,6 +680,17 @@ namespace crackhub.Controllers
             {
                 return Json(new { success = false, message = "Có lỗi xảy ra: " + ex.Message });
             }
+        }
+
+        [HttpPost]
+        public IActionResult ClearPremiumWarning()
+        {
+            // Clear premium warning flags from session
+            HttpContext.Session.Remove("PremiumExpiryWarning");
+            HttpContext.Session.Remove("PremiumExpiryDate");
+            HttpContext.Session.Remove("DaysUntilExpiry");
+            
+            return Json(new { success = true });
         }
 
         private string HashPassword(string password)

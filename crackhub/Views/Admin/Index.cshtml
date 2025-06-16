@@ -333,6 +333,63 @@
                     </div>
                 </div>
             </div>
-        </div>
+
+            <!-- Email Notifications -->
+            <div class="admin-card mt-4">
+                <div class="admin-card-header">
+                    <h5><i class="fas fa-envelope me-2"></i>Quản lý Email</h5>
+                </div>
+                <div class="admin-card-body">
+                    <!-- Send Premium Expiry Notifications -->
+                    <div class="mb-3">
+                        <h6>Gửi thông báo Premium sắp hết hạn</h6>
+                        <p class="text-muted small">Gửi email cho tất cả user có Premium hết hạn trong 3 ngày tới</p>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <form asp-controller="Notification" asp-action="SendPremiumExpiryNotifications" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-warning" onclick="return confirm('Bạn có chắc muốn gửi email thông báo cho tất cả user có Premium sắp hết hạn?')">
+                                    <i class="fas fa-exclamation-triangle me-2"></i> Gửi thông báo
+                                </button>
+                            </form>
+                            
+                        </div>
+                    </div>
+
+                    <!-- Test Email -->
+                    <div class="mb-3">
+                        <h6>Gửi email test</h6>
+                        <form asp-controller="Notification" asp-action="SendTestEmail" method="post">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <input type="email" name="email" class="form-control" placeholder="Email nhận" required />
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" name="userName" class="form-control" placeholder="Tên user" required />
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="submit" class="btn btn-info w-100">
+                                        <i class="fas fa-paper-plane me-2"></i> Gửi test
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        
+                    </div>
+
+                    @if (TempData["Message"] != null)
+                    {
+                        <div class="alert alert-success">
+                            <i class="fas fa-check-circle me-2"></i>@TempData["Message"]
+                        </div>
+                    }
+
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle me-2"></i>@TempData["Error"]
+                        </div>
+                    }
+                </div>
+            </div>
+        
     </div>
 </div>

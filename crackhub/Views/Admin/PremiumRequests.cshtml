@@ -1,0 +1,221 @@
+@model List<crackhub.Models.Data.PremiumRegister>
+@{
+    ViewData["Title"] = "Quản lý yêu cầu Premium";
+    Layout = "_AdminLayout";
+}
+
+<div class="admin-premium-requests">
+    <div class="admin-page-title-container mb-4">
+        <h4 class="admin-page-title">
+            <i class="fas fa-crown me-2"></i> Quản lý yêu cầu Premium
+        </h4>
+        <div class="admin-page-actions">
+            <span class="badge bg-warning me-2">
+                <i class="fas fa-clock me-1"></i> Chờ xử lý: @ViewBag.PendingCount
+            </span>
+        </div>
+    </div>    <!-- Filters -->    <div class="admin-form-section mb-4">
+        <div class="d-flex flex-wrap gap-2">
+            <a href="@Url.Action("PremiumRequests")" 
+               class="btn @(string.IsNullOrEmpty(ViewBag.StatusFilter) ? "btn-primary" : "btn-outline-primary")">
+                Tất cả
+            </a>
+            <a href="@Url.Action("PremiumRequests", new { status = "2" })" 
+               class="btn @(ViewBag.StatusFilter?.ToString() == "2" ? "btn-warning" : "btn-outline-warning")">
+                <i class="fas fa-clock me-1"></i> Đang chờ
+            </a>
+            <a href="@Url.Action("PremiumRequests", new { status = "1" })" 
+               class="btn @(ViewBag.StatusFilter?.ToString() == "1" ? "btn-success" : "btn-outline-success")">
+                <i class="fas fa-check me-1"></i> Đã duyệt
+            </a>
+            <a href="@Url.Action("PremiumRequests", new { status = "3" })" 
+               class="btn @(ViewBag.StatusFilter?.ToString() == "3" ? "btn-danger" : "btn-outline-danger")">
+                <i class="fas fa-times me-1"></i> Từ chối
+            </a>
+        </div>
+    </div><!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="admin-card border-start border-4 border-warning">
+                <div class="admin-card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fs-5 fw-bold text-warning">@Model.Count(r => r.Status == 2)</div>
+                            <div class="text-muted small">Đang chờ xử lý</div>
+                        </div>
+                        <div class="text-warning">
+                            <i class="fas fa-clock fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="admin-card border-start border-4 border-success">
+                <div class="admin-card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fs-5 fw-bold text-success">@Model.Count(r => r.Status == 1)</div>
+                            <div class="text-muted small">Đã duyệt</div>
+                        </div>
+                        <div class="text-success">
+                            <i class="fas fa-check fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="admin-card border-start border-4 border-danger">
+                <div class="admin-card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fs-5 fw-bold text-danger">@Model.Count(r => r.Status == 3)</div>
+                            <div class="text-muted small">Từ chối</div>
+                        </div>
+                        <div class="text-danger">
+                            <i class="fas fa-times fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="admin-card border-start border-4 border-info">
+                <div class="admin-card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fs-5 fw-bold text-info">@Model.Sum(r => r.Status == 1 && r.Premium != null ? r.Premium.Price : 0).ToString("#,##0")₫</div>
+                            <div class="text-muted small">Tổng doanh thu</div>
+                        </div>
+                        <div class="text-info">
+                            <i class="fas fa-dollar-sign fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Requests Table -->
+    @if (Model.Any())
+    {
+        <div class="admin-form-section">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Người dùng</th>
+                            <th>Gói Premium</th>
+                            <th>Số tiền</th>
+                            <th>Ngày gửi</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var request in Model)
+                        {
+                            <tr>
+                                <td>#@request.Id</td>                                <td>
+                                    <div class="d-flex align-items-center">
+                                        @if (!string.IsNullOrEmpty(request.User?.AvatarUrl))
+                                        {
+                                            <img src="@request.User.AvatarUrl" alt="Avatar" class="rounded-circle me-2" style="width: 32px; height: 32px; object-fit: cover;">
+                                        }
+                                        else
+                                        {
+                                            <div class="bg-secondary rounded-circle me-2 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                                                <i class="fas fa-user text-white"></i>
+                                            </div>
+                                        }
+                                        <div>
+                                            <div class="fw-bold">@request.User?.DisplayName</div>
+                                            <small class="text-muted">@request.User?.Email</small>
+                                        </div>
+                                    </div>
+                                </td>                                <td>
+                                    <span class="fw-bold">@(request.Premium?.DurationInMonths ?? "Chưa xác định")</span><br>
+                                    <small class="text-muted">Gói #@request.PackageId</small>
+                                </td>
+                                <td class="fw-bold text-success">@(request.Premium?.Price.ToString("#,##0") ?? "0")₫</td>
+                                <td>
+                                    @request.RegisterDate.ToString("dd/MM/yyyy")<br>
+                                    <small class="text-muted">@request.RegisterDate.ToString("HH:mm")</small>
+                                </td>                                <td>
+                                    @switch (request.Status)
+                                    {
+                                        case 2:
+                                            <span class="badge bg-warning text-dark">
+                                                <i class="fas fa-clock me-1"></i>Đang chờ
+                                            </span>
+                                            break;
+                                        case 1:
+                                            <span class="badge bg-success">
+                                                <i class="fas fa-check me-1"></i>Đã duyệt
+                                            </span>
+                                            break;
+                                        case 3:
+                                            <span class="badge bg-danger">
+                                                <i class="fas fa-times me-1"></i>Từ chối
+                                            </span>
+                                            break;
+                                        default:
+                                            <span class="badge bg-secondary">
+                                                <i class="fas fa-question me-1"></i>Không xác định
+                                            </span>
+                                            break;
+                                    }
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("PremiumRequestDetails", new { id = request.Id })" 
+                                       class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-eye"></i> Xem
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            @if (ViewBag.TotalPages > 1)
+            {
+                <nav aria-label="Phân trang yêu cầu Premium">
+                    <ul class="pagination justify-content-center mt-4">
+                        @if (ViewBag.CurrentPage > 1)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("PremiumRequests", new { page = ViewBag.CurrentPage - 1, status = ViewBag.CurrentStatus })">Trước</a>
+                            </li>
+                        }
+
+                        @for (int i = Math.Max(1, ViewBag.CurrentPage - 2); i <= Math.Min(ViewBag.TotalPages, ViewBag.CurrentPage + 2); i++)
+                        {
+                            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                                <a class="page-link" href="@Url.Action("PremiumRequests", new { page = i, status = ViewBag.CurrentStatus })">@i</a>
+                            </li>
+                        }
+
+                        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("PremiumRequests", new { page = ViewBag.CurrentPage + 1, status = ViewBag.CurrentStatus })">Sau</a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="admin-form-section text-center py-5">
+            <i class="fas fa-inbox fa-4x text-muted mb-3"></i>
+            <h4>Không có yêu cầu nào</h4>
+            <p class="text-muted">Chưa có yêu cầu thanh toán Premium nào được gửi.</p>
+        </div>
+    }
+</div>

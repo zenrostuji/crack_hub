@@ -120,5 +120,16 @@ namespace crackhub.Repositories
                 .OrderByDescending(dh => dh.DownloadDate)
                 .ToListAsync();
         }
+
+        public async Task<int> GetUserDownloadsCountTodayAsync(string userId)
+        {
+            var today = DateTime.Today;
+            var tomorrow = today.AddDays(1);
+            
+            return await _context.DownloadHistory
+                .CountAsync(dh => dh.UserId == userId && 
+                           dh.DownloadDate >= today && 
+                           dh.DownloadDate < tomorrow);
+        }
     }
 }

@@ -55,21 +55,29 @@
             @foreach (var plan in ViewBag.Plans)
             {
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="pricing-card @(plan.Popular ? "popular" : "")">
-                        <h3 class="pricing-name">@plan.Name</h3>
+                    <div class="pricing-card @(plan.Id == 2 ? "popular" : "")">
+                        <h3 class="pricing-name">@plan.DurationInMonths</h3>
                         <div class="pricing-price">
                             <span class="currency">₫</span>@plan.Price.ToString("#,##0")
-                            <span class="period">/@plan.Name.ToLower()</span>
+                            <span class="period">/@plan.DurationInMonths.ToLower()</span>
                         </div>
                         <ul class="pricing-features">
-                            @foreach (var feature in plan.Features)
+                            <li><strong><i class="fas fa-infinity text-warning me-1"></i>Không giới hạn lượt download</strong></li>
+                            <li>Tốc độ download nhanh hơn</li>
+                            <li>Thay đổi tên hiển thị</li>
+                            @if (plan.Id >= 2)
                             {
-                                <li>@feature</li>
+                                <li>Ưu tiên hỗ trợ kỹ thuật</li>
+                                <li>Không hiển thị quảng cáo</li>
+                            }
+                            @if (plan.Id == 3)
+                            {
+                                <li>Truy cập sớm game mới</li>
                             }
                         </ul>
                         <form method="post" action="@Url.Action("UpgradePremium")">
-                            <input type="hidden" name="durationMonths" value="@plan.Duration" />
-                            <button type="submit" class="pricing-button pricing-button-@plan.Color">
+                            <input type="hidden" name="packageId" value="@plan.Id" />
+                            <button type="submit" class="pricing-button pricing-button-@(plan.Id == 1 ? "primary" : plan.Id == 2 ? "success" : "danger")">
                                 @if (ViewBag.IsPremium)
                                 {
                                     <span>Gia hạn ngay</span>
@@ -104,7 +112,7 @@
                             <i class="fas fa-infinity"></i>
                         </div>
                         <h3 class="benefit-title">Không giới hạn lượt tải</h3>
-                        <p class="benefit-text">Tải không giới hạn số lượng game mỗi ngày, không bị hạn chế như tài khoản thông thường.</p>
+                        <p class="benefit-text">Tải không giới hạn số lượng game mỗi ngày, không bị hạn chế 3 lượt/ngày như tài khoản thông thường.</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 mb-4">
@@ -154,6 +162,13 @@
                 <div class="faq-question">Premium có gì khác biệt so với tài khoản thường?</div>
                 <div class="faq-answer">
                     Thành viên Premium được hưởng nhiều đặc quyền như: tốc độ tải không giới hạn, không có giới hạn số lượt tải, không hiển thị quảng cáo, ưu tiên hỗ trợ kỹ thuật, và có thể thay đổi tên hiển thị. Đối với các game mới, thành viên Premium còn được truy cập sớm trước người dùng thông thường.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Tài khoản thường có giới hạn tải xuống không?</div>
+                <div class="faq-answer">
+                    Có, tài khoản thường chỉ được phép tải xuống tối đa 3 game mỗi ngày. Để tải không giới hạn, bạn cần nâng cấp lên Premium.
                 </div>
             </div>
             

@@ -1,12 +1,10 @@
 /* Enhanced UI for Top-Down Shooter Game */
 
-* {
+/* Game container styles - only apply within game */
+#gameContainer {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-body {
     font-family: 'Segoe UI', 'Arial', sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     background-attachment: fixed;
@@ -15,9 +13,11 @@ body {
     position: relative;
     --mouse-x: 50%;
     --mouse-y: 50%;
+    width: 100vw;
+    height: 100vh;
 }
 
-    body::before {
+    #gameContainer::before {
         content: '';
         position: fixed;
         top: 0;
@@ -30,7 +30,7 @@ body {
         animation: backgroundShift 20s ease-in-out infinite;
     }
 
-    body::after {
+    #gameContainer::after {
         content: '';
         position: fixed;
         top: 0;
@@ -44,7 +44,7 @@ body {
         transition: opacity 0.3s ease;
     }
 
-    body.mouse-active::after {
+    #gameContainer.mouse-active::after {
         opacity: 1;
     }
 
@@ -249,15 +249,13 @@ body {
     }
 }
 /* Game Container */
-
 #gameContainer {
     width: 100vw;
     height: 100vh;
     position: relative;
 }
-/* Screen General Styles */
-
-.screen {
+/* Screen General Styles - only apply to game screens */
+#gameContainer .screen {
     position: absolute;
     top: 0;
     left: 0;
@@ -270,13 +268,13 @@ body {
     opacity: 1;
 }
 
-    .screen.hidden {
+    #gameContainer .screen.hidden {
         opacity: 0;
         transform: translateY(50px);
         pointer-events: none;
     }
 
-    .screen::before {
+    #gameContainer .screen::before {
         content: '';
         position: absolute;
         top: 0;
@@ -312,9 +310,8 @@ body {
         transform: translateY(-400px) translateX(0px);
     }
 }
-/* Menu Content Enhanced */
-
-.menu-content {
+/* Menu Content Enhanced - only apply to game menus */
+#gameContainer .menu-content {
     text-align: center;
     background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 20, 40, 0.8) 100%);
     padding: 50px 60px;
@@ -328,7 +325,7 @@ body {
     animation: menuSlideIn 0.8s ease-out;
 }
 
-    .menu-content::before {
+    #gameContainer .menu-content::before {
         content: '';
         position: absolute;
         top: -50%;
@@ -341,7 +338,7 @@ body {
         z-index: -1;
     }
 
-    .menu-content::after {
+    #gameContainer .menu-content::after {
         content: '';
         position: absolute;
         top: 0;
@@ -355,11 +352,11 @@ body {
         transition: opacity 0.3s ease;
     }
 
-    .menu-content:hover::after {
+    #gameContainer .menu-content:hover::after {
         opacity: 1;
     }
 
-    .menu-content:hover {
+    #gameContainer .menu-content:hover {
         transform: translateY(-5px);
         box-shadow: 0 35px 70px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
     }
@@ -385,9 +382,8 @@ body {
         transform: translateY(0) scale(1);
     }
 }
-/* Enhanced Typography */
-
-h1 {
+/* Enhanced Typography - only for game content */
+#gameContainer h1 {
     font-size: 5rem;
     margin-bottom: 15px;
     text-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 107, 107, 0.6), 0 5px 15px rgba(0, 0, 0, 0.5);
@@ -402,7 +398,7 @@ h1 {
     position: relative;
 }
 
-    h1::after {
+    #gameContainer h1::after {
         content: '';
         position: absolute;
         bottom: -10px;
@@ -415,7 +411,7 @@ h1 {
         animation: underlineGlow 2s ease-in-out infinite alternate;
     }
 
-h2 {
+#gameContainer h2 {
     font-size: 1.8rem;
     margin-bottom: 40px;
     color: #ffffff;
@@ -457,9 +453,8 @@ h2 {
         box-shadow: 0 0 20px rgba(255, 107, 107, 0.8);
     }
 }
-/* Enhanced Buttons */
-
-.menu-buttons {
+/* Enhanced Buttons - only for game buttons */
+#gameContainer .menu-buttons {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -467,7 +462,7 @@ h2 {
     animation: fadeInUp 1s ease-out 0.8s both;
 }
 
-.btn-primary, .btn-secondary, .btn-pause {
+#gameContainer .btn-primary, #gameContainer .btn-secondary, #gameContainer .btn-pause {
     padding: 18px 40px;
     font-size: 1.2rem;
     font-weight: 600;
@@ -483,7 +478,7 @@ h2 {
     font-family: inherit;
 }
 
-    .btn-primary::before, .btn-secondary::before {
+    #gameContainer .btn-primary::before, #gameContainer .btn-secondary::before {
         content: '';
         position: absolute;
         top: 0;
@@ -494,7 +489,7 @@ h2 {
         transition: left 0.5s;
     }
 
-.btn-primary {
+#gameContainer .btn-primary {
     background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 50%, #ff6b6b 100%);
     background-size: 200% 200%;
     color: white;

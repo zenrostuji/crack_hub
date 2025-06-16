@@ -321,6 +321,14 @@ namespace crackhub.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
+            // Remove coverImage from ModelState validation since it's optional for editing
+            ModelState.Remove("coverImage");
+
+            // Debug: Log ModelState status
+            Console.WriteLine($"ModelState.IsValid: {ModelState.IsValid}");
+            Console.WriteLine($"CoverImage is null: {coverImage == null}");
+            Console.WriteLine($"CoverImage length: {coverImage?.Length ?? 0}");
+
             if (ModelState.IsValid)
             {
                 try

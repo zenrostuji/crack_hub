@@ -14,14 +14,14 @@
             <div class="game-cover-wrapper">
                 <img src="@Model.CoverImageUrl" class="game-cover-img" alt="@Model.Title" onerror="this.src='/img/no-image.jpg'" />
                 <div class="game-cover-overlay">
-                    <a href="@Url.Action("Download", "Game", new { id = Model.Id })" class="cover-download-btn">
+                    <a href="@Url.Action("Download", "Game", new { id = Model.Id })" class="cover-download-btn download-link" data-game-id="@Model.Id">
                         <i class="fas fa-download me-2"></i> Tải game
                     </a>
                 </div>
             </div>
             
             <div class="d-grid gap-3 mb-4">
-                <a href="@Url.Action("Download", "Game", new { id = Model.Id })" class="btn btn-lg download-btn">
+                <a href="@Url.Action("Download", "Game", new { id = Model.Id })" class="btn btn-lg download-btn download-link" data-game-id="@Model.Id">
                     <i class="fas fa-download me-2"></i> Tải game
                 </a>
                 

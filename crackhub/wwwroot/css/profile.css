@@ -464,6 +464,55 @@
         opacity: 0.8;
     }
 
+/* Download History Styling */
+.profile-list-item {
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+}
+
+.profile-list-item:hover {
+    border-left-color: #5d4ec7;
+    background-color: rgba(93, 78, 199, 0.05);
+    transform: translateX(5px);
+}
+
+.profile-list-item img {
+    transition: transform 0.3s ease;
+}
+
+.profile-list-item:hover img {
+    transform: scale(1.1);
+}
+
+.badge.bg-success {
+    background: linear-gradient(45deg, #28a745, #20c997) !important;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+}
+
+/* Activity Tab Styling */
+.profile-nav-tabs .nav-link {
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-nav-tabs .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #5d4ec7, #7e57c2);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.profile-nav-tabs .nav-link.active::after,
+.profile-nav-tabs .nav-link:hover::after {
+    width: 100%;
+}
+
 /* Responsive Adjustments */
 @media (max-width: 992px) {
     .profile-container {

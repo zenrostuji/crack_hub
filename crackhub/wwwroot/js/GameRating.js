@@ -267,9 +267,17 @@ function resizeCanvas() {
     trailerCanvas.width = window.innerWidth;
     trailerCanvas.height = window.innerHeight;
 
-    // Reset player position
-    player.x = canvas.width / 2;
-    player.y = canvas.height / 2;
+    // Reset player position safely within bounds
+    resetPlayerPosition();
+}
+
+function resetPlayerPosition() {
+    // Ensure player is positioned safely within canvas bounds
+    const halfWidth = player.width / 2;
+    const halfHeight = player.height / 2;
+    
+    player.x = Math.max(halfWidth, Math.min(canvas.width - halfWidth, canvas.width / 2));
+    player.y = Math.max(halfHeight, Math.min(canvas.height - halfHeight, canvas.height / 2));
 }
 
 function setupEventListeners() {
@@ -1028,6 +1036,9 @@ function gameOver() {
     document.getElementById('finalScore').textContent = gameStats.score;
     document.getElementById('enemiesKilled').textContent = gameStats.enemiesKilled;
     document.getElementById('survivalTime').textContent = gameStats.survivalTime + 's';
+
+    // Submit score to server
+    submitGameScore();
 }
 
 function showScreen(screenId) {
@@ -1085,12 +1096,16 @@ function updatePlayer(deltaTime) {
         dy *= 0.707;
     }
 
-    player.x += dx * player.speed;
-    player.y += dy * player.speed;
+    // Calculate new position
+    const newX = player.x + dx * player.speed;
+    const newY = player.y + dy * player.speed;
 
-    // Keep player in bounds
-    player.x = Math.max(player.width / 2, Math.min(canvas.width - player.width / 2, player.x));
-    player.y = Math.max(player.height / 2, Math.min(canvas.height - player.height / 2, player.y));
+    // Keep player strictly within canvas bounds
+    const halfWidth = player.width / 2;
+    const halfHeight = player.height / 2;
+    
+    player.x = Math.max(halfWidth, Math.min(canvas.width - halfWidth, newX));
+    player.y = Math.max(halfHeight, Math.min(canvas.height - halfHeight, newY));
 
     // Update angle to face mouse
     player.angle = Math.atan2(mouse.y - player.y, mouse.x - player.x);
@@ -1499,5 +1514,206 @@ function gameLoop() {
     requestAnimationFrame(gameLoop);
 }
 
+// Score submission functions
+async function submitGameScore() {
+    try {
+        const scoreData = {
+            GameName: "CHIẾN TRƯỜNG",
+            Score: gameStats.score,
+            Level: gameStats.level,
+            EnemiesKilled: gameStats.enemiesKilled,
+            SurvivalTime: gameStats.survivalTime
+        };
+
+        const response = await fetch('/Home/SubmitScore', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(scoreData)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            showScoreNotification(result);
+        } else {
+            console.log('Score submission info:', result.message);
+        }
+    } catch (error) {
+        console.error('Error submitting score:', error);
+    }
+}
+
+function showScoreNotification(result) {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = 'score-notification';
+    
+    const isNewRecord = result.isNewRecord;
+    const message = isNewRecord 
+        ? `🎉 Kỷ lục mới! Hạng ${result.rank} 🎉` 
+        : `Điểm số đã lưu! Hạng ${result.rank}`;
+    
+    notification.innerHTML = `
+        <div class="notification-content">
+            <div class="notification-icon">
+                <i class="fas fa-${isNewRecord ? 'crown' : 'save'}"></i>
+            </div>
+            <div class="notification-text">
+                <div class="notification-title">${message}</div>
+                <div class="notification-subtitle">
+                    Điểm: ${gameStats.score.toLocaleString()} | 
+                    Cấp: ${gameStats.level} | 
+                    Thời gian: ${gameStats.survivalTime}s
+                </div>
+                <button class="view-leaderboard-btn" onclick="viewLeaderboard()">
+                    <i class="fas fa-trophy"></i> Xem bảng xếp hạng
+                </button>
+            </div>
+        </div>
+    `;
+    
+    // Add styles
+    notification.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.8);
+        background: ${isNewRecord 
+            ? 'linear-gradient(135deg, rgba(255, 215, 0, 0.95), rgba(255, 193, 7, 0.95))' 
+            : 'linear-gradient(135deg, rgba(78, 205, 196, 0.95), rgba(68, 160, 141, 0.95))'};
+        color: ${isNewRecord ? '#333' : 'white'};
+        padding: 25px;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(20px);
+        z-index: 1001;
+        text-align: center;
+        min-width: 350px;
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 2px solid ${isNewRecord ? 'rgba(255, 215, 0, 0.8)' : 'rgba(78, 205, 196, 0.8)'};
+    `;
+    
+    // Notification content styles
+    const style = document.createElement('style');
+    style.textContent = `
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .notification-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            ${isNewRecord ? 'animation: crownBounce 0.6s ease-in-out;' : ''}
+        }
+        
+        .notification-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .notification-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        .view-leaderboard-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: inherit;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .view-leaderboard-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        @keyframes crownBounce {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.2) rotate(-5deg); }
+            75% { transform: scale(1.2) rotate(5deg); }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.style.opacity = '1';
+        notification.style.transform = 'translate(-50%, -50%) scale(1)';
+    }, 100);
+    
+    // Remove after 5 seconds
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translate(-50%, -50%) scale(0.8)';
+        setTimeout(() => {
+            if (document.body.contains(notification)) {
+                document.body.removeChild(notification);
+            }
+            if (document.head.contains(style)) {
+                document.head.removeChild(style);
+            }
+        }, 400);
+    }, 5000);
+    
+    // Click to dismiss
+    notification.addEventListener('click', (e) => {
+        if (e.target !== notification.querySelector('.view-leaderboard-btn')) {
+            notification.style.opacity = '0';
+            notification.style.transform = 'translate(-50%, -50%) scale(0.8)';
+            setTimeout(() => {
+                if (document.body.contains(notification)) {
+                    document.body.removeChild(notification);
+                }
+            }, 400);
+        }
+    });
+}
+
+function viewLeaderboard() {
+    window.open('/Home/GameLeaderboard?gameName=CHIẾN TRƯỜNG', '_blank');
+}
+
+// Add leaderboard button to main menu
+function addLeaderboardButton() {
+    const menuButtons = document.querySelector('#mainMenu .menu-buttons');
+    if (menuButtons && !document.getElementById('leaderboardBtn')) {
+        const leaderboardBtn = document.createElement('button');
+        leaderboardBtn.id = 'leaderboardBtn';
+        leaderboardBtn.className = 'btn-secondary';
+        leaderboardBtn.innerHTML = '<i class="fas fa-trophy"></i> Bảng Xếp Hạng';
+        leaderboardBtn.addEventListener('click', viewLeaderboard);
+        
+        // Insert before settings button
+        const settingsBtn = document.getElementById('settingsBtn');
+        menuButtons.insertBefore(leaderboardBtn, settingsBtn);
+    }
+}
+
 // Start the game
-window.addEventListener('load', init);
+window.addEventListener('load', () => {
+    init();
+    addLeaderboardButton();
+});

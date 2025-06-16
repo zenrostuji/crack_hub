@@ -194,17 +194,87 @@ namespace crackhub.Controllers
                 return Json(new { success = true });
             }
 
+            // Get user's IP address
+            var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+            if (string.IsNullOrEmpty(ipAddress) || ipAddress == "::1")
+            {
+                ipAddress = "127.0.0.1"; // Localhost fallback
+            }
+
             // Record download history for logged in users
             var downloadHistory = new DownloadHistory
             {
                 UserId = userId,
                 GameId = gameId,
-                DownloadDate = DateTime.Now
+                DownloadDate = DateTime.Now,
+                IP = ipAddress
             };
 
             await _downloadHistoryRepository.CreateAsync(downloadHistory);
 
             return Json(new { success = true });
+        }
+
+        // GET: /Game/DownloadHistory
+        public async Task<IActionResult> DownloadHistory(int page = 1, string searchTerm = "", string sortOrder = "newest")
+        {
+            // Check if user is logged in
+            var userId = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userId))
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            const int PageSize = 12;
+
+            // Get user's download history
+            var allDownloads = await _downloadHistoryRepository.GetDownloadsByUserAsync(userId);
+
+            // Apply search if provided
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                allDownloads = allDownloads.Where(d => d.Game != null && 
+                    (d.Game.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                     (d.Game.Developer?.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                     (d.Game.Category?.CategoryName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ?? false))
+                ).ToList();
+                ViewBag.SearchTerm = searchTerm;
+            }
+
+            // Apply sorting
+            switch (sortOrder)
+            {
+                case "oldest":
+                    allDownloads = allDownloads.OrderBy(d => d.DownloadDate).ToList();
+                    break;
+                case "title":
+                    allDownloads = allDownloads.OrderBy(d => d.Game?.Title ?? "").ToList();
+                    break;
+                case "title_desc":
+                    allDownloads = allDownloads.OrderByDescending(d => d.Game?.Title ?? "").ToList();
+                    break;
+                default: // newest
+                    allDownloads = allDownloads.OrderByDescending(d => d.DownloadDate).ToList();
+                    break;
+            }
+
+            ViewBag.CurrentSort = sortOrder;
+
+            // Count total downloads for pagination
+            var totalDownloads = allDownloads.Count();
+            var totalPages = (int)Math.Ceiling((double)totalDownloads / PageSize);
+
+            // Get downloads for current page
+            var downloads = allDownloads
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize)
+                .ToList();
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.TotalDownloads = totalDownloads;
+
+            return View(downloads);
         }
 
         // GET: /Game/ByCategory/{categorySlug}

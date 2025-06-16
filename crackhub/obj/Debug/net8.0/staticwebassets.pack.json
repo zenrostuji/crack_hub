@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\crackhub.bundle.scp.css"
     },
     {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\css\\GameLeaderboard.css",
+      "PackagePath": "staticwebassets\\css\\GameLeaderboard.css"
+    },
+    {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\css\\GameRating.css",
       "PackagePath": "staticwebassets\\css\\GameRating.css"
     },
@@ -19,6 +23,10 @@
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\css\\category.css",
       "PackagePath": "staticwebassets\\css\\category.css"
+    },
+    {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\css\\cursor-effects.css",
+      "PackagePath": "staticwebassets\\css\\cursor-effects.css"
     },
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\css\\download.css",
@@ -93,6 +101,10 @@
       "PackagePath": "staticwebassets\\img\\avartars\\Rinri.jpg"
     },
     {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\avartars\\Vong Xuyên Mạc.jpg",
+      "PackagePath": "staticwebassets\\img\\avartars\\Vong Xuyên Mạc.jpg"
+    },
+    {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\avartars\\Vy Nguyen.jpg",
       "PackagePath": "staticwebassets\\img\\avartars\\Vy Nguyen.jpg"
     },
@@ -109,12 +121,28 @@
       "PackagePath": "staticwebassets\\img\\avartars\\mesouya.jpg"
     },
     {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\cursor.svg",
+      "PackagePath": "staticwebassets\\img\\cursor.svg"
+    },
+    {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\frameAvartar\\49ce7ae4-34e5-45e0-b9c5-7e5f84c5ab13_LONG_KHUNG.png",
       "PackagePath": "staticwebassets\\img\\frameAvartar\\49ce7ae4-34e5-45e0-b9c5-7e5f84c5ab13_LONG_KHUNG.png"
     },
     {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\frameAvartar\\4a732f32-9db6-4afc-aa56-9412816c111c_Sprite-0001.png",
+      "PackagePath": "staticwebassets\\img\\frameAvartar\\4a732f32-9db6-4afc-aa56-9412816c111c_Sprite-0001.png"
+    },
+    {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\frameAvartar\\4df37784-a741-41a9-89c7-93a26df74e87_Sprite-0001.png",
+      "PackagePath": "staticwebassets\\img\\frameAvartar\\4df37784-a741-41a9-89c7-93a26df74e87_Sprite-0001.png"
+    },
+    {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\frameAvartar\\52da37fc-fbd4-48c8-a77d-5e1971761856_LONG_KHUNG.png",
       "PackagePath": "staticwebassets\\img\\frameAvartar\\52da37fc-fbd4-48c8-a77d-5e1971761856_LONG_KHUNG.png"
+    },
+    {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\frameAvartar\\55e4d989-0d8b-46cc-94af-b1f345227272_Sprite-0001.png",
+      "PackagePath": "staticwebassets\\img\\frameAvartar\\55e4d989-0d8b-46cc-94af-b1f345227272_Sprite-0001.png"
     },
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\frameAvartar\\Aquarius.png",
@@ -183,6 +211,14 @@
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\frameAvartar\\c1c10259-0c5b-4ce1-bed2-f679c8d51ac4_LONG_KHUNG.png",
       "PackagePath": "staticwebassets\\img\\frameAvartar\\c1c10259-0c5b-4ce1-bed2-f679c8d51ac4_LONG_KHUNG.png"
+    },
+    {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\frameAvartar\\dd54aeea-48df-4399-ae44-1c5ca109eb3e_Premium.png",
+      "PackagePath": "staticwebassets\\img\\frameAvartar\\dd54aeea-48df-4399-ae44-1c5ca109eb3e_Premium.png"
+    },
+    {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\frameAvartar\\de7e6659-94d6-4c22-94db-b8c38800ca23_Sprite-0001.png",
+      "PackagePath": "staticwebassets\\img\\frameAvartar\\de7e6659-94d6-4c22-94db-b8c38800ca23_Sprite-0001.png"
     },
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\frameAvartar\\gold.png",
@@ -273,8 +309,16 @@
       "PackagePath": "staticwebassets\\img\\games\\cyberpunk2077.jpg"
     },
     {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\games\\d246e9353cfd76f2e310c6b3855a5a954f240837.gif",
+      "PackagePath": "staticwebassets\\img\\games\\d246e9353cfd76f2e310c6b3855a5a954f240837.gif"
+    },
+    {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\games\\death_end_request2.jpg",
       "PackagePath": "staticwebassets\\img\\games\\death_end_request2.jpg"
+    },
+    {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\games\\download.gif",
+      "PackagePath": "staticwebassets\\img\\games\\download.gif"
     },
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\games\\e7d22ca1-9d5e-41b5-b4b6-43f113da2322_z6126961936990_d00acf9ea290a2dfef7df5562fe67bde.jpg",
@@ -461,6 +505,10 @@
       "PackagePath": "staticwebassets\\img\\games\\screenshots\\3610f1be-0ef7-4703-8e42-3969a549a6ef_download (2).jpeg"
     },
     {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\games\\screenshots\\367e688f-8211-4cd7-8525-8fe2510a6c34_download.gif",
+      "PackagePath": "staticwebassets\\img\\games\\screenshots\\367e688f-8211-4cd7-8525-8fe2510a6c34_download.gif"
+    },
+    {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\games\\screenshots\\37f52231-a9f0-44d0-a181-fab977c452df_1616378931222928.jpg",
       "PackagePath": "staticwebassets\\img\\games\\screenshots\\37f52231-a9f0-44d0-a181-fab977c452df_1616378931222928.jpg"
     },
@@ -563,6 +611,10 @@
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\games\\screenshots\\824529d1-bed6-430e-b5f2-5c38b085a3f4_policenauts_6.png",
       "PackagePath": "staticwebassets\\img\\games\\screenshots\\824529d1-bed6-430e-b5f2-5c38b085a3f4_policenauts_6.png"
+    },
+    {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\games\\screenshots\\85724356-6163-4fcf-be50-540bab351721_48064.gif",
+      "PackagePath": "staticwebassets\\img\\games\\screenshots\\85724356-6163-4fcf-be50-540bab351721_48064.gif"
     },
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\games\\screenshots\\870f88d9-2477-47f5-b6c1-faad57caaed0_maxresdefault.jpg",
@@ -681,6 +733,10 @@
       "PackagePath": "staticwebassets\\img\\games\\screenshots\\cfd5c8e9-7899-43c0-bc8a-fb5a5e945f0f_ss_0682c86b6a140bb293f86f03fa0404369c0bba25.1920x1080.jpg"
     },
     {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\games\\screenshots\\d0027623-6eae-4d96-b28b-0375165ce46f_1616378931222928.jpg",
+      "PackagePath": "staticwebassets\\img\\games\\screenshots\\d0027623-6eae-4d96-b28b-0375165ce46f_1616378931222928.jpg"
+    },
+    {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\games\\screenshots\\d00f0073-7da4-48f6-a105-78cff3669563_6453801909fd7.jpg",
       "PackagePath": "staticwebassets\\img\\games\\screenshots\\d00f0073-7da4-48f6-a105-78cff3669563_6453801909fd7.jpg"
     },
@@ -695,6 +751,10 @@
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\games\\screenshots\\d60976d3-56f4-4139-af2e-b716aaf4057a_34GAou.png",
       "PackagePath": "staticwebassets\\img\\games\\screenshots\\d60976d3-56f4-4139-af2e-b716aaf4057a_34GAou.png"
+    },
+    {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\games\\screenshots\\d68b2f98-549c-419e-972a-494030d4f17f_b86e76916241b6dec23acee513998dd599f418f1.png",
+      "PackagePath": "staticwebassets\\img\\games\\screenshots\\d68b2f98-549c-419e-972a-494030d4f17f_b86e76916241b6dec23acee513998dd599f418f1.png"
     },
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\games\\screenshots\\d6fd4d18-a5d1-4437-9d5c-84f0146da41d_81TM86cuJIL._AC_UF350,350_QL80_.jpg",
@@ -761,12 +821,20 @@
       "PackagePath": "staticwebassets\\img\\games\\screenshots\\f4e7018b-80c6-41a1-adc0-c58012d40c57_images (12).jpeg"
     },
     {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\games\\screenshots\\f6cacc39-7b92-4bb9-bde4-0a88c2f79be1_d246e9353cfd76f2e310c6b3855a5a954f240837.gif",
+      "PackagePath": "staticwebassets\\img\\games\\screenshots\\f6cacc39-7b92-4bb9-bde4-0a88c2f79be1_d246e9353cfd76f2e310c6b3855a5a954f240837.gif"
+    },
+    {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\games\\screenshots\\f8a9b818-9347-4fc6-9c12-c08499fcfc2d_hq720 (2).jpg",
       "PackagePath": "staticwebassets\\img\\games\\screenshots\\f8a9b818-9347-4fc6-9c12-c08499fcfc2d_hq720 (2).jpg"
     },
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\games\\screenshots\\f8e93656-4d73-49a6-ac5c-4323b2bd3868_a43750e696249f5389a77635fab973bd3efba2b339406278f2e208bb80c9f17a.jpg",
       "PackagePath": "staticwebassets\\img\\games\\screenshots\\f8e93656-4d73-49a6-ac5c-4323b2bd3868_a43750e696249f5389a77635fab973bd3efba2b339406278f2e208bb80c9f17a.jpg"
+    },
+    {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\games\\screenshots\\f92a898f-18c0-47ca-9bb3-becc48362f1d_hq720 (4).jpg",
+      "PackagePath": "staticwebassets\\img\\games\\screenshots\\f92a898f-18c0-47ca-9bb3-becc48362f1d_hq720 (4).jpg"
     },
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\games\\screenshots\\fa506b20-0667-4a06-a565-a9ab7484a6e1_ss_587cae4e1429e5bd6da6932c2cccb466443eb35d.1920x1080.jpg",
@@ -783,6 +851,10 @@
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\games\\spiralscouts.jpg",
       "PackagePath": "staticwebassets\\img\\games\\spiralscouts.jpg"
+    },
+    {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\games\\ss_26b6017564d5ec5452bd450c8f3c27a0b97da74f.1920x1080.jpg",
+      "PackagePath": "staticwebassets\\img\\games\\ss_26b6017564d5ec5452bd450c8f3c27a0b97da74f.1920x1080.jpg"
     },
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\img\\games\\steins_gate.jpg",
@@ -1389,8 +1461,16 @@
       "PackagePath": "staticwebassets\\img\\thu_ha.jpeg"
     },
     {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\js\\GameLeaderboard.js",
+      "PackagePath": "staticwebassets\\js\\GameLeaderboard.js"
+    },
+    {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\js\\GameRating.js",
       "PackagePath": "staticwebassets\\js\\GameRating.js"
+    },
+    {
+      "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\js\\cursor-effects.js",
+      "PackagePath": "staticwebassets\\js\\cursor-effects.js"
     },
     {
       "Id": "D:\\A_CONG_VIEC\\CODE\\WEB_GAME\\crack_hub-co_repositories\\crackhub\\wwwroot\\js\\game-features.js",

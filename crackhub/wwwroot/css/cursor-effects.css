@@ -1,0 +1,205 @@
+/* Custom cursor styles và hiệu ứng làn sương */
+* {
+    cursor: none !important;
+}
+
+/* Custom cursor */
+.custom-cursor {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #00d4ff;
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: all 0.1s ease;
+    backdrop-filter: blur(2px);
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.3) 0%, transparent 70%);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+    mix-blend-mode: screen;
+}
+
+.custom-cursor::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    background: #00d4ff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #00d4ff;
+}
+
+/* Hiệu ứng khi hover */
+.custom-cursor.hover {
+    transform: scale(1.5);
+    border-color: #ff6b6b;
+    background: radial-gradient(circle, rgba(255, 107, 107, 0.3) 0%, transparent 70%);
+    box-shadow: 0 0 25px rgba(255, 107, 107, 0.7);
+}
+
+.custom-cursor.hover::before {
+    background: #ff6b6b;
+    box-shadow: 0 0 15px #ff6b6b;
+}
+
+/* Hiệu ứng click */
+.custom-cursor.click {
+    transform: scale(0.8);
+    border-color: #4ecdc4;
+    background: radial-gradient(circle, rgba(78, 205, 196, 0.5) 0%, transparent 70%);
+}
+
+/* Hiệu ứng làn sương */
+.cursor-trail {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.6) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    animation: trailFade 0.8s ease-out forwards;
+}
+
+@keyframes trailFade {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.3);
+        filter: blur(3px);
+    }
+}
+
+/* Hiệu ứng sương mù nền */
+.mist-effect {
+    position: fixed;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.08) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+    filter: blur(15px);
+    animation: mistFloat 4s ease-in-out infinite;
+}
+
+@keyframes mistFloat {
+    0%, 100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 0.4;
+    }
+    50% {
+        transform: scale(1.3) rotate(180deg);
+        opacity: 0.15;
+    }
+}
+
+/* Hiệu ứng khi click */
+.click-ripple {
+    position: fixed;
+    border: 2px solid #00d4ff;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9997;
+    animation: rippleEffect 0.6s ease-out;
+}
+
+@keyframes rippleEffect {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+    100% {
+        width: 60px;
+        height: 60px;
+        opacity: 0;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Hiệu ứng đặc biệt cho game cards */
+.game-card:hover ~ .custom-cursor {
+    border-color: #45b7d1;
+    background: radial-gradient(circle, rgba(69, 183, 209, 0.4) 0%, transparent 70%);
+    box-shadow: 0 0 20px rgba(69, 183, 209, 0.6);
+}
+
+/* Hiệu ứng cho buttons */
+.btn:hover ~ .custom-cursor,
+button:hover ~ .custom-cursor {
+    border-color: #96c93d;
+    background: radial-gradient(circle, rgba(150, 201, 61, 0.4) 0%, transparent 70%);
+}
+
+/* Responsive - Tắt hiệu ứng trên mobile */
+@media (max-width: 768px) {
+    .custom-cursor,
+    .cursor-trail,
+    .mist-effect,
+    .click-ripple {
+        display: none !important;
+    }
+    
+    * {
+        cursor: auto !important;
+    }
+}
+
+/* Tắt hiệu ứng cho touch devices */
+@media (hover: none) and (pointer: coarse) {
+    .custom-cursor,
+    .cursor-trail,
+    .mist-effect,
+    .click-ripple {
+        display: none !important;
+    }
+    
+    * {
+        cursor: auto !important;
+    }
+}
+
+/* Hiệu ứng cho text selection */
+.custom-cursor.text {
+    width: 2px;
+    height: 20px;
+    border-radius: 1px;
+    border-color: #00d4ff;
+    background: linear-gradient(to bottom, rgba(0, 212, 255, 0.8) 0%, transparent 100%);
+}
+
+/* Animation cho cursor khi di chuyển nhanh */
+.custom-cursor.moving {
+    transition: all 0.05s ease;
+}
+
+/* Particle effect cho trail */
+.cursor-particle {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background: #00d4ff;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9996;
+    animation: particleFade 1.2s ease-out forwards;
+}
+
+@keyframes particleFade {
+    0% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0) translateY(-20px);
+    }
+}

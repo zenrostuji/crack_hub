@@ -118,8 +118,9 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label asp-for="AverageRating" class="admin-form-label">Điểm đánh giá trung bình</label>
-                            <input asp-for="AverageRating" type="number" step="0.1" min="0" max="10" class="admin-form-control">
+                            <input asp-for="AverageRating" type="number" step="0.1" min="0" max="10" class="admin-form-control" readonly>
                             <span asp-validation-for="AverageRating" class="text-danger"></span>
+                            <small class="form-text text-muted">Tự động lấy từ trường Đánh giá</small>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label asp-for="Downloads" class="admin-form-label">Lượt tải</label>
@@ -152,7 +153,10 @@
                             <img id="imagePreview" src="@(string.IsNullOrEmpty(Model.CoverImageUrl) ? "/img/no-image.jpg" : Model.CoverImageUrl)" alt="Preview" class="img-fluid">
                         </div>
                         <input type="file" class="form-control" id="coverImage" name="coverImage" accept="image/*" onchange="previewImage(this)">
-                        <small class="form-text text-muted">Để trống nếu không thay đổi ảnh</small>
+                        <small class="form-text text-muted">
+                            <strong>Lưu ý:</strong> Để trống nếu không muốn thay đổi ảnh hiện tại.
+                            <br>Form có thể cập nhật mà không cần upload ảnh mới.
+                        </small>
                     </div>
                 </div>
 
@@ -211,6 +215,23 @@
         }
         
         $(document).ready(function() {
+            // Debug: Log form submission events
+            console.log('EditGame page loaded successfully');
+            
+            // Sync Rating to AverageRating
+            function syncRatingToAverageRating() {
+                var ratingValue = $('#Rating').val();
+                $('#AverageRating').val(ratingValue);
+            }
+            
+            // Initial sync when page loads
+            syncRatingToAverageRating();
+            
+            // Sync whenever Rating field changes
+            $('#Rating').on('input change', function() {
+                syncRatingToAverageRating();
+            });
+            
             // Initialize rich text editor for description
             if (typeof tinymce !== 'undefined') {
                 tinymce.init({
@@ -229,10 +250,19 @@
             }
             
             // Submit form handler - ensure TinyMCE content is synchronized
-            $('#editGameForm').on('submit', function() {
+            $('#editGameForm').on('submit', function(e) {
                 // Make sure content from TinyMCE is saved to the textarea
                 if (typeof tinymce !== 'undefined') {
                     tinymce.triggerSave();
+                }
+                
+                // Check if form is valid before proceeding
+                var form = this;
+                if (!form.checkValidity()) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    form.classList.add('was-validated');
+                    return false;
                 }
                 
                 // Add status indicator

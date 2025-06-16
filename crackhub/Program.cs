@@ -35,6 +35,7 @@ builder.Services.AddScoped<IAvatarFrameRepository, EFAvatarFrameRepository>();
 builder.Services.AddScoped<IUserAvatarFrameRepository, EFUserAvatarFrameRepository>();
 builder.Services.AddScoped<IPremiumRepository, EFPremiumRepository>();
 builder.Services.AddScoped<IPremiumRegisterRepository, EFPremiumRegisterRepository>();
+builder.Services.AddScoped<IGameScoreRepository, EFGameScoreRepository>();
 
 // Add HttpContextAccessor
 builder.Services.AddHttpContextAccessor();

@@ -174,8 +174,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2FtZVxEb3dubG9hZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Game/DownloadHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2FtZVxEb3dubG9hZEhpc3RvcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Game/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2FtZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Home/GameLeaderboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHYW1lTGVhZGVyYm9hcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/A_CONG_VIEC/CODE/WEB_GAME/crack_hub-co_repositories/crackhub/Views/Home/GameRating.cshtml]

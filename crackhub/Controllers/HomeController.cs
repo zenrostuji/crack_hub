@@ -14,6 +14,7 @@ namespace crackhub.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IPremiumRepository _premiumRepository;
         private readonly IPremiumRegisterRepository _premiumRegisterRepository;
+        private readonly IGameScoreRepository _gameScoreRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public HomeController(
@@ -23,6 +24,7 @@ namespace crackhub.Controllers
             IUserRepository userRepository,
             IPremiumRepository premiumRepository,
             IPremiumRegisterRepository premiumRegisterRepository,
+            IGameScoreRepository gameScoreRepository,
             IWebHostEnvironment webHostEnvironment)
         {
             _logger = logger;
@@ -31,6 +33,7 @@ namespace crackhub.Controllers
             _userRepository = userRepository;
             _premiumRepository = premiumRepository;
             _premiumRegisterRepository = premiumRegisterRepository;
+            _gameScoreRepository = gameScoreRepository;
             _webHostEnvironment = webHostEnvironment;
         }
 
@@ -62,6 +65,92 @@ namespace crackhub.Controllers
         public IActionResult GameRating()
         {
             return View();
+        }
+
+        // Bảng xếp hạng game
+        public async Task<IActionResult> GameLeaderboard(string gameName = "CHIẾN TRƯỜNG")
+        {
+            var topScores = await _gameScoreRepository.GetTopScoresAsync(gameName, 50);
+            ViewBag.GameName = gameName;
+            ViewBag.CurrentUserId = HttpContext.Session.GetString("UserId");
+            return View(topScores);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SubmitScore([FromBody] GameScoreSubmission submission)
+        {
+            try
+            {
+                var userId = HttpContext.Session.GetString("UserId");
+                if (userId == null)
+                {
+                    return Json(new { success = false, message = "Bạn cần đăng nhập để lưu điểm số" });
+                }
+
+                var gameScore = new GameScore
+                {
+                    UserId = userId,
+                    GameName = submission.GameName,
+                    Score = submission.Score,
+                    Level = submission.Level,
+                    EnemiesKilled = submission.EnemiesKilled,
+                    SurvivalTime = submission.SurvivalTime
+                };
+
+                var savedScore = await _gameScoreRepository.AddOrUpdateScoreAsync(gameScore);
+                var userRank = await _gameScoreRepository.GetUserRankAsync(userId, submission.GameName);
+
+                return Json(new { 
+                    success = true, 
+                    message = "Điểm số đã được lưu thành công!",
+                    rank = userRank,
+                    isNewRecord = savedScore.Score == submission.Score
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error submitting game score");
+                return Json(new { success = false, message = "Có lỗi xảy ra khi lưu điểm số" });
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUserRank(string gameName = "CHIẾN TRƯỜNG")
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            if (userId == null)
+            {
+                return Json(new { rank = 0, score = 0 });
+            }
+
+            var userScore = await _gameScoreRepository.GetUserGameScoreAsync(userId, gameName);
+            var rank = userScore != null ? await _gameScoreRepository.GetUserRankAsync(userId, gameName) : 0;
+
+            return Json(new { 
+                rank = rank, 
+                score = userScore?.Score ?? 0,
+                level = userScore?.Level ?? 0,
+                enemiesKilled = userScore?.EnemiesKilled ?? 0,
+                survivalTime = userScore?.SurvivalTime ?? 0
+            });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetTopScores(string gameName = "CHIẾN TRƯỜNG", int count = 10)
+        {
+            var topScores = await _gameScoreRepository.GetTopScoresAsync(gameName, count);
+            var scoreList = topScores.Select((score, index) => new
+            {
+                rank = index + 1,
+                playerName = score.User?.DisplayName ?? "Unknown",
+                score = score.Score,
+                level = score.Level,
+                enemiesKilled = score.EnemiesKilled,
+                survivalTime = score.SurvivalTime,
+                date = score.UpdatedAt.ToString("dd/MM/yyyy")
+            });
+
+            return Json(scoreList);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -274,5 +363,15 @@ namespace crackhub.Controllers
             var premiumRegisters = await _premiumRegisterRepository.GetByUserIdAsync(userId);
             return View(premiumRegisters);
         }
+    }
+
+    // DTO class for score submission
+    public class GameScoreSubmission
+    {
+        public string GameName { get; set; } = "CHIẾN TRƯỜNG";
+        public int Score { get; set; }
+        public int Level { get; set; }
+        public int EnemiesKilled { get; set; }
+        public int SurvivalTime { get; set; }
     }
 }

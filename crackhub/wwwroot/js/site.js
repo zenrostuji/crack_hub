@@ -518,4 +518,24 @@ $(document).ready(function () {
         $('.screenshots-thumbnails .thumbnail').removeClass('active');
         $(`.screenshots-thumbnails .thumbnail[data-bs-slide-to="${activeIndex}"]`).addClass('active');
     });
+
+    // Download history tracking - Global handler for all download links
+    $(document).on('click', '.download-link', function(e) {
+        var gameId = $(this).data('game-id');
+        if (gameId) {
+            $.ajax({
+                url: '/Game/AddDownloadHistory',
+                type: 'POST',
+                data: { gameId: gameId },
+                success: function(response) {
+                    // Optional: Show notification that download was tracked
+                    console.log('Download tracked successfully');
+                },
+                error: function() {
+                    // Silent fail - don't interrupt user's download
+                    console.log('Failed to track download');
+                }
+            });
+        }
+    });
 });

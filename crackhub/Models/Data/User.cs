@@ -40,5 +40,6 @@ namespace crackhub.Models.Data
         public ICollection<DownloadHistory> DownloadHistory { get; set; } = new List<DownloadHistory>();
         public ICollection<SearchHistory> SearchHistory { get; set; } = new List<SearchHistory>();
         public ICollection<UserAvatarFrame> UserAvatarFrames { get; set; } = new List<UserAvatarFrame>();
+        public ICollection<GameScore> GameScores { get; set; } = new List<GameScore>();
     }
 }

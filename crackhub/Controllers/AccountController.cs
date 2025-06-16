@@ -314,8 +314,8 @@ namespace crackhub.Controllers
                 return NotFound();
             }
 
-            // Get all available avatar frames
-            var allFrames = await _avatarFrameRepository.GetAllAsync();
+            // Get all available avatar frames (only active ones)
+            var allFrames = await _avatarFrameRepository.GetAvailableFramesAsync();
             ViewBag.AllAvatarFrames = allFrames;
             
             // Get user's equipped frame

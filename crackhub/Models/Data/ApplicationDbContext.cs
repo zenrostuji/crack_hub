@@ -32,6 +32,7 @@ namespace crackhub.Models.Data
         public DbSet<UserAvatarFrame> UserAvatarFrames { get; set; }
         public DbSet<Premium> Premiums { get; set; }
         public DbSet<PremiumRegister> PremiumRegisters { get; set; }
+        public DbSet<GameScore> GameScores { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -159,6 +160,22 @@ namespace crackhub.Models.Data
                 .WithMany(p => p.PremiumRegisters)
                 .HasForeignKey(pr => pr.PackageId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // Cấu hình cho GameScore
+            modelBuilder.Entity<GameScore>()
+                .HasOne(gs => gs.User)
+                .WithMany()
+                .HasForeignKey(gs => gs.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Index cho tối ưu hóa query
+            modelBuilder.Entity<GameScore>()
+                .HasIndex(gs => new { gs.GameName, gs.Score })
+                .HasDatabaseName("IX_GameScore_GameName_Score");
+
+            modelBuilder.Entity<GameScore>()
+                .HasIndex(gs => gs.UserId)
+                .HasDatabaseName("IX_GameScore_UserId");
 
             base.OnModelCreating(modelBuilder);
         }
